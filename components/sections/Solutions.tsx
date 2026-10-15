@@ -1,8 +1,23 @@
 import { services, servicesCopy } from '@/content/services';
 import { Media } from '@/components/ui/Media';
+import { Auralis } from '@/components/ui/auralis';
 
 export function Solutions() {
-  return <section id="soluciones" className="solutions-section" data-theme="white" aria-labelledby="solutions-title">
+  return <section id="soluciones" className="solutions-section" data-theme="navy-deep" data-nav="dark" aria-labelledby="solutions-title">
+    {/* Full-bleed Auralis WebGL Ambient Background */}
+    <div className="solutions-auralis-backdrop" aria-hidden="true">
+      <Auralis
+        colors={["#38bdf8", "#0284c7", "#0a3663"]}
+        bgColor="#071725"
+        speed={0.25}
+        grain={0.5}
+        height="100%"
+        className="absolute inset-0 h-full w-full pointer-events-none"
+      />
+      <div className="solutions-backdrop-vignette" />
+      <div className="solutions-backdrop-grain" />
+    </div>
+
     <header className="solutions-header">
       <h2 id="solutions-title">{servicesCopy.title}</h2>
       <p>{servicesCopy.subtitle}</p>
