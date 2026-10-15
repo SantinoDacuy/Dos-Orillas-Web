@@ -81,15 +81,9 @@ export function Manifesto() {
               animate={{ scale: 1.04 }}
               transition={{ duration: 8, ease: "linear" }}
             />
-            {/* Color grade overlays to match active slide's hue */}
-            <div
-              className="absolute inset-0"
-              style={{ backgroundColor: activeItem.accent ?? '#071725', mixBlendMode: 'color' }}
-            />
-            <div
-              className="absolute inset-0 opacity-65"
-              style={{ backgroundColor: activeItem.accent ?? '#071725', mixBlendMode: 'multiply' }}
-            />
+            {/* Balanced atmosphere: preserves the photo's natural clarity with a balanced dark mood */}
+            <div className="absolute inset-0 bg-[#071725]/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#071725]/80 via-transparent to-[#071725]/70" />
           </motion.div>
         </AnimatePresence>
 

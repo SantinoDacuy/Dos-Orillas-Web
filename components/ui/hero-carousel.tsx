@@ -159,10 +159,10 @@ export function FilmstripTrack({
               aria-current={isFocused}
               onClick={() => onChange(i)}
               className={cn(
-                "relative shrink-0 overflow-hidden rounded-2xl border transition-colors cursor-pointer",
+                "relative shrink-0 overflow-hidden rounded-none border-0 transition-all cursor-pointer",
                 isFocused
-                  ? "border-cyan-400/60 shadow-[0_16px_36px_-10px_rgba(56,189,248,0.35)]"
-                  : "border-white/10 hover:border-white/30"
+                  ? "shadow-[0_28px_60px_-12px_rgba(0,0,0,0.95),0_14px_28px_-6px_rgba(0,0,0,0.8)] z-10"
+                  : "shadow-[0_16px_36px_-8px_rgba(0,0,0,0.85)] opacity-85 hover:opacity-100"
               )}
               style={{ width: cardW }}
               animate={{ height: isFocused ? fullH : halfH }}
