@@ -403,7 +403,7 @@ html:not(.js-motion) .manifesto-bridge {
     right: var(--gutter); 
     width: min(24vw, 330px); 
     max-height: 60svh; 
-    z-index: 3; 
+    z-index: 1; 
     pointer-events: none; 
   }
   .solutions-media > .media { 

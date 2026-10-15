@@ -73,7 +73,7 @@ export function ContactForm() {
     {status === 'success' ? <div className="contact-success">
       <span className="contact-success-bridge" aria-hidden="true" />
       <h3 ref={success} tabIndex={-1}>{contactCopy.success}</h3>
-    </div> : <form action="/api/contact" method="post" noValidate onSubmit={event => { void submit(event); }}
+    </div> : <form action="/api/contact" method="post" noValidate suppressHydrationWarning onSubmit={event => { void submit(event); }}
       onFocusCapture={() => { void loadSubmit().catch(() => {}); }} aria-busy={status === 'loading'}>
       {status === 'error' && <div className="contact-error-summary" ref={summary} tabIndex={-1} role="alert">
         <h3>{Object.keys(errors).length ? contactCopy.errors.summary : notice}</h3>
@@ -84,36 +84,36 @@ export function ContactForm() {
       <div className="contact-field">
         <label htmlFor="contact-name">{contactCopy.fields.name}</label>
         <div className="contact-control"><input id="contact-name" name="name" type="text" autoComplete="name" required maxLength={contactLimits.name}
-          disabled={status === 'loading'} aria-invalid={Boolean(errors.name)} aria-describedby={description('name')} onChange={() => edit('name')} />
+          suppressHydrationWarning disabled={status === 'loading'} aria-invalid={Boolean(errors.name)} aria-describedby={description('name')} onChange={() => edit('name')} />
           <span className="contact-field-bridge" aria-hidden="true" /></div>
         {errors.name && <p id="contact-name-error" className="contact-field-error">{errors.name}</p>}
       </div>
       <div className="contact-field">
         <label htmlFor="contact-email">{contactCopy.fields.email}</label>
         <div className="contact-control"><input id="contact-email" name="email" type="email" inputMode="email" autoComplete="email" autoCapitalize="none" required maxLength={contactLimits.email}
-          disabled={status === 'loading'} aria-invalid={Boolean(errors.email)} aria-describedby={description('email')} onChange={() => edit('email')} />
+          suppressHydrationWarning disabled={status === 'loading'} aria-invalid={Boolean(errors.email)} aria-describedby={description('email')} onChange={() => edit('email')} />
           <span className="contact-field-bridge" aria-hidden="true" /></div>
         {errors.email && <p id="contact-email-error" className="contact-field-error">{errors.email}</p>}
       </div>
       <div className="contact-field">
         <label htmlFor="contact-organization">{contactCopy.fields.organization}<span className="contact-optional">{contactFeedback.optional}</span></label>
         <div className="contact-control"><input id="contact-organization" name="organization" type="text" autoComplete="organization" maxLength={contactLimits.organization}
-          disabled={status === 'loading'} aria-invalid={Boolean(errors.organization)} aria-describedby={description('organization')} onChange={() => edit('organization')} />
+          suppressHydrationWarning disabled={status === 'loading'} aria-invalid={Boolean(errors.organization)} aria-describedby={description('organization')} onChange={() => edit('organization')} />
           <span className="contact-field-bridge" aria-hidden="true" /></div>
         {errors.organization && <p id="contact-organization-error" className="contact-field-error">{errors.organization}</p>}
       </div>
       <div className="contact-field">
         <label htmlFor="contact-message">{contactCopy.fields.message}</label>
         <div className="contact-control"><textarea id="contact-message" name="message" required rows={6} maxLength={contactLimits.message}
-          disabled={status === 'loading'} aria-invalid={Boolean(errors.message)} aria-describedby={description('message')} onChange={() => edit('message')} />
+          suppressHydrationWarning disabled={status === 'loading'} aria-invalid={Boolean(errors.message)} aria-describedby={description('message')} onChange={() => edit('message')} />
           <span className="contact-field-bridge" aria-hidden="true" /></div>
         <p id="contact-message-helper" className="contact-helper">{contactCopy.helper}</p>
         {errors.message && <p id="contact-message-error" className="contact-field-error">{errors.message}</p>}
       </div>
       <div className="contact-honeypot" aria-hidden="true">
-        <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" />
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" defaultValue="" suppressHydrationWarning />
       </div>
-      <button className="contact-submit" type="submit" disabled={!interactive || status === 'loading'}>
+      <button className="contact-submit" type="submit" suppressHydrationWarning disabled={!interactive || status === 'loading'}>
         <span>{status === 'loading' ? contactCopy.loading : contactCopy.submit}</span>
         <span className="contact-submit-progress" aria-hidden="true" />
       </button>
