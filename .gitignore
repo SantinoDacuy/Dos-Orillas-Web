@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js build output and cache
+.next/
+out/
+build/
+dist/
+
+# Environment variables
+.env*
+!.env.example
+
+# Test & QA results
+test-results/
+playwright-report/
+qa-results/
+coverage/
+assets-src/
+
+# TypeScript build cache
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel and local caches
+.vercel/
+.cache/
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vscode/
+.idea/

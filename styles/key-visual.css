@@ -1,0 +1,128 @@
+.project-media { inline-size: 100%; min-inline-size: 0; }
+.project-media > .media { block-size: 100%; }
+.project-media > .key-visual { min-block-size: 0; block-size: 100%; aspect-ratio: auto; }
+.key-visual {
+  margin: 0;
+  min-inline-size: 0;
+  inline-size: 100%;
+  aspect-ratio: 8 / 5;
+  min-block-size: 22rem;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(16px, 2.1vw, 32px);
+  color: var(--fg);
+  background: var(--bg);
+  border-block: 1px solid var(--line);
+  overflow: visible;
+}
+.kv-caption { flex: none; }
+.kv-concept-label {
+  font: 400 0.75rem / 1.45 var(--font-mono), monospace;
+  letter-spacing: 0.06em;
+}
+.kv-svg {
+  inline-size: 100%;
+  block-size: auto;
+  min-block-size: 0;
+  flex: 1 1 auto;
+  display: block;
+  overflow: visible;
+}
+.kv-grid, .kv-outline, .kv-line, .kv-arrow, .kv-cluster-ring {
+  fill: none;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.kv-grid { stroke: var(--line); }
+.kv-outline { stroke: var(--kv-node-stroke, var(--fg)); }
+.kv-line, .kv-arrow { stroke: var(--accent); }
+.kv-branch { stroke-dasharray: 0.07 0.04; }
+.kv-arrow { stroke-linecap: round; stroke-linejoin: round; }
+.kv-label {
+  fill: var(--fg);
+  font: 400 24px / 1.2 var(--font-mono), monospace;
+}
+.kv-label-small { font-size: 19px; }
+.kv-label-tiny { font-size: 13px; }
+.kv-search-area { fill: var(--accent); fill-opacity: 0.08; }
+.kv-point, .kv-order-bar { fill: var(--fg); }
+.kv-origin, .kv-nearby { fill: var(--accent); }
+.kv-radius { transform-origin: 220px 224px; }
+.kv-cluster-ring { stroke: var(--accent); }
+.kv-cell {
+  fill: none;
+  stroke: var(--fg);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.kv-cell-active { fill: var(--accent); stroke: var(--accent); }
+.kv-fact { stroke: var(--accent); }
+.kv-packet { display: none; fill: var(--accent); offset-rotate: 0deg; }
+.kv-legend {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 0.75rem / 1.55 var(--font-mono), monospace;
+}
+.kv-legend li, .kv-legend span { max-inline-size: 100%; overflow-wrap: anywhere; }
+.kv-legend span { display: inline-block; }
+.kv-legend [tabindex]:hover { text-decoration: underline; text-underline-offset: 0.3em; }
+.kv-legend [tabindex]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.key-visual:has([data-kv-key="api"]:is(:hover, :focus-visible)) :is([data-kv-from="api"], [data-kv-to="api"], [data-kv-node="api"]),
+.key-visual:has([data-kv-key="commands"]:is(:hover, :focus-visible)) :is([data-kv-from="commands"], [data-kv-to="commands"], [data-kv-node="commands"]),
+.key-visual:has([data-kv-key="processor"]:is(:hover, :focus-visible)) :is([data-kv-from="processor"], [data-kv-to="processor"], [data-kv-node="processor"]),
+.key-visual:has([data-kv-key="events"]:is(:hover, :focus-visible)) :is([data-kv-from="events"], [data-kv-to="events"], [data-kv-node="events"]),
+.key-visual:has([data-kv-key="sse"]:is(:hover, :focus-visible)) :is([data-kv-from="sse"], [data-kv-to="sse"], [data-kv-node="sse"]),
+.key-visual:has([data-kv-key="timeline"]:is(:hover, :focus-visible)) :is([data-kv-from="timeline"], [data-kv-to="timeline"], [data-kv-node="timeline"]),
+.key-visual:has([data-kv-key="dlq"]:is(:hover, :focus-visible)) :is([data-kv-from="dlq"], [data-kv-to="dlq"], [data-kv-node="dlq"]) {
+  --kv-node-stroke: var(--accent);
+  stroke-width: 2;
+}
+
+/* Enhancement is explicitly opted in by the separate, deferred island. */
+.key-visual[data-kv-enhanced="true"] .kv-line {
+  stroke-dasharray: 1;
+  animation: kv-draw 900ms var(--ease-out-quint) var(--kv-delay, 0ms) both;
+  animation-play-state: paused;
+}
+.key-visual[data-kv-enhanced="true"] .kv-radius {
+  animation: kv-radius 1600ms var(--ease-out-quint) both;
+  animation-play-state: paused;
+}
+.key-visual[data-kv-enhanced="true"] .kv-new-prototype {
+  animation: kv-prototype 900ms var(--ease-out-quint) 700ms both;
+  animation-play-state: paused;
+}
+.key-visual[data-kv-enhanced="true"] .kv-packet {
+  display: block;
+  animation: kv-packet 4200ms linear var(--kv-delay, 0ms) infinite both;
+  animation-play-state: paused;
+}
+.key-visual[data-kv-enhanced="true"] .kv-packet-branch { animation-duration: 9600ms; }
+.key-visual[data-kv-playing="true"] :is(.kv-line, .kv-radius, .kv-new-prototype, .kv-packet) { animation-play-state: running; }
+@keyframes kv-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes kv-radius { from { transform: scale(0.1); } to { transform: scale(1); } }
+@keyframes kv-prototype { from { opacity: 0; } to { opacity: 1; } }
+@keyframes kv-packet {
+  0% { offset-distance: 0%; opacity: 0; }
+  5%, 80% { opacity: 1; }
+  100% { offset-distance: 100%; opacity: 0; }
+}
+@media (max-width: 767px) {
+  .key-visual { aspect-ratio: auto; min-block-size: 20rem; padding: 18px 16px; gap: 0.75rem; }
+  .kv-svg { flex: none; }
+  .kv-legend { gap: 0.4rem 0.8rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .key-visual :is(.kv-line, .kv-radius, .kv-new-prototype, .kv-packet) {
+    animation: none !important;
+    stroke-dashoffset: 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .key-visual .kv-packet { display: none !important; }
+}

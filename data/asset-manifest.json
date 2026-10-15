@@ -1,0 +1,74 @@
+{
+  "/projects/clasificador-de-frutas/cover.webp": {
+    "src": "/projects/clasificador-de-frutas/cover.webp",
+    "width": 2400,
+    "height": 1500,
+    "blurDataURL": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAACwAQCdASoKAAYABIByJZQAAvhp7D+EAP6l+GUDOda+18uKPjZstJWU9PpVyfnvPjCAAA=="
+  },
+  "/projects/gestion-aeroportuaria/cover.webp": {
+    "src": "/projects/gestion-aeroportuaria/cover.webp",
+    "width": 2400,
+    "height": 1500,
+    "blurDataURL": "data:image/webp;base64,UklGRjAAAABXRUJQVlA4ICQAAAAwAQCdASoKAAYABIByJZwAA3AA/u+CcdyCfGW9DtCWghHAAAA="
+  },
+  "/projects/mate-unico/cover.webp": {
+    "src": "/projects/mate-unico/cover.webp",
+    "width": 2400,
+    "height": 1500,
+    "blurDataURL": "data:image/webp;base64,UklGRkQAAABXRUJQVlA4IDgAAADQAQCdASoKAAYABIByJYwCdAELMFN+AAD+5sEWrtWvz25smb5NbvML2EBiq6ANFXNQ6K4Li3gAAA=="
+  },
+  "/projects/retail-vision/cover.webp": {
+    "src": "/projects/retail-vision/cover.webp",
+    "width": 2400,
+    "height": 1500,
+    "blurDataURL": "data:image/webp;base64,UklGRjYAAABXRUJQVlA4ICoAAADQAQCdASoKAAYABIByJZQAAtzpo0iwwAD+pojJVnu+HEGaPXhH3MbsIAA="
+  },
+  "/projects/transacciones-en-tiempo-real/cover.webp": {
+    "src": "/projects/transacciones-en-tiempo-real/cover.webp",
+    "width": 2400,
+    "height": 1500,
+    "blurDataURL": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoKAAYABIByJZwAAxbsXCGAAAD+wHNHyjDT8VIcDlAwxcEIaPBclwA8M7RXRlgAAAA="
+  },
+  "/projects/_manifesto/vertical.webp": {
+    "src": "/projects/_manifesto/vertical.webp",
+    "width": 1800,
+    "height": 2400,
+    "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoKAA0ABIByJaQAD5Au1NHJmXnMAP7SM20bCFQ8tUA1gaX466vLpAfS3hIR57tOIFfvX3WDc7IucCWeSvB/cTIR2kAAAA=="
+  },
+  "/projects/_services/automatizacion.webp": {
+    "src": "/projects/_services/automatizacion.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAADQAQCdASoKAAwABIByJZwCdAD0tKIgAAD+8N+nW8oipPN+fc4ElxV2TVWISkPMAAA="
+  },
+  "/projects/_services/datos.webp": {
+    "src": "/projects/_services/datos.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoKAAwABIByJYwCdAELZR5rdQAA/u9lE+wi1rF7RaA0I+Ra4IK6vOtIVejFwAAA"
+  },
+  "/projects/_services/sistemas.webp": {
+    "src": "/projects/_services/sistemas.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRkYAAABXRUJQVlA4IDoAAADQAQCdASoKAAwABIByJZwAAv+5+896gADif5VE+eeIYTdEV5gEZONs/HLxVPoF5JAIEK0CMMuYQAAA"
+  },
+  "/projects/_services/web.webp": {
+    "src": "/projects/_services/web.webp",
+    "width": 1400,
+    "height": 1750,
+    "blurDataURL": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoKAAwABIByJZwAAtx5NxWQAAD6Dy1kfthlsqpbTFi1P0p2MMZqH6zq556ppqevndsIsuKLJlFNHGSoQAA="
+  },
+  "/visuals/hero-film-poster-desktop.webp": {
+    "src": "/visuals/hero-film-poster-desktop.webp",
+    "width": 1924,
+    "height": 1076,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADQAQCdASoKAAYABIByJQBdgB8ux+UfgAD+7BFtU2BSsE+94gLrWMy29Fd+FuDvjfXkkAAA"
+  },
+  "/visuals/hero-film-poster.webp": {
+    "src": "/visuals/hero-film-poster.webp",
+    "width": 1280,
+    "height": 716,
+    "blurDataURL": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAACwAQCdASoKAAYABIByJQBdgB8wXExMAP7sEW1TYFKwT73iAutWWoxlUhIFxkguAvrEAAAA"
+  }
+}

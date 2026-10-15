@@ -1,0 +1,6 @@
+.projects-index-page { padding-top:clamp(144px,20svh,220px); }
+.projects-index-contact { display:flex; align-items:center; min-height:44px; max-width:32ch;
+  margin:clamp(80px,12vw,160px) 0 0 auto; font-family:var(--font-display);
+  font-size:clamp(24px,4vw,56px); line-height:1.12; letter-spacing:-.035em; }
+.projects-index-contact:focus-visible { outline-offset:8px; }
+@media(max-width:767px) { .projects-index-contact { margin-left:var(--gutter); } }

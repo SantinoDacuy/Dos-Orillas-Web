@@ -1,0 +1,12 @@
+@media (min-width:1024px) and (hover:hover) and (pointer:fine) {
+  .solutions-section[data-services-preview-motion="true"] .solutions-media { top:0; left:0; right:auto; }
+  html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-hairline { opacity:.35; }
+  html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-number { color:var(--muted); }
+  html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-name { opacity:.5; }
+  html:not([data-motion-tier="0"]) .solutions-row[data-active="true"] .solutions-name { transform:scale(1.03); }
+  html:not([data-motion-tier="0"]) .solutions-row[data-active="true"] .solutions-line { transform:scaleX(.92) scaleY(2); background:var(--bridge); }
+  html:not([data-motion-tier="0"]) .solutions-row:nth-of-type(even)[data-active="true"] .solutions-line { transform:scaleX(1.08) scaleY(2); }
+  .solutions-row[data-active="true"] .solutions-copy { color:var(--fg); }
+  .solutions-name,.solutions-number,.solutions-hairline { transition:opacity .3s; }
+  .solutions-name { transition:opacity .3s,transform .45s var(--ease-out-expo); }
+}

@@ -1,0 +1,12 @@
+html.lenis,html.lenis body { height:auto; }
+.lenis.lenis-smooth { scroll-behavior:auto!important; }
+.lenis.lenis-stopped { overflow:clip; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior:contain; }
+.motion-line { padding-block:.12em; margin-block:-.12em; }
+.grain { position:fixed; inset:0; z-index:60; pointer-events:none; opacity:.045; background:url('/textures/grain.svg') repeat; mix-blend-mode:multiply; }
+html[data-motion-tier="0"] .grain,html[data-motion-tier="1"] .grain { display:none; }
+.motion-lab section { min-height:100svh; padding:120px var(--gutter); }
+.motion-lab h1,.motion-lab h2 { font:650 clamp(32px,6vw,100px)/1 var(--font-display),sans-serif; letter-spacing:-.04em; margin:24px 0; }
+.motion-lab p { max-width:50ch; }
+.lab-image { width:min(500px,70%); margin-left:auto; }
+.motion-lab [data-bridge] { margin:70px 0; }

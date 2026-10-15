@@ -1,0 +1,12 @@
+/* Only roots explicitly opting into native tier1 + an intrinsic estimate qualify.
+   Enhanced roots have real layout; hashes, keyboard/focus and short screens use flow. */
+@media (max-width:1023px) and (min-height:701px) and (prefers-reduced-motion:no-preference) {
+  html.js-motion[data-motion-tier="1"]:not(:has(:target))
+    .project-grid-scene[data-grid-motion-policy="native-tier1"][data-grid-intrinsic="true"]:not([data-narrative-layout-ready="true"]):not([data-projects-enhanced="true"]):not(:focus-within) {
+    content-visibility:auto;
+    contain-intrinsic-size:auto var(--project-grid-intrinsic-height);
+  }
+}
+@media (min-width:640px) and (max-width:1023px) {
+  .project-grid-scene[data-grid-intrinsic="true"] { --project-grid-estimate-header-lines:1; }
+}

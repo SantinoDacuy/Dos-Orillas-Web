@@ -1,0 +1,34 @@
+/* Keep these root geometry/CV values identical to their canonical files.
+   Detail rules are delivered by the external narrative stylesheet. */
+.manifesto-section {
+  --manifesto-photo-height:calc((100vw - var(--gutter) - var(--gutter)) * .875);
+  padding:clamp(88px,12svh,160px) var(--gutter) clamp(88px,16svh,180px);
+}
+@layer components {
+  .solutions-section { position:relative; isolation:isolate; min-height:200svh; padding:clamp(96px,12vw,180px) var(--gutter) clamp(96px,10vw,160px); }
+  .process-scene { position:relative; padding:112px var(--gutter) 0; }
+}
+html.js-motion[data-motion-tier="1"]:not(:has(:target)) .manifesto-section:not([data-narrative-layout-ready="true"]):not([data-manifesto-mode="full"]) {
+  content-visibility:auto; contain-intrinsic-size:auto 1100px;
+}
+html.js-motion[data-motion-tier="1"]:not(:has(:target)) .solutions-section:not([data-narrative-layout-ready="true"]) {
+  content-visibility:auto; contain-intrinsic-size:auto 2500px;
+}
+html.js-motion[data-motion-tier="1"]:not(:has(:target)) .process-scene:not([data-narrative-layout-ready="true"]):not([data-process-mode="horizontal"]) {
+  content-visibility:auto; contain-intrinsic-size:auto 2100px;
+}
+@media (min-width:768px) {
+  html.js-motion[data-motion-tier="1"]:not(:has(:target)) .manifesto-section:not([data-narrative-layout-ready="true"]):not([data-manifesto-mode="full"]) { contain-intrinsic-size:auto 1000px; }
+  html.js-motion[data-motion-tier="1"]:not(:has(:target)) .process-scene:not([data-narrative-layout-ready="true"]):not([data-process-mode="horizontal"]) { contain-intrinsic-size:auto 1600px; }
+}
+@media (max-width:1023px) {
+  .solutions-section { min-height:180svh; padding-top:clamp(96px,14vw,144px); padding-bottom:80px; }
+  .process-scene { padding-top:96px; }
+}
+@media (max-width:767px) {
+  .manifesto-section { padding-block:clamp(72px,10svh,112px); }
+  .process-scene { padding-top:88px; }
+}
+@media (max-height:700px) {
+  html.js-motion[data-motion-tier="1"] :is(.manifesto-section,.solutions-section,.process-scene) { content-visibility:visible!important; }
+}

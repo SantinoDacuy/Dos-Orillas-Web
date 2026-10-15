@@ -1,0 +1,10 @@
+.not-found-page { display:flex; flex-direction:column; justify-content:center; min-height:85svh;
+  padding:clamp(144px,20svh,220px) var(--gutter) 88px; }
+.not-found-page h1 { max-width:13ch; font-family:var(--font-display); font-weight:600;
+  font-size:clamp(44px,9vw,156px); line-height:1.02; letter-spacing:-.055em; overflow-wrap:anywhere; }
+.not-found-link { display:flex; flex-direction:column; align-items:flex-start; width:fit-content;
+  min-height:44px; margin-top:clamp(48px,8svh,96px); gap:24px; padding-block:8px; }
+.not-found-bridge { display:flex; width:clamp(160px,24vw,320px); gap:16px; transition:gap .5s var(--ease-out-expo); }
+.not-found-bridge > span { height:1px; flex:1; background:var(--accent); }
+.not-found-link:is(:hover,:focus-visible) .not-found-bridge { gap:0; }
+html[data-motion-tier="0"] .not-found-bridge { transition:none; }

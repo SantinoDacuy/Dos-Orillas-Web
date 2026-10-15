@@ -1,0 +1,38 @@
+DOS ORILLAS ESTUDIO
+PAQUETE DE LOGO · 30/09/2026
+
+EMPEZAR
+Abrí 09_GUIA_Y_CATALOGO/CATALOGO.html para ver las versiones y descargar archivos. Funciona sin conexión a Internet después de extraer el ZIP completo.
+
+DISEÑO
+Se mantienen las dos composiciones de la imagen, las formas, las letras, sus proporciones, la onda y la línea divisoria de la versión horizontal. No se usaron fuentes de reemplazo ni se rediseñó el logo. Los vectores se trazaron directamente desde el JPEG suministrado: no son el archivo original editable del autor. Una vectorización desde JPEG puede conservar pequeñas irregularidades presentes en la imagen.
+
+VARIANTES
+principal: logo completo superior.
+horizontal: composición inferior completa con separador.
+dos: DOS extraído del logo principal.
+onda: O con onda extraída del logo principal.
+texto: bloque DOS ORILLAS / ESTUDIO extraído del horizontal.
+Los tres últimos son elementos separados para aplicaciones; no representan nuevas composiciones oficiales.
+
+FORMATOS
+00_ORIGINAL: JPEG recibido, conservado sin modificación.
+01_PNG_TRANSPARENTES: 1024, 2500 y 5000 píxeles de ancho, fondo transparente, proporción original, metadatos de 300 ppp.
+02_SVG_VECTORES: curvas reales, sin imágenes incrustadas ni dependencias de tipografías.
+03_JPG_CON_FONDO: 2500 px, fondo blanco u oscuro según el color.
+04_WEBP_TRANSPARENTES: 2500 px, compresión sin pérdida.
+05_EPS_VECTORES: trazados RGB, sin tipografías.
+06_PDF_VECTORES: trazados RGB y CMYK de referencia. Los blancos se incluyen en RGB; en impresión convencional blanco significa ausencia de tinta.
+07_PNG_BASE_RESOLUCION_ORIGINAL: negro y blanco extraídos a la resolución de la fuente, sin reconstrucción vectorial.
+08_AVATARES_Y_ICONOS: elementos centrados con margen en lienzos de 512 y 1080 px; favicons PNG e ICO en varias medidas.
+09_GUIA_Y_CATALOGO: catálogo local, guía PDF, paleta e inventario.
+
+COLOR
+Negro y blanco: monocromáticos. Grafito, azul noche, petróleo, verde bosque, bordó, terracota, arena y dorado plano: propuestas opcionales. No se presenta esta selección como una paleta oficial preexistente. Los códigos RGB/HEX están en COLORES.csv. Dorado es color plano, sin tinta metálica.
+
+USO
+PNG para Canva y redes. SVG para escalar y editar el color. PDF o EPS para entregar al diseñador o a la imprenta. JPG cuando se necesite fondo sólido. WebP para web. Para fondos oscuros, elegir blanco o uno de los tonos claros.
+Las letras finas de ESTUDIO provienen de una imagen de tamaño limitado; para usos muy pequeños, preferir el elemento DOS u O con onda. No deformar al escalar.
+
+IMPRESIÓN
+Los PNG de 5000 px están renderizados directamente desde los trazados. A 300 ppp, 5000 px equivalen a unos 42,3 cm de ancho. Los vectores no tienen ese límite. Los PDF CMYK usan una conversión matemática de referencia, sin perfil de imprenta; el negro es 100% K.
