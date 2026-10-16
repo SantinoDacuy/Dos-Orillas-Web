@@ -23,7 +23,7 @@ let firstLayoutFrame = 0;
 let settledLayoutFrame = 0;
 
 const setActive = () => {
-  const next = fine.matches ? hovered ?? focused : null;
+  const next = fine.matches ? (hovered ?? focused ?? active ?? rows[0] ?? null) : null;
   const visible = next !== dismissed ? next : null;
   if (visible === active) return;
   rows.forEach(row => { if (row === visible) row.dataset.active = 'true'; else delete row.dataset.active; });

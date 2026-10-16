@@ -1,5 +1,4 @@
 @media (min-width:1024px) and (hover:hover) and (pointer:fine) {
-  .solutions-section[data-services-preview-motion="true"] .solutions-media { top:0; left:0; right:auto; }
   html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-hairline { opacity:.35; }
   html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-number { color:var(--muted); }
   html:not([data-motion-tier="0"]) .solutions-section[data-services-active="true"] .solutions-row:not([data-active="true"]) .solutions-name { opacity:.5; }

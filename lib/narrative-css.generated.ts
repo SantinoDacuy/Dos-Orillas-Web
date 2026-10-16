@@ -1,2 +1,2 @@
 // Generated from styles/{manifesto,solutions,process}.css with the shared reduced policy. Do not edit.
-export const narrativeStylesHref = "/styles/narrative.css?v=7b3c8a3af31a";
+export const narrativeStylesHref = "/styles/narrative.css?v=acae61b639ac";

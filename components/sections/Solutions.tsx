@@ -1,17 +1,18 @@
 import { services, servicesCopy } from '@/content/services';
 import { Media } from '@/components/ui/Media';
-import { Auralis } from '@/components/ui/auralis';
+import { GlassFold } from '@/components/ui/glass-fold';
 
 export function Solutions() {
   return <section id="soluciones" className="solutions-section" data-theme="navy-deep" data-nav="dark" aria-labelledby="solutions-title">
-    {/* Full-bleed Auralis WebGL Ambient Background */}
+    {/* Full-bleed GlassFold WebGL Ambient Background */}
     <div className="solutions-auralis-backdrop" aria-hidden="true">
-      <Auralis
-        colors={["#38bdf8", "#0284c7", "#0a3663"]}
-        bgColor="#071725"
-        speed={0.25}
-        grain={0.5}
-        height="100%"
+      <GlassFold
+        color1="#0c355e"
+        color2="#071725"
+        color3="#38bdf8"
+        speed={0.4}
+        scale={1.05}
+        noise={0.06}
         className="absolute inset-0 h-full w-full pointer-events-none"
       />
       <div className="solutions-backdrop-vignette" />

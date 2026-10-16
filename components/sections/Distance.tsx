@@ -1,12 +1,27 @@
 import { distanceCopy } from '@/content/site';
 import { DistanceMotion } from './SceneMotion';
 import { Suspense } from 'react';
+import { GlassFold } from '@/components/ui/glass-fold';
 
 const statementPhases = ['DIAGNÓSTICO', 'ESTRATEGIA', 'DESARROLLO'] as const;
 
 export function Distance() {
   return <section id="distancia" className="distance-scene" data-theme="navy-deep" data-scene="distance" aria-labelledby="distance-title">
     <div className="distance-stage">
+      {/* Full-bleed GlassFold WebGL Ambient Background */}
+      <div className="distance-glassfold-backdrop" aria-hidden="true">
+        <GlassFold
+          color1="#0c355e"
+          color2="#071725"
+          color3="#38bdf8"
+          speed={0.4}
+          scale={1.05}
+          noise={0.06}
+          className="absolute inset-0 h-full w-full pointer-events-none"
+        />
+        <div className="distance-backdrop-vignette" />
+      </div>
+
       <h2 id="distance-title" className="sr-only">{distanceCopy.title}</h2>
       <div className="distance-topline">
         <div className="shore-badge shore-left">

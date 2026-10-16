@@ -347,12 +347,12 @@ html:not(.js-motion) .manifesto-bridge {
     gap: clamp(12px, 2vw, 30px); 
     width: 100%; 
     min-height: 44px; 
-    padding: .12em 0; 
+    padding: .12em 4px; 
     border: 0; 
     background: none; 
     text-align: right; 
-    font: 650 clamp(46px, 6.1vw, 116px)/1.05 var(--font-display), sans-serif; 
-    letter-spacing: -.055em; 
+    font: 650 clamp(42px, 5.6vw, 108px)/1.05 var(--font-display), sans-serif; 
+    letter-spacing: -.03em; 
     color: #F2EEE6;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.85), 0 8px 24px rgba(0, 0, 0, 0.9);
   }
@@ -367,19 +367,50 @@ html:not(.js-motion) .manifesto-bridge {
   }
   .solutions-hairline, .solutions-hairline-draw, .solutions-line { display: block; width: 100%; height: 1px; transform-origin: left; }
   .solutions-line { background: rgba(255, 255, 255, 0.15); transition: transform .4s var(--ease-out-expo), background-color .2s; }
-  .solutions-name-mask { display: block; min-width: 0; overflow: clip; padding-block: .12em; margin-block: -.12em; background: transparent; }
-  .solutions-name { display: block; transform-origin: right center; overflow-wrap: anywhere; transition: transform .45s var(--ease-out-expo); }
-  .solutions-name-inner { display: block; }
+  .solutions-name-mask { 
+    display: block; 
+    min-width: 0; 
+    overflow-y: clip; 
+    overflow-x: visible; 
+    padding-block: .12em; 
+    padding-inline: 0.16em; 
+    margin-block: -.12em; 
+    margin-inline: -0.16em; 
+    background: transparent; 
+  }
+  .solutions-name { 
+    display: block; 
+    transform-origin: right center; 
+    overflow: visible; 
+    white-space: nowrap; 
+    padding-inline: 0.08em; 
+    transition: transform .45s var(--ease-out-expo); 
+  }
+  .solutions-name-inner { 
+    display: block; 
+    overflow: visible; 
+    padding-inline: 0.06em; 
+  }
   .solutions-toggle { display: none; }
   .solutions-panel { display: grid; grid-template-rows: 1fr; opacity: 1; }
-  .solutions-panel-inner { min-height: 0; overflow: visible; }
+  .solutions-panel-inner { 
+    min-height: 0; 
+    overflow: visible; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(24px, 4vw, 64px);
+    padding-top: 20px;
+    padding-bottom: 24px;
+  }
   .solutions-copy { 
     position: relative; 
     z-index: 2; 
     background: transparent; 
     color: #9cbcdb; 
-    max-width: 45ch; 
-    margin: 20px 0 18px clamp(28px, 10vw, 160px); 
+    flex: 1 1 auto;
+    max-width: 52ch; 
+    margin: 0 0 0 clamp(20px, 4vw, 80px); 
     transition: color .3s; 
   }
   .solutions-full-title { 
@@ -397,22 +428,37 @@ html:not(.js-motion) .manifesto-bridge {
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
   }
   .solutions-media { 
-    display: none; 
-    position: fixed; 
-    top: 20svh; 
-    right: var(--gutter); 
-    width: min(24vw, 330px); 
-    max-height: 60svh; 
-    z-index: 1; 
-    pointer-events: none; 
+    display: block !important; 
+    position: relative !important; 
+    top: auto !important; 
+    left: auto !important; 
+    right: auto !important; 
+    bottom: auto !important; 
+    transform: none !important; 
+    flex: 0 0 clamp(240px, 24vw, 360px); 
+    width: clamp(240px, 24vw, 360px); 
+    aspect-ratio: 16 / 10; 
+    overflow: hidden; 
+    border-radius: 0; 
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.9), 0 0 20px rgba(56, 189, 248, 0.2); 
+    border: 1px solid rgba(56, 189, 248, 0.35); 
+    transition: transform 0.4s var(--ease-out-expo), box-shadow 0.4s, border-color 0.4s; 
   }
   .solutions-media > .media { 
-    max-height: 60svh; 
-    border-radius: 0;
-    box-shadow: 0 28px 60px -12px rgba(0, 0, 0, 0.95), 0 0 20px rgba(56, 189, 248, 0.2);
-    border: 1px solid rgba(56, 189, 248, 0.3);
+    width: 100%; 
+    height: 100%; 
+    max-height: none !important; 
+    object-fit: cover; 
+    border-radius: 0; 
   }
-  .solutions-row[data-active="true"] .solutions-media, .solutions-media[data-preview-visible="true"] { display: block; }
+  .solutions-row:hover .solutions-media { 
+    transform: scale(1.02); 
+    box-shadow: 0 24px 55px -8px rgba(0, 0, 0, 0.95), 0 0 28px rgba(56, 189, 248, 0.45); 
+    border-color: rgba(56, 189, 248, 0.65); 
+  }
+  .solutions-row[data-active="true"] .solutions-media { 
+    border-color: rgba(56, 189, 248, 0.6); 
+  }
   .solutions-ai { 
     position: relative;
     z-index: 2;
@@ -449,16 +495,16 @@ html:not(.js-motion) .manifesto-bridge {
   .solutions-header > p { margin-top: 24px; max-width: 28ch; }
   .solutions-list { --solutions-rail-gap: 18px; }
   .solutions-row { min-height: 0; padding-block: 24px; }
-  .solutions-trigger { grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content) auto; gap: 10px; font-size: clamp(32px, 8.6vw, 66px); }
-  .solutions-row[data-service="automatizacion"] .solutions-trigger { font-size: clamp(22px, 6.6vw, 52px); }
+  .solutions-trigger { grid-template-columns: auto minmax(0, 1fr) minmax(0, max-content) auto; gap: 10px; font-size: clamp(30px, 8vw, 64px); letter-spacing: -.025em; }
+  .solutions-row[data-service="automatizacion"] .solutions-trigger { font-size: clamp(20px, 5.6vw, 46px); }
   .solutions-number { font-size: 10px; }
   .solutions-panel { transition: none; }
   html:not([data-motion-tier="0"]) .solutions-section[data-services-transitions="true"] .solutions-panel { transition: grid-template-rows .38s var(--ease-out-expo), opacity .18s; }
-  .solutions-panel-inner { overflow: clip; }
-  .solutions-copy { margin: 24px 0 0 0; max-width: 38ch; color: #e2edf8; }
+  .solutions-panel-inner { overflow: clip; flex-direction: column; align-items: flex-start; gap: 20px; }
+  .solutions-copy { margin: 20px 0 0 0; max-width: 38ch; color: #e2edf8; }
   .solutions-full-title { font-size: 10px; }
   .solutions-description { font-size: 15px; }
-  .solutions-media { display: block; position: static; width: min(100%, 220px); max-height: none; margin-top: 24px; }
+  .solutions-media { flex: none; width: min(100%, 340px); max-height: none; margin-top: 16px; }
   .solutions-media > .media { max-height: none; border-radius: 0; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85); border: 1px solid rgba(56, 189, 248, 0.3); }
   .solutions-section[data-services-enhanced="true"][data-services-collapsible="true"] .solutions-toggle { position: relative; display: block; width: 12px; height: 12px; }
   .solutions-toggle::before, .solutions-toggle::after { content: ""; position: absolute; background: currentColor; left: 0; top: 5px; width: 12px; height: 1px; }
