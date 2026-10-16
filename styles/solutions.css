@@ -21,17 +21,23 @@
     inset: 0;
     background: 
       linear-gradient(180deg, 
-        rgba(6, 18, 29, 0.55) 0%, 
-        rgba(6, 18, 29, 0.3) 20%, 
-        rgba(6, 18, 29, 0.3) 80%, 
-        rgba(6, 18, 29, 0.55) 100%
+        #071725 0%, 
+        #071725 6%, 
+        rgba(7, 23, 37, 0.82) 16%, 
+        rgba(6, 18, 29, 0.38) 28%, 
+        rgba(6, 18, 29, 0.22) 50%, 
+        rgba(6, 18, 29, 0.38) 72%, 
+        rgba(7, 23, 37, 0.82) 84%, 
+        #071725 94%, 
+        #071725 100%
       ),
       radial-gradient(ellipse at 50% 50%, 
         transparent 0%, 
-        rgba(6, 18, 29, 0.35) 80%, 
-        rgba(6, 18, 29, 0.55) 100%
+        rgba(6, 18, 29, 0.25) 65%, 
+        rgba(7, 23, 37, 0.75) 100%
       );
     pointer-events: none;
+    z-index: 1;
   }
   .solutions-backdrop-grain {
     position: absolute;
@@ -39,6 +45,26 @@
     opacity: 0.15;
     mix-blend-mode: overlay;
     pointer-events: none;
+  }
+  .solutions-bg-mask-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: clamp(200px, 24svh, 320px);
+    background: linear-gradient(180deg, #071725 0%, #071725 35%, rgba(7, 23, 37, 0.85) 70%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
+  }
+  .solutions-bg-mask-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: clamp(200px, 24svh, 320px);
+    background: linear-gradient(0deg, #071725 0%, #071725 35%, rgba(7, 23, 37, 0.85) 70%, transparent 100%);
+    pointer-events: none;
+    z-index: 2;
   }
 
   .solutions-header { 

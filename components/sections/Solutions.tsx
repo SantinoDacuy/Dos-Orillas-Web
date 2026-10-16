@@ -17,6 +17,8 @@ export function Solutions() {
       />
       <div className="solutions-backdrop-vignette" />
       <div className="solutions-backdrop-grain" />
+      <div className="solutions-bg-mask-top" />
+      <div className="solutions-bg-mask-bottom" />
     </div>
 
     <header className="solutions-header">

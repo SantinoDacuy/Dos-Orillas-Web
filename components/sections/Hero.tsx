@@ -25,6 +25,7 @@ export function Hero() {
         />
         <HeroFilmMedia />
         <div className="hero-film-shade" aria-hidden="true" />
+        <div className="hero-bottom-feather" aria-hidden="true" />
 
         <div className="hero-film-content">
           <div className="hero-brand-block">

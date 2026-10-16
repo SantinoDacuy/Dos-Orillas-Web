@@ -28,9 +28,11 @@
   background: 
     linear-gradient(180deg, 
       #071725 0%, 
-      rgba(7, 23, 37, 0.45) 18%, 
+      #071725 6%, 
+      rgba(7, 23, 37, 0.75) 18%, 
       rgba(7, 23, 37, 0.35) 50%, 
-      rgba(7, 23, 37, 0.5) 82%, 
+      rgba(7, 23, 37, 0.75) 82%, 
+      #071725 94%, 
       #071725 100%
     ),
     radial-gradient(ellipse at 50% 50%, 
@@ -53,18 +55,20 @@
   position: absolute;
   top: 0;
   inset-inline: 0;
-  height: 160px;
-  background: linear-gradient(to bottom, #071725 0%, rgba(7, 23, 37, 0) 100%);
+  height: clamp(180px, 22svh, 280px);
+  background: linear-gradient(to bottom, #071725 0%, #071725 30%, rgba(7, 23, 37, 0.85) 65%, transparent 100%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .manifesto-bg-mask-bottom {
   position: absolute;
   bottom: 0;
   inset-inline: 0;
-  height: 160px;
-  background: linear-gradient(to top, #071725 0%, rgba(7, 23, 37, 0) 100%);
+  height: clamp(200px, 24svh, 320px);
+  background: linear-gradient(to top, #071725 0%, #071725 35%, rgba(7, 23, 37, 0.85) 70%, transparent 100%);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* Foreground Content */

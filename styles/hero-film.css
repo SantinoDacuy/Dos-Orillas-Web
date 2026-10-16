@@ -6,6 +6,7 @@ html .hero-scene.hero-film .hero-film-shell { position:relative!important; heigh
 .hero-film-video { opacity:0; }
 .hero-film-video[data-has-frame="true"] { opacity:1; }
 .hero-film-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgb(7 23 37 / 75%) 0%,rgb(7 23 37 / 20%) 22%,transparent 35%,rgb(7 23 37 / 35%) 52%,rgb(7 23 37 / 85%) 72%,rgb(7 23 37 / 98%) 88%,#071725 100%); }
+.hero-bottom-feather { position:absolute; bottom:0; left:0; right:0; height:clamp(120px,16svh,200px); background:linear-gradient(180deg,transparent 0%,rgba(7,23,37,0.85) 50%,#071725 100%); pointer-events:none; z-index:2; }
 /* The first frame must have a readable menu before the scroll theme controller
    starts. Its inherited variables continue to switch at subsequent sections. */
 .site-shell[data-home="true"] .site-nav { color:var(--nav-fg,#F2EEE6); }

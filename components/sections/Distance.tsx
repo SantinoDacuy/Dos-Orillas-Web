@@ -20,6 +20,8 @@ export function Distance() {
           className="absolute inset-0 h-full w-full pointer-events-none"
         />
         <div className="distance-backdrop-vignette" />
+        <div className="distance-bg-mask-top" />
+        <div className="distance-bg-mask-bottom" />
       </div>
 
       <h2 id="distance-title" className="sr-only">{distanceCopy.title}</h2>
