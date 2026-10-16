@@ -107,8 +107,6 @@ export function ParallaxComponent({
             <img
               src="/images/parallax/layer-1.webp"
               loading="eager"
-              width="1200"
-              height="800"
               data-parallax-layer="1"
               alt=""
               className="parallax__layer-img"
@@ -118,8 +116,6 @@ export function ParallaxComponent({
             <img
               src="/images/parallax/layer-2.webp"
               loading="eager"
-              width="1200"
-              height="800"
               data-parallax-layer="2"
               alt=""
               className="parallax__layer-img"
@@ -139,8 +135,6 @@ export function ParallaxComponent({
             <img
               src="/images/parallax/layer-4.webp"
               loading="eager"
-              width="1200"
-              height="800"
               data-parallax-layer="4"
               alt=""
               className="parallax__layer-img"
