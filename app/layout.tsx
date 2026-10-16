@@ -18,6 +18,7 @@ import '@/styles/projects-grid-lite.css';
 import '@/styles/project-transitions.css';
 import '@/styles/editorial.css';
 import '@/styles/contact.css';
+import '@/styles/parallax-scrolling.css';
 import { motionBootstrap } from '@/lib/motion-bootstrap';
 import { buildSiteMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildSiteMetadata();

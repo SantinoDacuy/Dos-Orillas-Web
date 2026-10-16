@@ -11,6 +11,9 @@ importers:
       '@gsap/react':
         specifier: ^2.1.2
         version: 2.1.2(gsap@3.15.0)(react@19.3.0)
+      '@studio-freight/lenis':
+        specifier: ^1.0.42
+        version: 1.0.42
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -799,6 +802,10 @@ packages:
   '@sentry/server-utils@10.76.1':
     resolution: {integrity: sha512-E4BHBU2F975eQW/eo4w73DvxN2LNac3wqWzd8lvk4A6jXt8nJwtGSxxdPaTM0Il82aJkbZXJ3IIO/Px6rlX+lQ==}
     engines: {node: '>=18'}
+
+  '@studio-freight/lenis@1.0.42':
+    resolution: {integrity: sha512-HJAGf2DeM+BTvKzHv752z6Z7zy6bA643nZM7W88Ft9tnw2GsJSp6iJ+3cekjyMIWH+cloL2U9X82dKXgdU8kPg==}
+    deprecated: 'The ''@studio-freight/lenis'' package has been renamed to ''lenis''. Please update your dependencies: npm install lenis and visit the documentation: https://www.npmjs.com/package/lenis'
 
   '@swc/helpers@0.5.23':
     resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
@@ -3337,6 +3344,8 @@ snapshots:
     dependencies:
       '@sentry/conventions': 0.16.0
       '@sentry/core': 10.76.1
+
+  '@studio-freight/lenis@1.0.42': {}
 
   '@swc/helpers@0.5.23':
     dependencies:

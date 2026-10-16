@@ -1,0 +1,431 @@
+/* Parallax Image Layers — Osmo Supply & Dos Orillas Estudio */
+
+.parallax {
+  position: relative;
+  width: 100%;
+  background-color: #071725;
+  color: #F2EEE6;
+  overflow: clip;
+}
+
+.parallax__header {
+  position: relative;
+  width: 100%;
+  height: clamp(650px, 120svh, 950px);
+  min-height: 600px;
+  overflow: hidden;
+  background-color: #071725;
+}
+
+.parallax__visuals {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.parallax__black-line-overflow {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #071725;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.parallax__fade-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(100px, 15svh, 180px);
+  background: linear-gradient(180deg, #071725 0%, #071725 30%, rgba(7, 23, 37, 0.7) 70%, transparent 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.parallax__layers {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.parallax__layer-img {
+  position: absolute;
+  inset: -10% -5% 0 -5%;
+  width: 110%;
+  height: 120%;
+  object-fit: cover;
+  object-position: center bottom;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform;
+}
+
+.parallax__layer-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 var(--gutter);
+  pointer-events: none;
+  z-index: 3;
+  will-change: transform;
+}
+
+.parallax__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  background: rgba(7, 23, 37, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(127, 166, 207, 0.35);
+  color: #7FA6CF;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.parallax__badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 10px #38BDF8;
+  animation: statementDotPulse 2s ease-in-out infinite;
+}
+
+.parallax__title {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(56px, 12vw, 190px);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  color: #F2EEE6;
+  text-transform: uppercase;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.9), 0 2px 10px rgba(7, 23, 37, 0.95);
+  margin: 0;
+}
+
+.parallax__subtitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(14px, 1.4vw, 20px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: rgba(242, 238, 230, 0.85);
+  max-width: 38ch;
+  margin: 18px 0 0;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
+}
+
+.parallax__fade {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: clamp(160px, 26svh, 320px);
+  background: linear-gradient(180deg, transparent 0%, rgba(7, 23, 37, 0.5) 40%, rgba(7, 23, 37, 0.92) 80%, #071725 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Content in Dark/Black Section (#071725) ── */
+.parallax__content {
+  position: relative;
+  width: 100%;
+  background-color: #071725;
+  color: #F2EEE6;
+  padding: clamp(32px, 4svh, 64px) var(--gutter) clamp(80px, 10svh, 140px);
+  z-index: 6;
+}
+
+.parallax-projects-shell {
+  max-width: 1320px;
+  margin-inline: auto;
+  width: 100%;
+}
+
+.parallax-projects-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 68ch;
+  margin-bottom: clamp(40px, 6svh, 72px);
+}
+
+.parallax-projects-tagline {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: #38BDF8;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.parallax-projects-tagline::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 1.5px;
+  background: #38BDF8;
+}
+
+.parallax-projects-lead {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(28px, 3.8vw, 56px);
+  font-weight: 650;
+  line-height: 1.1;
+  letter-spacing: -0.035em;
+  color: #F2EEE6;
+  margin: 0;
+}
+
+.parallax-projects-desc {
+  font-size: clamp(15px, 1.15vw, 17px);
+  line-height: 1.6;
+  color: #B7C4D0;
+  margin: 8px 0 0;
+}
+
+/* ── Project Cards Grid ── */
+.parallax-projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4.5vw, 56px);
+}
+
+.parallax-project-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(24px, 3.5vw, 56px);
+  align-items: center;
+  padding: clamp(20px, 2.5vw, 36px);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(16, 38, 62, 0.45) 0%, rgba(7, 23, 37, 0.65) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(127, 166, 207, 0.18);
+  border-top: 1.5px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  color: inherit;
+  overflow: clip;
+}
+
+.parallax-project-card:nth-child(even) {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+}
+
+.parallax-project-card:nth-child(even) .parallax-project-media-wrap {
+  order: 2;
+}
+
+.parallax-project-card:hover {
+  transform: translateY(-4px);
+  border-top-color: #38BDF8;
+  border-left-color: rgba(56, 189, 248, 0.45);
+  border-right-color: rgba(56, 189, 248, 0.45);
+  background: linear-gradient(145deg, rgba(22, 54, 88, 0.6) 0%, rgba(7, 23, 37, 0.85) 100%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 35px rgba(56, 189, 248, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.parallax-project-media-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(127, 166, 207, 0.25);
+  background: #061320;
+}
+
+.parallax-project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.parallax-project-card:hover .parallax-project-img {
+  transform: scale(1.05);
+}
+
+.parallax-project-media-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(7, 23, 37, 0.75) 100%);
+  pointer-events: none;
+}
+
+.parallax-project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.parallax-project-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.parallax-project-num {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #38BDF8;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.parallax-project-category {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 230, 0.55);
+}
+
+.parallax-project-title {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(24px, 2.6vw, 42px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  color: #F2EEE6;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.parallax-project-card:hover .parallax-project-title {
+  color: #38BDF8;
+}
+
+.parallax-project-desc {
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.6;
+  color: #B7C4D0;
+  margin: 0;
+}
+
+.parallax-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.parallax-project-tag {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(30, 78, 128, 0.25);
+  border: 1px solid rgba(127, 166, 207, 0.25);
+  color: #7FA6CF;
+  letter-spacing: 0.04em;
+}
+
+.parallax-project-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #F2EEE6;
+  margin-top: 8px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.parallax-project-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.parallax-project-card:hover .parallax-project-arrow {
+  transform: translateX(4px);
+  background: #38BDF8;
+  color: #071725;
+}
+
+/* ── Bottom Invitation Box ── */
+.parallax-projects-footer {
+  margin-top: clamp(60px, 8svh, 96px);
+  padding: clamp(32px, 4vw, 56px);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(16, 42, 70, 0.45) 0%, rgba(7, 23, 37, 0.8) 100%);
+  border: 1px solid rgba(127, 166, 207, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.parallax-footer-text h4 {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(22px, 2.2vw, 34px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #F2EEE6;
+  margin: 0 0 6px 0;
+}
+
+.parallax-footer-text p {
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.5;
+  color: #B7C4D0;
+  margin: 0;
+}
+
+.parallax-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .parallax-project-card,
+  .parallax-project-card:nth-child(even) {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .parallax-project-card:nth-child(even) .parallax-project-media-wrap {
+    order: 0;
+  }
+  .parallax-projects-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
