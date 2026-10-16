@@ -155,6 +155,7 @@ export function FilmstripTrack({
             <motion.button
               key={item.id ?? i}
               type="button"
+              suppressHydrationWarning
               aria-label={item.title || `Slide ${i + 1}`}
               aria-current={isFocused}
               onClick={() => onChange(i)}
@@ -306,6 +307,7 @@ export function HeroCarousel({
           {onBack && (
             <button
               type="button"
+              suppressHydrationWarning
               onClick={onBack}
               className="opacity-80 hover:opacity-100 cursor-pointer"
             >
@@ -316,6 +318,7 @@ export function HeroCarousel({
           {onMenu && (
             <button
               type="button"
+              suppressHydrationWarning
               onClick={onMenu}
               className="opacity-80 hover:opacity-100 cursor-pointer"
             >

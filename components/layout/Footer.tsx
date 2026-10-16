@@ -166,7 +166,7 @@ export function Footer({ home }: { home: boolean }) {
         <div className="footer-bottom">
           <span className="mono">{footerCopy.copyright} <Year /> {siteConfig.name}</span>
           <LocalClock />
-          <div className="footer-controls"><button className="motion-toggle mono" type="button" aria-pressed={buttonReduced} onClick={toggleMotion}>{buttonReduced ? motionCopy.full : motionCopy.reduce}<span className="motion-toggle-dot" aria-hidden="true" /></button><a className="back-to-top" href="#main-content" aria-label={accessibilityCopy.backToTop} onClick={backToTop}><span aria-hidden="true">↑</span></a></div>
+          <div className="footer-controls"><button className="motion-toggle mono" type="button" suppressHydrationWarning aria-pressed={buttonReduced} onClick={toggleMotion}>{buttonReduced ? motionCopy.full : motionCopy.reduce}<span className="motion-toggle-dot" aria-hidden="true" /></button><a className="back-to-top" href="#main-content" aria-label={accessibilityCopy.backToTop} onClick={backToTop}><span aria-hidden="true">↑</span></a></div>
         </div>
       </footer>
     </>

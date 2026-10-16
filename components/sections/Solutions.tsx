@@ -28,7 +28,7 @@ export function Solutions() {
       {services.map(service => <article className="solutions-row" data-service={service.id} key={service.id}>
         <h3 className="solutions-heading">
           <span className="solutions-ai-mark" aria-hidden="true" />
-          <button className="solutions-trigger" id={`solution-trigger-${service.id}`} type="button" aria-controls={`solution-panel-${service.id}`} aria-expanded="true" aria-disabled="true" tabIndex={-1}>
+          <button className="solutions-trigger" id={`solution-trigger-${service.id}`} type="button" suppressHydrationWarning aria-controls={`solution-panel-${service.id}`} aria-expanded="true" aria-disabled="true" tabIndex={-1}>
             <span className="solutions-number mono" aria-hidden="true">{service.number}</span>
             <span className="solutions-hairline" aria-hidden="true"><span className="solutions-hairline-draw"><span className="solutions-line" /></span></span>
             <span className="solutions-name-mask"><span className="solutions-name"><span className="solutions-name-inner">{service.name}</span></span></span>

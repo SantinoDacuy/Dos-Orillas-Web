@@ -195,7 +195,7 @@ export function Nav({ home }: { home: boolean }) {
               );
             })}
           </nav>
-          <button ref={toggleRef} className="menu-toggle" type="button" aria-label={menuOpen ? accessibilityCopy.closeMenu : accessibilityCopy.openMenu} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={openMenu}>
+          <button ref={toggleRef} className="menu-toggle" type="button" suppressHydrationWarning aria-label={menuOpen ? accessibilityCopy.closeMenu : accessibilityCopy.openMenu} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={openMenu}>
             <span aria-hidden="true" /><span aria-hidden="true" />
           </button>
         </div>
@@ -209,7 +209,7 @@ export function Nav({ home }: { home: boolean }) {
       }}>
         <div className="mobile-menu-top">
           <Logo horizontal light className="mobile-menu-logo" />
-          <button className="mobile-menu-close" type="button" aria-label={accessibilityCopy.closeMenu} onClick={() => void closeMenu()}><span aria-hidden="true">×</span></button>
+          <button className="mobile-menu-close" type="button" suppressHydrationWarning aria-label={accessibilityCopy.closeMenu} onClick={() => void closeMenu()}><span aria-hidden="true">×</span></button>
         </div>
         <nav className="mobile-menu-nav" aria-label={accessibilityCopy.mainNavigation}>
           {navigationItems.map((item) => <a className="mobile-menu-link" key={item.id} href={home ? item.href : `/${item.href}`} onClick={(event) => void followAnchor(event, item.id, true)}><span className="mobile-menu-link-inner"><span className="mono">{item.number}</span><span>{item.menuLabel}</span></span></a>)}

@@ -28,7 +28,7 @@ export function CopyEmail() {
     }
   };
   return <div className="contact-copy-email">
-    <button type="button" className="contact-copy-button" disabled={!interactive} onClick={() => { void copy(); }}>{contactCopy.copyEmail}</button>
+    <button type="button" suppressHydrationWarning className="contact-copy-button" disabled={!interactive} onClick={() => { void copy(); }}>{contactCopy.copyEmail}</button>
     <p className="contact-copy-notice" role="status" aria-live="polite" aria-atomic="true">{notice}</p>
   </div>;
 }

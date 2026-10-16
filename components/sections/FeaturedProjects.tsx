@@ -76,7 +76,7 @@ export function FeaturedProjects({ items = projects }: FeaturedProjectsProps) {
       </ol>
     </div>
     <div className="featured-controls" hidden>
-      <button type="button" className="featured-step-button mono" data-featured-direction="-1" disabled tabIndex={-1}
+      <button type="button" suppressHydrationWarning className="featured-step-button mono" data-featured-direction="-1" disabled tabIndex={-1}
         aria-label={featuredProjectsCopy.previous}><span aria-hidden="true">←</span></button>
       <div className="featured-counter mono" aria-hidden="true">
         <span className="featured-counter-window"><span className="featured-counter-roll">
@@ -84,10 +84,10 @@ export function FeaturedProjects({ items = projects }: FeaturedProjectsProps) {
         </span></span><span className="featured-counter-total">/ {total}</span>
       </div>
       <div className="featured-dots">
-        {selected.map((project, index) => <button type="button" key={project.slug} className="featured-dot"
+        {selected.map((project, index) => <button type="button" suppressHydrationWarning key={project.slug} className="featured-dot"
           data-featured-select={index} aria-label={featuredProjectsCopy.selectLabel(project.title)} disabled tabIndex={-1}><span aria-hidden="true" /></button>)}
       </div>
-      <button type="button" className="featured-step-button mono" data-featured-direction="1" disabled tabIndex={-1}
+      <button type="button" suppressHydrationWarning className="featured-step-button mono" data-featured-direction="1" disabled tabIndex={-1}
         aria-label={featuredProjectsCopy.next}><span aria-hidden="true">→</span></button>
     </div>
     <p className="featured-interaction-hint mono" hidden>{featuredProjectsCopy.interactionHint}</p>
