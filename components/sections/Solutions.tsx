@@ -7,12 +7,12 @@ export function Solutions() {
     {/* Full-bleed GlassFold WebGL Ambient Background */}
     <div className="solutions-auralis-backdrop" aria-hidden="true">
       <GlassFold
-        color1="#0c355e"
-        color2="#071725"
-        color3="#38bdf8"
-        speed={0.4}
-        scale={1.05}
-        noise={0.06}
+        color1="#0c2d4a"
+        color2="#06121d"
+        color3="#2575a2"
+        speed={0.3}
+        scale={1.0}
+        noise={0.04}
         className="absolute inset-0 h-full w-full pointer-events-none"
       />
       <div className="solutions-backdrop-vignette" />

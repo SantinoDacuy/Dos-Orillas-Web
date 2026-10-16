@@ -58,38 +58,37 @@ const FRAGMENT = `
     return mat2(c, -s, s, c);
   }
 
-  // panes of glass folded over each other. Each pane has one creased edge
-  // that catches the light and thins out to nothing behind it; panes screen
-  // over one another, so overlaps get brighter instead of darker.
+  // panes of glass folded over each other with uniform distribution from top to bottom
   vec3 shade(vec2 uv, float time) {
-    vec2 q = rot(0.6) * centered(uv) * 2.0 * u_scale;
-    float t = time * 0.6;
+    vec2 q = rot(0.32) * centered(uv) * 1.8 * u_scale;
+    float t = time * 0.5;
     float pixel = 2.0 * u_scale / max(u_resolution.y, 1.0);
 
-    vec3 color = mix(u_color2, u_color2 * 0.45, clamp(length(centered(uv)) * 1.3, 0.0, 1.0));
+    vec3 color = u_color2;
 
     for (int i = 0; i < 6; i++) {
       float fi = float(i);
       float bend = mod(fi, 2.0) * 2.0 - 1.0;
 
-      float crease = (fi - 2.5) * 0.4
-                   + 0.26 * sin(q.x * (1.05 + 0.12 * fi) + fi * 1.9 + t * (0.25 + 0.05 * fi))
-                   + 0.1 * bend * q.x * q.x;
+      // Distribute creases evenly across the canvas so top and bottom are equally balanced
+      float crease = (fi - 2.5) * 0.52
+                   + 0.22 * sin(q.x * (0.9 + 0.11 * fi) + fi * 1.7 + t * (0.22 + 0.04 * fi))
+                   + 0.05 * bend * q.x * q.x;
       float s = q.y - crease;
       float pane = smoothstep(-pixel, pixel, s);
       float back = max(s, 0.0);
 
-      // thick near the crease, clear further in
-      float body = exp(-back * 1.7);
-      float fresnel = exp(-back * 8.0);
-      // the lit edge, and a fainter line just inside it for the glass's thickness
-      float rim = exp(-back * 80.0);
-      float inner = exp(-pow((back - 0.045) / 0.014, 2.0));
-      float bloom = exp(-abs(s) * 20.0);
+      // Soft body falloff and gentle fresnel
+      float body = exp(-back * 1.5);
+      float fresnel = exp(-back * 6.0);
+      // Softened lit edge and bloom so it remains atmospheric without overpowering typography
+      float rim = exp(-back * 45.0);
+      float inner = exp(-pow((back - 0.045) / 0.018, 2.0));
+      float bloom = exp(-abs(s) * 14.0);
 
-      vec3 tint = mix(u_color1, u_color3, clamp(fresnel * 0.6 + 0.08 + 0.14 * sin(fi * 2.1 + q.x * 0.8 + t * 0.2), 0.0, 1.0));
-      vec3 light = tint * pane * (body * 0.42 + fresnel * 0.4)
-                 + u_color3 * (pane * (rim * 0.6 + inner * 0.12) + bloom * 0.1);
+      vec3 tint = mix(u_color1, u_color3, clamp(fresnel * 0.5 + 0.1 + 0.12 * sin(fi * 2.0 + q.x * 0.7 + t * 0.2), 0.0, 1.0));
+      vec3 light = (tint * pane * (body * 0.26 + fresnel * 0.24)
+                 + u_color3 * (pane * (rim * 0.22 + inner * 0.05) + bloom * 0.04)) * 0.38;
 
       // screen blend
       color += light * (1.0 - color);

@@ -89,7 +89,7 @@ function useScene(name: 'hero' | 'distance') {
       const statements = root.querySelector<HTMLElement>('.distance-statements');
       const description = root.querySelector<HTMLElement>('.distance-description');
       if (!connection || !statements || getComputedStyle(connection).position === 'static') return true;
-      const lateContentFits = connection.offsetTop + connection.offsetHeight + 16 <= statements.offsetTop;
+      const lateContentFits = connection.offsetTop + connection.offsetHeight + 8 <= statements.offsetTop;
       const staticCopyFits = tier !== 0 || !description || description.offsetTop + description.offsetHeight + 12 <= connection.offsetTop;
       return lateContentFits && staticCopyFits;
     };

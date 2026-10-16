@@ -17,16 +17,15 @@
     inset: 0;
     background: 
       linear-gradient(180deg, 
-        #071725 0%, 
-        rgba(7, 23, 37, 0.45) 15%, 
-        rgba(7, 23, 37, 0.25) 50%, 
-        rgba(7, 23, 37, 0.5) 85%, 
-        #071725 100%
+        rgba(6, 18, 29, 0.55) 0%, 
+        rgba(6, 18, 29, 0.3) 25%, 
+        rgba(6, 18, 29, 0.3) 75%, 
+        rgba(6, 18, 29, 0.55) 100%
       ),
       radial-gradient(ellipse at 50% 50%, 
         transparent 0%, 
-        rgba(7, 23, 37, 0.45) 75%, 
-        #071725 100%
+        rgba(6, 18, 29, 0.3) 80%, 
+        rgba(6, 18, 29, 0.55) 100%
       );
     pointer-events: none;
   }
@@ -54,11 +53,11 @@
   .measure-bridge-node::before { content:""; position:absolute; left:-10px; right:-10px; height:2px; background:linear-gradient(90deg,#7FA6CF 0%,#38BDF8 50%,#7FA6CF 100%); box-shadow:0 0 12px rgba(56,189,248,.8); }
   .measure-bridge-glow { position:relative; width:8px; height:8px; border-radius:2px; transform:rotate(45deg); background:#FFFFFF; box-shadow:0 0 14px #38BDF8,0 0 4px #FFFFFF; z-index:1; }
   .distance-description { position:absolute; top:67svh; left:calc(50% - 20ch); width:40ch; text-align:center; font-family:var(--font-display),sans-serif; font-size:15px; line-height:1.5; color:#B7C4D0; text-shadow:0 2px 14px rgba(7,23,37,.8); }
-  .distance-connection { position:absolute; top:59svh; left:var(--gutter); right:var(--gutter); display:flex; align-items:center; justify-content:center; gap:20px; z-index:4; }
+  .distance-connection { position:absolute; top:50svh; left:var(--gutter); right:var(--gutter); display:flex; align-items:center; justify-content:center; gap:20px; z-index:4; }
   .distance-connection p,.distance-connection-text { font-family:var(--font-display),sans-serif!important; font-size:clamp(24px,3.2vw,48px); font-weight:700; letter-spacing:-.025em; color:#F2EEE6; text-shadow:0 2px 20px rgba(7,23,37,.95); margin:0; font-style:normal!important; }
   .distance-bridge { width:clamp(24px,6vw,72px); height:2px; background:linear-gradient(90deg,transparent,#7FA6CF 50%,#7FA6CF); box-shadow:0 0 10px rgba(127,166,207,.6); transform-origin:center; border-radius:1px; }
-  .distance-statements { position:absolute; bottom:4.5svh; left:var(--gutter); right:var(--gutter); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,1.8vw,24px); z-index:5; }
-  .distance-statement { display:flex; flex-direction:column; gap:12px; padding:18px 22px; border-radius:14px; background:linear-gradient(180deg,rgba(16,42,70,.45) 0%,rgba(7,23,37,.65) 100%); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-top:1.5px solid rgba(127,166,207,.45); border-left:1px solid rgba(127,166,207,.16); border-right:1px solid rgba(127,166,207,.16); border-bottom:1px solid rgba(127,166,207,.08); box-shadow:0 10px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12); transition:all .28s var(--ease-out-quint,cubic-bezier(.22,1,.36,1)); }
+  .distance-statements { position:absolute; bottom:clamp(14px, 3.5svh, 28px); left:var(--gutter); right:var(--gutter); display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(14px,1.8vw,24px); z-index:5; }
+  .distance-statement { display:flex; flex-direction:column; gap:10px; padding:clamp(14px, 1.3vw, 18px) clamp(16px, 1.8vw, 22px); border-radius:14px; background:linear-gradient(180deg,rgba(16,42,70,.45) 0%,rgba(7,23,37,.65) 100%); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-top:1.5px solid rgba(127,166,207,.45); border-left:1px solid rgba(127,166,207,.16); border-right:1px solid rgba(127,166,207,.16); border-bottom:1px solid rgba(127,166,207,.08); box-shadow:0 10px 32px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12); transition:all .28s var(--ease-out-quint,cubic-bezier(.22,1,.36,1)); }
   .distance-statement:hover { border-top-color:#38BDF8; border-left-color:rgba(127,166,207,.4); border-right-color:rgba(127,166,207,.4); background:linear-gradient(180deg,rgba(22,56,92,.6) 0%,rgba(7,23,37,.8) 100%); box-shadow:0 14px 40px rgba(7,23,37,.8),0 0 24px rgba(56,189,248,.25),inset 0 1px 0 rgba(255,255,255,.25); transform:translateY(-3px); }
   .statement-head { display:flex; align-items:center; justify-content:space-between; }
   .statement-badge { display:inline-flex; align-items:center; gap:7px; padding:3px 9px; background:rgba(30,78,128,.35); border:1px solid rgba(127,166,207,.3); border-radius:9999px; font-family:var(--font-mono),monospace; font-size:10.5px; font-weight:600; letter-spacing:.06em; color:#7FA6CF; }
