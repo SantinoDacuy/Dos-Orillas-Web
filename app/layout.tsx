@@ -18,8 +18,6 @@ import '@/styles/projects-grid-lite.css';
 import '@/styles/project-transitions.css';
 import '@/styles/editorial.css';
 import '@/styles/contact.css';
-import '@/styles/parallax-scrolling.css';
-import '@/styles/projects-carousel.css';
 import '@/styles/projects-cinematic.css';
 import { buildSiteMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildSiteMetadata();
