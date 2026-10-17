@@ -1,0 +1,506 @@
+/* ==========================================================================
+   Projects Cinematic Showcase — Top-tier Creative Studio Portfolio
+   ========================================================================== */
+
+.cinematic-showcase-section {
+  position: relative;
+  width: 100%;
+  background: var(--navy-deep, #071725);
+  color: var(--foreground, #F2EEE6);
+  padding-block: clamp(70px, 9vw, 130px);
+  overflow: clip;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Full-bleed Animated GlassFold Backdrop */
+.projects-glassfold-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.projects-backdrop-vignette {
+  position: absolute;
+  inset: 0;
+  background: 
+    linear-gradient(180deg, 
+      #071725 0%, 
+      rgba(7, 23, 37, 0.78) 12%, 
+      rgba(6, 18, 29, 0.22) 50%, 
+      rgba(7, 23, 37, 0.78) 88%, 
+      #071725 100%
+    ),
+    radial-gradient(ellipse at 50% 50%, 
+      transparent 0%, 
+      rgba(6, 18, 29, 0.28) 65%, 
+      rgba(7, 23, 37, 0.8) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.projects-bg-mask-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: clamp(80px, 12svh, 160px);
+  background: linear-gradient(180deg, #071725 0%, rgba(7, 23, 37, 0.8) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.projects-bg-mask-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(80px, 12svh, 160px);
+  background: linear-gradient(0deg, #071725 0%, rgba(7, 23, 37, 0.8) 60%, transparent 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.cinematic-header-wrap,
+.cinematic-arena,
+.cinematic-dock-row {
+  position: relative;
+  z-index: 5;
+}
+
+.cinematic-header-wrap {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 24px);
+  margin-bottom: clamp(40px, 6vw, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .cinematic-header-wrap {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+
+.cinematic-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.cinematic-eyebrow-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #38bdf8;
+  box-shadow: 0 0 12px #38bdf8;
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+
+.cinematic-title {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.6rem, 6.2vw, 4.8rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #F2EEE6;
+}
+
+.cinematic-subtitle {
+  font-size: clamp(0.95rem, 1.25vw, 1.15rem);
+  color: rgba(242, 238, 230, 0.65);
+  max-width: 46ch;
+  line-height: 1.55;
+  margin-top: 6px;
+}
+
+/* ==========================================================================
+   Showcase Arena
+   ========================================================================== */
+
+.cinematic-arena {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 24px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vw, 64px);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .cinematic-arena {
+    grid-template-columns: minmax(0, 46%) minmax(0, 54%);
+    gap: clamp(48px, 6vw, 80px);
+  }
+}
+
+/* Left Narrative Column (Directly on the background, no rectangle container) */
+.cinematic-narrative {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.cinematic-project-index {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cinematic-project-category {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 230, 0.7);
+}
+
+.cinematic-project-name {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  color: #F2EEE6;
+  margin-bottom: 18px;
+}
+
+.cinematic-project-summary {
+  font-size: clamp(1rem, 1.25vw, 1.2rem);
+  line-height: 1.65;
+  color: rgba(242, 238, 230, 0.8);
+  max-width: 48ch;
+  margin-bottom: 28px;
+}
+
+.cinematic-tech-section {
+  margin-bottom: 36px;
+}
+
+.cinematic-tech-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242, 238, 230, 0.45);
+  margin-bottom: 12px;
+}
+
+.cinematic-tech-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cinematic-tech-pill {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  padding: 6px 14px;
+  border-radius: 0px; /* Sharp rectangular, no round */
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(242, 238, 230, 0.85);
+  transition: all 0.25s ease;
+}
+
+.cinematic-tech-pill:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.cinematic-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.cinematic-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 28px;
+  border-radius: 0px; /* Sharp corners */
+  background: #38bdf8;
+  color: #071725;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(56, 189, 248, 0.28);
+}
+
+.cinematic-cta-button:hover {
+  background: #7dd3fc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(56, 189, 248, 0.4);
+}
+
+.cinematic-cta-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.cinematic-cta-button:hover .cinematic-cta-arrow {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Right Visual Stage (Central Focused Canvas + Flanking Previews)
+   ========================================================================== */
+
+.cinematic-stage-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cinematic-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #040c15;
+  border-radius: 0px; /* Sharp corners */
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.8),
+              0 0 35px rgba(56, 189, 248, 0.15);
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.cinematic-canvas-wrapper:active {
+  cursor: grabbing;
+}
+
+.cinematic-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  filter: contrast(1.05) brightness(0.98);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-canvas-wrapper:hover .cinematic-main-image {
+  transform: scale(1.03);
+}
+
+/* Corner badge overlay on active image */
+.cinematic-canvas-badge {
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  padding: 6px 14px;
+  background: rgba(7, 23, 37, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+  z-index: 5;
+}
+
+/* Quick link affordance on image hover */
+.cinematic-canvas-action {
+  position: absolute;
+  bottom: 18px;
+  right: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(7, 23, 37, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: #38bdf8;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.cinematic-canvas-wrapper:hover .cinematic-canvas-action {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Thumbnails Strip (Sleek Horizontal Gallery Navigation)
+   ========================================================================== */
+
+.cinematic-thumbs-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(8px, 1.5vw, 14px);
+  width: 100%;
+  margin-top: 20px;
+}
+
+.cinematic-thumb-card {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 0px; /* Sharp corners */
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #091a2b;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-thumb-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  filter: brightness(0.4) grayscale(20%);
+  transition: all 0.35s ease;
+}
+
+.cinematic-thumb-card:hover img {
+  filter: brightness(0.7) grayscale(0%);
+}
+
+.cinematic-thumb-card[data-active="true"] {
+  border-color: #38bdf8;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+}
+
+.cinematic-thumb-card[data-active="true"] img {
+  filter: brightness(1) grayscale(0%);
+}
+
+.cinematic-thumb-index {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.05em;
+  color: #F2EEE6;
+  background: rgba(7, 23, 37, 0.8);
+  padding: 2px 6px;
+  backdrop-filter: blur(4px);
+}
+
+.cinematic-thumb-card[data-active="true"] .cinematic-thumb-index {
+  color: #38bdf8;
+}
+
+/* ==========================================================================
+   Control Dock (Prev / Next & Progress Line)
+   ========================================================================== */
+
+.cinematic-dock-row {
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 24px);
+  margin-top: clamp(28px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.cinematic-progress-track {
+  flex: 1;
+  max-width: 400px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cinematic-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cinematic-btn-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 0px; /* Sharp corners */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: #F2EEE6;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.cinematic-btn-arrow:hover:not(:disabled) {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+.cinematic-btn-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.cinematic-counter-display {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: rgba(242, 238, 230, 0.7);
+  padding-inline: 8px;
+}
+
+.cinematic-counter-current {
+  color: #38bdf8;
+  font-weight: 600;
+}

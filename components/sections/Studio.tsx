@@ -1,51 +1,133 @@
-import { studioCopy, type ContentMedia } from '@/content/site';
-import { Media } from '@/components/ui/Media';
-import { getAsset } from '@/lib/assets';
+import { studioCopy } from '@/content/site';
 import { EditorialLines } from './EditorialLines';
 import { staticSection } from '@/lib/static-section';
 
-function StudioPhoto({ media, index }: { media: ContentMedia; index: number }) {
-  if (!getAsset(media.src)) return null;
-  return <figure className={`studio-photo studio-photo-${index}`} data-editorial-photo
-    data-speed={index === 0 ? 1.06 : index === 1 ? 0.94 : 1.03}
-    data-photo-real={String(Boolean(getAsset(media.src)))}>
-    <div className="editorial-photo-mask"><div className="editorial-photo-camera">
-      <Media path={media.src} width={media.width} height={media.height} alt={media.alt}
-        focal={media.focal} sizes={index === 1 ? '(min-width: 1024px) 40vw, 90vw' : '(min-width: 1024px) 22vw, 58vw'} />
-    </div></div>
-  </figure>;
-}
-
 export function Studio() {
-  // The final paragraph is composed from its literal prefix and the canonical trio.
-  const closingPrefix = studioCopy.paragraphs[2].split(studioCopy.statements[0])[0]?.trim() ?? '';
-  const hasPhotos = studioCopy.media.some(media => Boolean(getAsset(media.src)));
-  const section = <section id="el-estudio" className="studio-section editorial-section" data-editorial="studio"
-    data-theme="white" data-nav="light" aria-labelledby="studio-heading">
-    <div className="studio-split">
-      <header className="studio-sticky">
-        <p className="editorial-eyebrow">{studioCopy.title}</p>
-        <h2 id="studio-heading" className="studio-headline"><EditorialLines lines={studioCopy.headline} /></h2>
-      </header>
-      <div className="studio-reading">
-        <p className="studio-lead" data-editorial-words>{studioCopy.lead.split(/\s+/).map((word, index) =>
-          <span key={`${index}-${word}`}><span data-editorial-word>{word}</span>{' '}</span>)}</p>
-        {studioCopy.media[0] && getAsset(studioCopy.media[0].src) && <StudioPhoto media={studioCopy.media[0]} index={0} />}
-        <div className="studio-paragraphs">
-          {studioCopy.paragraphs.slice(0, 2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+  const section = (
+    <section
+      id="el-estudio"
+      className="studio-section editorial-section radiant-section-wrap"
+      data-editorial="studio"
+      data-theme="navy-deep"
+      data-nav="dark"
+      aria-labelledby="studio-heading"
+    >
+      {/* Radiant ambient light sources */}
+      <div className="radiant-ambient-glow radiant-glow-cyan" style={{ width: '650px', height: '650px', top: '-10%', left: '-10%' }} aria-hidden="true" />
+      <div className="radiant-ambient-glow radiant-glow-teal" style={{ width: '500px', height: '500px', bottom: '10%', right: '-5%' }} aria-hidden="true" />
+
+      <div className="studio-radiant-container studio-split">
+        <header className="studio-sticky">
+          <div className="radiant-badge mb-6">
+            <span className="radiant-beacon" />
+            <span>01 · {studioCopy.title}</span>
+          </div>
+
+          <h2 id="studio-heading" className="studio-headline">
+            <EditorialLines lines={studioCopy.headline} accentIndex={2} />
+          </h2>
+
+          <div className="mt-8 flex items-center gap-3 text-xs font-mono tracking-wider text-slate-400">
+            <span className="inline-block w-8 h-[1px] bg-sky-400/50" />
+            <span>32°29′S 58°14′W · CONCEPCIÓN DEL URUGUAY</span>
+          </div>
+        </header>
+
+        <div className="studio-reading">
+          {/* Luminous Lead Manifesto Card */}
+          <div className="studio-lead-card w-full">
+            <p className="studio-lead-quote" data-editorial-words>
+              {studioCopy.lead.split(/\s+/).map((word, index) => (
+                <span key={`${index}-${word}`}>
+                  <span data-editorial-word>{word}</span>{' '}
+                </span>
+              ))}
+            </p>
+          </div>
+
+          {/* Context paragraphs with rich styling */}
+          <div className="studio-paragraphs text-slate-300">
+            <p>{studioCopy.paragraphs[0]}</p>
+            <p>{studioCopy.paragraphs[1]}</p>
+          </div>
+
+          {/* Radiant 3-Phase Methodology Grid */}
+          <div className="w-full">
+            <div className="mb-4 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-sky-400">
+              <span className="w-2 h-2 rounded-full bg-sky-400" />
+              <span>Nuestra Metodología de Trabajo</span>
+            </div>
+            
+            <p className="text-base text-slate-300 mb-6 italic font-serif">
+              &ldquo;No llegamos con una herramienta definida.&rdquo;
+            </p>
+
+            <div className="methodology-grid">
+              {/* Step 1 */}
+              <div className="methodology-card">
+                <div className="methodology-top">
+                  <span className="methodology-number">01</span>
+                  <div className="methodology-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
+                      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="methodology-title">Escuchamos.</h4>
+                  <p className="methodology-desc">
+                    Entendemos la realidad y el funcionamiento de tu negocio, diagnosticando antes de prescribir.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 2 */}
+              <div className="methodology-card">
+                <div className="methodology-top">
+                  <span className="methodology-number">02</span>
+                  <div className="methodology-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="m4.93 4.93 4.24 4.24" />
+                      <path d="m14.83 9.17 4.24-4.24" />
+                      <path d="m14.83 14.83 4.24 4.24" />
+                      <path d="m9.17 14.83-4.24 4.24" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="methodology-title">Analizamos.</h4>
+                  <p className="methodology-desc">
+                    Diseñamos la arquitectura y estrategia tecnológica óptima, priorizando simpleza y valor tangible.
+                  </p>
+                </div>
+              </div>
+
+              {/* Step 3 */}
+              <div className="methodology-card">
+                <div className="methodology-top">
+                  <span className="methodology-number">03</span>
+                  <div className="methodology-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="16 18 22 12 16 6" />
+                      <polyline points="8 6 2 12 8 18" />
+                    </svg>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="methodology-title">Y después construimos.</h4>
+                  <p className="methodology-desc">
+                    Desarrollamos soluciones sólidas, escalables y a medida con tecnología moderna y alto criterio.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        {studioCopy.media[1] && getAsset(studioCopy.media[1].src) && <StudioPhoto media={studioCopy.media[1]} index={1} />}
-        {closingPrefix && <p className="studio-closing-prefix">{closingPrefix}</p>}
-        <ol className="studio-statements">
-          {studioCopy.statements.map((statement, index) => <li key={statement}>
-            <span>{statement}</span>
-            {index < studioCopy.statements.length - 1 && <span className="studio-statement-bridge" aria-hidden="true" data-editorial-bridge />}
-          </li>)}
-        </ol>
-        {studioCopy.media[2] && getAsset(studioCopy.media[2].src) && <StudioPhoto media={studioCopy.media[2]} index={2} />}
       </div>
-    </div>
-  </section>;
-  // Next/Image media keeps its own server/client behavior when real assets arrive.
-  return hasPhotos ? section : staticSection(section);
+    </section>
+  );
+
+  return section;
 }

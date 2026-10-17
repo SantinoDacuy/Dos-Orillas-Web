@@ -1,0 +1,537 @@
+/* Radiant Presentation Design System for El Estudio, Equipo & Stack */
+
+/* 1. Ambient Lighting & Glow Cones */
+.radiant-section-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #071725;
+}
+
+.radiant-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.18;
+  z-index: 0;
+}
+
+.radiant-glow-cyan {
+  background: radial-gradient(circle, #38bdf8 0%, rgba(56, 189, 248, 0) 70%);
+}
+
+.radiant-glow-teal {
+  background: radial-gradient(circle, #2dd4bf 0%, rgba(45, 212, 191, 0) 70%);
+}
+
+.radiant-glow-blue {
+  background: radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 70%);
+}
+
+/* 2. Radiant Typography Accents */
+.radiant-serif-highlight {
+  font-family: var(--font-editorial), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #38bdf8;
+  text-shadow: 0 0 35px rgba(56, 189, 248, 0.4);
+}
+
+.radiant-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  font: 500 0.72rem/1 var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7dd3fc;
+  box-shadow: 0 0 20px -3px rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.radiant-beacon {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8, 0 0 18px #38bdf8;
+  animation: radiantBeaconPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes radiantBeaconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+
+/* 3. Studio Section Layout & Cards */
+.studio-radiant-container {
+  position: relative;
+  z-index: 1;
+}
+
+.studio-lead-card {
+  position: relative;
+  padding: clamp(2rem, 3.5vw, 3.2rem);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(16, 38, 62, 0.6) 0%, rgba(7, 23, 37, 0.8) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.studio-lead-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 25px 50px -10px rgba(56, 189, 248, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.studio-lead-quote {
+  font: 450 clamp(1.35rem, 2.2vw, 2.1rem)/1.3 var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+}
+
+.studio-lead-quote strong {
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+/* 4. Methodology 3-Step Radiant Process */
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.methodology-card {
+  position: relative;
+  padding: clamp(1.5rem, 2.2vw, 2.2rem);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(16, 38, 62, 0.45) 0%, rgba(7, 23, 37, 0.75) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  backdrop-filter: blur(12px);
+  transition: all 0.4s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.methodology-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.methodology-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  background: linear-gradient(145deg, rgba(16, 38, 62, 0.65) 0%, rgba(7, 23, 37, 0.9) 100%);
+  box-shadow: 0 16px 36px -10px rgba(56, 189, 248, 0.18);
+  transform: translateY(-4px);
+}
+
+.methodology-card:hover::before {
+  opacity: 1;
+}
+
+.methodology-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.methodology-number {
+  font: 600 0.85rem/1 var(--font-mono), monospace;
+  color: #38bdf8;
+  letter-spacing: 0.1em;
+}
+
+.methodology-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+}
+
+.methodology-title {
+  font: 530 clamp(1.3rem, 1.8vw, 1.7rem)/1.15 var(--font-display), sans-serif;
+  letter-spacing: -0.025em;
+  color: #f1f5f9;
+  margin-bottom: 0.75rem;
+}
+
+.methodology-desc {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+/* 5. Team Section: Executive Digital ID Dossiers */
+.team-radiant-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3.5vw, 3rem);
+  width: 100%;
+  margin-top: clamp(2rem, 4vw, 4rem);
+}
+
+.dossier-card {
+  position: relative;
+  border-radius: 14px;
+  padding: clamp(2rem, 3.5vw, 3.2rem);
+  background: linear-gradient(135deg, rgba(16, 38, 62, 0.55) 0%, rgba(7, 23, 37, 0.85) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 20px 45px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.5s var(--ease-out-expo);
+  overflow: hidden;
+}
+
+.dossier-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(56, 189, 248, 0.08), transparent 40%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.dossier-card:hover::after {
+  opacity: 1;
+}
+
+.dossier-card:hover {
+  border-color: rgba(56, 189, 248, 0.5);
+  box-shadow: 0 30px 60px -15px rgba(56, 189, 248, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.dossier-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 2rem;
+}
+
+.dossier-id-tag {
+  font: 500 0.75rem/1 var(--font-mono), monospace;
+  letter-spacing: 0.1em;
+  color: #38bdf8;
+}
+
+.dossier-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font: 450 0.7rem/1 var(--font-mono), monospace;
+  color: #2dd4bf;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(45, 212, 191, 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(45, 212, 191, 0.25);
+}
+
+.status-dot-active {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2dd4bf;
+  box-shadow: 0 0 8px #2dd4bf;
+}
+
+/* Holographic Avatar Monogram */
+.hologram-avatar-wrap {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin-bottom: 2rem;
+}
+
+.hologram-ring-outer {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(56, 189, 248, 0.35);
+  animation: hologramSpin 25s linear infinite;
+}
+
+.hologram-ring-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.25) 0%, rgba(16, 38, 62, 0.9) 70%);
+  border: 1px solid rgba(56, 189, 248, 0.45);
+  box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(56, 189, 248, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.dossier-card:hover .hologram-ring-inner {
+  border-color: #38bdf8;
+  box-shadow: 0 0 45px rgba(56, 189, 248, 0.45), inset 0 0 25px rgba(56, 189, 248, 0.35);
+}
+
+.hologram-monogram {
+  font: 700 2.4rem/1 var(--font-display), sans-serif;
+  letter-spacing: -0.05em;
+  background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(56, 189, 248, 0.4));
+}
+
+@keyframes hologramSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.dossier-name {
+  font: 600 clamp(1.8rem, 2.5vw, 2.5rem)/1.1 var(--font-display), sans-serif;
+  letter-spacing: -0.035em;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.dossier-degree {
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #38bdf8;
+  margin-bottom: 1rem;
+  font-weight: 450;
+}
+
+.dossier-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font: 400 0.75rem/1.4 var(--font-mono), monospace;
+  color: #94a3b8;
+  margin-bottom: 1.75rem;
+}
+
+.dossier-pills-title {
+  font: 500 0.7rem/1 var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+.dossier-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dossier-pill {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font: 450 0.75rem/1.4 var(--font-mono), monospace;
+  color: #cbd5e1;
+  transition: all 0.3s ease;
+}
+
+.dossier-pill:hover {
+  background: rgba(56, 189, 248, 0.12);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  transform: translateY(-1px);
+}
+
+/* 6. Stack Bento Matrix */
+.stack-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.75rem);
+  width: 100%;
+  margin-top: clamp(2rem, 4vw, 4rem);
+}
+
+.stack-bento-card {
+  position: relative;
+  padding: clamp(1.75rem, 2.5vw, 2.5rem);
+  border-radius: 12px;
+  background: linear-gradient(145deg, rgba(16, 38, 62, 0.5) 0%, rgba(7, 23, 37, 0.8) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.16);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-bento-card:hover {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.18);
+  transform: translateY(-3px);
+}
+
+.stack-bento-card-full {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(16, 38, 62, 0.6) 0%, rgba(7, 23, 37, 0.85) 100%);
+  border-color: rgba(56, 189, 248, 0.25);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.stack-bento-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.stack-bento-tag {
+  font: 600 0.72rem/1 var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #38bdf8;
+}
+
+.stack-bento-title {
+  font: 530 clamp(1.2rem, 1.6vw, 1.5rem)/1.2 var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  margin-bottom: 0.75rem;
+}
+
+.stack-bento-desc {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.stack-chip {
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font: 450 0.8rem/1.3 var(--font-mono), monospace;
+  color: #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.stack-chip:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+  transform: translateY(-1px);
+}
+
+.manifesto-quote {
+  font: 450 clamp(1.15rem, 1.8vw, 1.6rem)/1.4 var(--font-display), sans-serif;
+  letter-spacing: -0.02em;
+  color: #e2e8f0;
+}
+
+.manifesto-quote strong {
+  color: #38bdf8;
+  font-weight: 500;
+}
+
+/* 7. Radiant Infinite Tech Ticker */
+.radiant-ticker-wrap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 3rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+
+.radiant-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: radiantTickerSlide 35s linear infinite;
+}
+
+.radiant-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  font: 500 0.85rem/1 var(--font-mono), monospace;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.radiant-ticker-item:hover {
+  color: #38bdf8;
+}
+
+.radiant-ticker-bullet {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #38bdf8;
+  opacity: 0.6;
+}
+
+@keyframes radiantTickerSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1023px) {
+  .methodology-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .team-radiant-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 2rem;
+  }
+  .stack-bento-grid {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .stack-bento-card-full {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

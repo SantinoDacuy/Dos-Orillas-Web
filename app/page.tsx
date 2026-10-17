@@ -6,8 +6,7 @@ import { Manifesto } from '@/components/sections/Manifesto';
 import { Solutions } from '@/components/sections/Solutions';
 import { Process } from '@/components/sections/Process';
 import { DeferredNarrativeMotion } from '@/components/sections/DeferredNarrativeMotion';
-import { ParallaxComponent } from '@/components/ui/parallax-scrolling';
-import { BrandSeparator } from '@/components/sections/BrandSeparator';
+import { ProjectsCinematicSection } from '@/components/sections/ProjectsCinematicSection';
 import { Studio } from '@/components/sections/Studio';
 import { Team } from '@/components/sections/Team';
 import { Stack } from '@/components/sections/Stack';
@@ -26,8 +25,7 @@ export default function Home() {
     <Solutions />
     <Process />
     <Suspense fallback={null}><DeferredNarrativeMotion /></Suspense>
-    <ParallaxComponent />
-    <BrandSeparator id="projects-separator" />
+    <ProjectsCinematicSection />
     <Studio />
     <Team />
     <Stack />

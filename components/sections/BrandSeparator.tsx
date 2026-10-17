@@ -4,7 +4,7 @@ import { projectGridCopy } from '@/content/project-grid';
 import { BrandSeparatorMotion } from './BrandSeparatorMotion';
 
 export function BrandSeparator({ id = 'projects-brand-separator' }: { id?: string }) {
-  return <div id={id} className="brand-separator" data-brand-separator data-theme="cream">
+  return <div id={id} className="brand-separator" data-brand-separator data-theme="navy-deep">
     <p className="sr-only">{brandCopy.wordmark}</p>
     <div className="brand-separator-window" aria-hidden="true">
       <div className="brand-separator-static">{brandCopy.wordmark}</div>
