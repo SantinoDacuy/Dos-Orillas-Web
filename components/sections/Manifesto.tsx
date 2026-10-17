@@ -5,51 +5,71 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { manifestoCopy } from '@/content/site';
 import { FilmstripTrack, type HeroCarouselItem, CAROUSEL_GRAIN } from '@/components/ui/hero-carousel';
 
-// Initial showcase slides — the user will provide the final custom images.
 const CAROUSEL_ITEMS: HeroCarouselItem[] = [
   {
-    id: 'river-delta',
-    title: 'Delta del Río Uruguay',
-    image: '/images/river-delta.jpg',
-    meta: ['NATURALEZA', 'ENTRE RÍOS'],
+    id: 'fondo-1',
+    title: 'Túnel // Monograma Dos Orillas',
+    image: '/fondos/fondo-1.png',
+    meta: ['ATMÓSFERA', '01'],
     accent: '#0d2847',
   },
   {
-    id: 'mate-unico',
-    title: 'Mate Único // E-Commerce',
-    image: '/projects/mate-unico/cover.webp',
-    meta: ['WEB', 'PLATAFORMA'],
+    id: 'fondo-2',
+    title: 'Ola Azul // Firma Dos Orillas',
+    image: '/fondos/fondo-2.png',
+    meta: ['RÍO', '02'],
+    accent: '#092543',
+  },
+  {
+    id: 'fondo-3',
+    title: 'Espresso & DOS // Detalle',
+    image: '/fondos/fondo-3.png',
+    meta: ['ESTUDIO', '03'],
+    accent: '#0e2b4b',
+  },
+  {
+    id: 'fondo-4',
+    title: 'Portátil & Hélice // Luz Azul',
+    image: '/fondos/fondo-4.png',
+    meta: ['CREACIÓN', '04'],
     accent: '#10263e',
   },
   {
-    id: 'clasificador',
-    title: 'Clasificador de Frutas // Visión IA',
-    image: '/projects/clasificador-de-frutas/cover.webp',
-    meta: ['IA', 'AUTOMATIZACIÓN'],
-    accent: '#0a324d',
+    id: 'fondo-5',
+    title: 'Planeta Azul // Sonda Estelar',
+    image: '/fondos/fondo-5.png',
+    meta: ['VISIÓN', '05'],
+    accent: '#0a1d33',
   },
   {
-    id: 'aeropuerto',
-    title: 'Gestión Aeroportuaria // Plataforma',
-    image: '/projects/gestion-aeroportuaria/cover.webp',
-    meta: ['SISTEMAS', 'TIEMPO REAL'],
-    accent: '#162b48',
+    id: 'fondo-6',
+    title: 'Esquiador Veloz // Nieve Azul',
+    image: '/fondos/fondo-6.png',
+    meta: ['VELOCIDAD', '06'],
+    accent: '#0f3152',
   },
   {
-    id: 'transacciones',
-    title: 'Transacciones en Tiempo Real // Core',
-    image: '/projects/transacciones-en-tiempo-real/cover.webp',
-    meta: ['FINTECH', 'DATA'],
-    accent: '#0b1e36',
+    id: 'fondo-7',
+    title: 'Retrato // Broche Dos Orillas',
+    image: '/fondos/fondo-7.png',
+    meta: ['IDENTIDAD', '07'],
+    accent: '#0c223a',
+  },
+  {
+    id: 'fondo-8',
+    title: 'Río Entre Bosques // Azul Profundo',
+    image: '/fondos/fondo-8.png',
+    meta: ['ORILLAS', '08'],
+    accent: '#071725',
   },
 ];
 
 export function Manifesto() {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const activeItem = CAROUSEL_ITEMS[activeIndex] || CAROUSEL_ITEMS[0] || {
-    id: 'river-delta',
-    title: 'Delta del Río Uruguay',
-    image: '/images/river-delta.jpg',
+    id: 'fondo-1',
+    title: 'Túnel // Monograma Dos Orillas',
+    image: '/fondos/fondo-1.png',
     accent: '#0d2847',
   };
 
