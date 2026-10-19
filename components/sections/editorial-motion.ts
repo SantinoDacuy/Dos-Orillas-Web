@@ -215,75 +215,6 @@ function fullCTA(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
   return () => { removeInteractions(); context.revert(); syncTriggerCount(); };
 }
 
-/** Native loop engine; rates use cached geometry and scroll velocity, never layout per frame. */
-function kineticStack(root: HTMLElement, tier: MotionTier): Cleanup {
-  const animations: Animation[] = [];
-  const tracks = Array.from(root.querySelectorAll<HTMLElement>('.stack-marquee-track'));
-  root.dataset.editorialProfile = 'marquee';
-  let visible = false; let hovered = false; let frame = 0; let rate = 1; let targetRate = 1;
-  let appliedRate = 1;
-  let lastScroll = window.scrollY; let lastTime = performance.now();
-  const tick = () => {
-    frame = 0;
-    if (!visible || hovered || document.hidden) return;
-    rate += (targetRate - rate) * 0.08;
-    targetRate += ((targetRate < 0 ? -1 : 1) - targetRate) * 0.025;
-    if (Math.abs(rate - appliedRate) > 0.002) {
-      animations.forEach(animation => {
-        if (typeof animation.updatePlaybackRate === 'function') animation.updatePlaybackRate(rate);
-        else animation.playbackRate = rate;
-      });
-      appliedRate = rate;
-    }
-    const baseline = targetRate < 0 ? -1 : 1;
-    if (Math.abs(rate - baseline) > 0.01 || Math.abs(targetRate - baseline) > 0.01) frame = requestAnimationFrame(tick);
-  };
-  const sync = () => {
-    cancelAnimationFrame(frame); frame = 0;
-    const playing = visible && !hovered && !document.hidden;
-    animations.forEach(animation => { if (playing) animation.play(); else animation.pause(); });
-    if (playing) frame = requestAnimationFrame(tick);
-  };
-  const scroll = () => {
-    const now = performance.now(); const position = window.scrollY;
-    const velocity = (position - lastScroll) / Math.max(16, now - lastTime);
-    lastScroll = position; lastTime = now;
-    if (Math.abs(velocity) > 0.01) targetRate = Math.sign(velocity) * (1 + Math.min(Math.abs(velocity) * 0.8, 3));
-    if (visible && !hovered && !document.hidden && !frame) frame = requestAnimationFrame(tick);
-  };
-  const enter = () => { if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) { hovered = true; sync(); } };
-  const leave = () => { hovered = false; sync(); };
-  const observer = new IntersectionObserver(entries => { visible = entries.some(entry => entry.isIntersecting); sync(); });
-  const hoverTarget = root.querySelector<HTMLElement>('.stack-marquees');
-  const cleanup = () => {
-    observer.disconnect(); cancelAnimationFrame(frame);
-    animations.forEach(animation => animation.cancel());
-    window.removeEventListener('scroll', scroll);
-    document.removeEventListener('visibilitychange', sync);
-    hoverTarget?.removeEventListener('pointerenter', enter); hoverTarget?.removeEventListener('pointerleave', leave);
-    delete root.dataset.editorialProfile;
-  };
-  try {
-    for (const track of tracks) {
-      const width = track.scrollWidth / 2;
-      const reverse = track.dataset.marqueeDirection === 'reverse';
-      const duration = Math.max(40000, width / (tier === 1 ? 0.016 : 0.033));
-      const animation = track.animate([
-        { transform: `translateX(${reverse ? -width : 0}px)` },
-        { transform: `translateX(${reverse ? 0 : -width}px)` },
-      ], { duration, iterations: Infinity, easing: 'linear', fill: 'both' });
-      // Start well inside the infinite loop so reverse playback stays continuous.
-      animation.currentTime = duration * 500; animation.pause(); animations.push(animation);
-    }
-    observer.observe(root);
-    window.addEventListener('scroll', scroll, { passive: true });
-    document.addEventListener('visibilitychange', sync);
-    hoverTarget?.addEventListener('pointerenter', enter); hoverTarget?.addEventListener('pointerleave', leave);
-    return cleanup;
-  } catch (error) { cleanup(); throw error; }
-}
-
-/** Resize/font changes rebuild only this scene; every profile has a complete static base. */
 export function mountEditorial(root: HTMLElement, tier: MotionTier, signal: AbortSignal): Cleanup {
   let alive = true; let generation = 0; let frame = 0; let key = ''; let stop: Cleanup = () => {};
   const targets = Array.from(root.querySelectorAll<HTMLElement>(readableTargets));
@@ -302,12 +233,9 @@ export function mountEditorial(root: HTMLElement, tier: MotionTier, signal: Abor
     // Its names and roles never wait behind a photo reveal or a pinned stage.
     if (scene === 'team' && !root.querySelector('[data-editorial-photo][data-photo-real="true"]')) { notify(); return; }
     if (scene === 'stack') {
-      // Enhanced rows are still typography, so oversized text naturally remains in the real list.
-      const rootFont = Number.parseFloat(getComputedStyle(document.documentElement).fontSize);
-      const listItem = root.querySelector<HTMLElement>('.stack-list li');
-      const listFont = listItem ? Number.parseFloat(getComputedStyle(listItem).fontSize) : rootFont;
-      if (rootFont > 24 || listFont > 24 || typeof root.animate !== 'function') return;
-      try { stop = kineticStack(root, tier); root.dataset.editorialReady = 'true'; key = footprint(); notify(); } catch { fallback(); }
+      root.dataset.editorialReady = 'true';
+      key = footprint();
+      notify();
       return;
     }
     if (tier === 1 || innerWidth < 1024 || innerHeight <= 700) {

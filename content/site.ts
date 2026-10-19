@@ -166,7 +166,7 @@ export const manifestoCopy = {
 
 export const studioCopy = {
   title: "EL ESTUDIO",
-  eyebrow: "01 · EL ESTUDIO",
+  eyebrow: "04 · EL ESTUDIO",
   headline: ["DOS PERSONAS.", "DOS ORILLAS.", "UNA MISMA FORMA DE TRABAJAR."],
   coordinates: "32°29′S 58°14′W · CONCEPCIÓN DEL URUGUAY",
   lead: "Dos Orillas nace de una idea simple: antes de construir una solución, hay que entender realmente el problema.",

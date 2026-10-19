@@ -458,173 +458,553 @@
   transform: translateY(-1px);
 }
 
-/* 6. Stack Bento Matrix */
-.stack-bento-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.75rem);
-  width: 100%;
-  margin-top: clamp(2rem, 4vw, 4rem);
+/* ─────────────────────────────────────────────────────────────────────────────
+   6. CRITERIO & STACK REDESIGN (PARTE A, B, C, D, E)
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Scroll margin top: fixed navbar height (88px) + 24px = 112px */
+.stack-section,
+#herramientas {
+  scroll-margin-top: calc(88px + 24px);
 }
 
-.stack-bento-card {
+.stack-section {
   position: relative;
-  padding: clamp(1.75rem, 2.5vw, 2.5rem);
-  border-radius: 12px;
-  background: linear-gradient(145deg, rgba(16, 38, 62, 0.5) 0%, rgba(7, 23, 37, 0.8) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.16);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
-  transition: all 0.4s var(--ease-out-expo);
+  overflow: clip;
+  padding-block: clamp(4.5rem, 8vw, 8.5rem);
+}
+
+/* Header & Isometric Stack Layout */
+.stack-header-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .stack-header-grid {
+    grid-template-columns: 1fr auto;
+    gap: 3.5rem;
+  }
+}
+
+.stack-header-text {
+  max-width: 680px;
+}
+
+.stack-headline {
+  font: 530 clamp(2.2rem, 5vw, 4.75rem)/1.05 var(--font-display), sans-serif;
+  letter-spacing: -0.045em;
   display: flex;
   flex-direction: column;
 }
 
-.stack-bento-card:hover {
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 20px 45px -10px rgba(56, 189, 248, 0.18);
-  transform: translateY(-3px);
+.stack-headline-mask {
+  display: block;
+  overflow: clip;
 }
 
-.stack-bento-card-full {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, rgba(16, 38, 62, 0.6) 0%, rgba(7, 23, 37, 0.85) 100%);
-  border-color: rgba(56, 189, 248, 0.25);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+.stack-headline-inner {
+  display: block;
+  transform: translateY(105%);
+  opacity: 0;
+  transition: transform 0.75s var(--ease-out-quint), opacity 0.6s ease;
 }
 
-.stack-bento-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1.25rem;
+.stack-section[data-revealed="true"] .stack-headline-inner {
+  transform: translateY(0);
+  opacity: 1;
 }
 
-.stack-bento-tag {
-  font: 600 0.72rem/1 var(--font-mono), monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.stack-headline-mask:nth-child(2) .stack-headline-inner {
+  transition-delay: 0.12s;
+}
+
+.stack-headline-serif {
+  font-family: var(--font-editorial), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   color: #38bdf8;
 }
 
-.stack-bento-title {
-  font: 530 clamp(1.2rem, 1.6vw, 1.5rem)/1.2 var(--font-display), sans-serif;
+.stack-headline-sans {
+  color: #f8fafc;
+}
+
+.stack-description {
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+  line-height: 1.55;
+  color: #94a3b8;
+  max-width: 60ch;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease 0.22s, transform 0.6s var(--ease-out-quint) 0.22s;
+}
+
+.stack-section[data-revealed="true"] .stack-description {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (min-width: 1024px) {
+  .stack-description {
+    white-space: nowrap;
+  }
+}
+
+/* Isometric 3-Layer Stack Illustration */
+.stack-isometric-wrap {
+  display: none;
+  width: 320px;
+  height: 220px;
+  flex-shrink: 0;
+  transition: transform 0.15s ease-out;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .stack-isometric-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.stack-isometric-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.stack-iso-layer {
+  transition: transform 0.35s var(--ease-out-quint), fill 0.35s ease, stroke 0.35s ease, filter 0.35s ease;
+  transform-origin: center;
+}
+
+.stack-iso-face-top {
+  fill: rgba(56, 189, 248, 0.04);
+  stroke: rgba(56, 189, 248, 0.35);
+  stroke-width: 1.25px;
+  transition: all 0.35s ease;
+}
+
+.stack-iso-face-left {
+  fill: rgba(16, 38, 62, 0.55);
+  stroke: rgba(56, 189, 248, 0.22);
+  stroke-width: 1px;
+}
+
+.stack-iso-face-right {
+  fill: rgba(7, 23, 37, 0.75);
+  stroke: rgba(56, 189, 248, 0.22);
+  stroke-width: 1px;
+}
+
+.stack-iso-detail {
+  stroke: rgba(56, 189, 248, 0.25);
+  stroke-width: 1px;
+  fill: none;
+}
+
+.stack-iso-node {
+  fill: #38bdf8;
+  opacity: 0.7;
+}
+
+.stack-iso-connector {
+  stroke: rgba(56, 189, 248, 0.25);
+  stroke-width: 1.2px;
+}
+
+.stack-iso-label {
+  font-family: var(--font-mono), monospace;
+  font-size: 7.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  fill: #38bdf8;
+  opacity: 0.75;
+  text-anchor: middle;
+}
+
+/* CSS :has() interaction: Hovering over a card illuminates the corresponding isometric layer */
+.stack-section:has([data-stack-card="interface"]:hover) [data-iso-layer="interface"] .stack-iso-face-top,
+.stack-section:has([data-stack-card="server"]:hover) [data-iso-layer="server"] .stack-iso-face-top,
+.stack-section:has([data-stack-card="data"]:hover) [data-iso-layer="data"] .stack-iso-face-top {
+  fill: rgba(56, 189, 248, 0.22);
+  stroke: #38bdf8;
+  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+}
+
+.stack-section:has([data-stack-card="interface"]:hover) [data-iso-layer="interface"],
+.stack-section:has([data-stack-card="server"]:hover) [data-iso-layer="server"],
+.stack-section:has([data-stack-card="data"]:hover) [data-iso-layer="data"] {
+  transform: translateY(-3px);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Cards Matrix & Connectors
+   ───────────────────────────────────────────────────────────────────────────── */
+.stack-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .stack-cards-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .stack-card[data-stack-card="data"] {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .stack-cards-grid {
+    grid-template-columns: 1fr 36px 1fr 36px 1fr;
+    align-items: stretch;
+    gap: 0;
+  }
+}
+
+/* Dynamic Connectors between Cards */
+.stack-grid-connector {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .stack-grid-connector {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 48px; /* Perfectly aligned with the center of the 44px icon tile */
+    position: relative;
+    pointer-events: none;
+    z-index: 12;
+  }
+  .stack-connector-track {
+    width: 100%;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(56, 189, 248, 0.4) 50%, transparent 50%);
+    background-size: 6px 1px;
+    background-repeat: repeat-x;
+    position: relative;
+  }
+  .stack-connector-pulse {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 8px #38bdf8;
+    top: -2.5px;
+    left: 0;
+    animation: stackConnectorPulse 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+}
+
+/* Pause connector animation when offscreen */
+.stack-section[data-visible="false"] .stack-connector-pulse {
+  animation-play-state: paused;
+}
+
+@keyframes stackConnectorPulse {
+  0% {
+    transform: translateX(0);
+    opacity: 0.15;
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(30px);
+    opacity: 0.15;
+  }
+}
+
+/* Card Structure */
+.stack-card {
+  position: relative;
+  border-radius: 12px;
+  background: 
+    radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 55%),
+    linear-gradient(145deg, rgba(16, 38, 62, 0.5) 0%, rgba(7, 23, 37, 0.8) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.35s ease, transform 0.35s var(--ease-out-quint), box-shadow 0.35s ease;
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.stack-section[data-revealed="true"] .stack-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.65s ease calc(var(--card-index, 0) * 80ms + 100ms),
+              transform 0.65s var(--ease-out-quint) calc(var(--card-index, 0) * 80ms + 100ms),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+@media (hover: hover) {
+  .stack-card:hover {
+    border-color: rgba(56, 189, 248, 0.40);
+    box-shadow: 0 20px 42px -10px rgba(7, 23, 37, 0.8), 0 0 22px rgba(56, 189, 248, 0.16);
+    transform: translateY(-4px);
+  }
+}
+
+.stack-card-inner {
+  padding: clamp(1.5rem, 2.4vw, 2.25rem);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Card Header with 44px Icon Tile */
+.stack-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.stack-card-icon-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(56, 189, 248, 0.10);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #38bdf8;
+  flex-shrink: 0;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+@media (hover: hover) {
+  .stack-card:hover .stack-card-icon-tile {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: rgba(56, 189, 248, 0.45);
+  }
+}
+
+.stack-card-eyebrow {
+  font: 600 0.72rem/1 var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: #38bdf8;
+}
+
+.stack-card-title {
+  font: 540 clamp(1.2rem, 1.5vw, 1.45rem)/1.2 var(--font-display), sans-serif;
   letter-spacing: -0.02em;
   color: #f8fafc;
   margin-bottom: 0.75rem;
 }
 
-.stack-bento-desc {
+.stack-card-desc {
   font-size: 0.92rem;
   line-height: 1.55;
   color: #94a3b8;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
-.stack-chips {
+/* Tech Chips (Parte C) */
+.stack-chips-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin-top: auto;
 }
 
-.stack-chip {
-  padding: 0.4rem 0.8rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  font: 450 0.8rem/1.3 var(--font-mono), monospace;
-  color: #e2e8f0;
-  transition: all 0.3s ease;
+.stack-chip-item {
+  display: inline-flex;
 }
 
-.stack-chip:hover {
-  background: rgba(56, 189, 248, 0.15);
-  border-color: #38bdf8;
-  color: #ffffff;
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-  transform: translateY(-1px);
-}
-
-.manifesto-quote {
-  font: 450 clamp(1.15rem, 1.8vw, 1.6rem)/1.4 var(--font-display), sans-serif;
-  letter-spacing: -0.02em;
-  color: #e2e8f0;
-}
-
-.manifesto-quote strong {
-  color: #38bdf8;
-  font-weight: 500;
-}
-
-/* 7. Radiant Infinite Tech Ticker */
-.radiant-ticker-wrap {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 3rem;
-  padding: 1.25rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
-}
-
-.radiant-ticker-track {
-  display: flex;
-  width: max-content;
-  animation: radiantTickerSlide 35s linear infinite;
-}
-
-.radiant-ticker-item {
+.stack-tech-chip {
   display: inline-flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 0 1.5rem;
-  font: 500 0.85rem/1 var(--font-mono), monospace;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  white-space: nowrap;
-  transition: color 0.3s ease;
+  gap: 8px;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  font: 450 13px/1 var(--font-mono), monospace;
+  color: #cbd5e1;
+  transition: all 0.25s ease;
+  user-select: none;
 }
 
-.radiant-ticker-item:hover {
+.stack-tech-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: #94a3b8;
+  opacity: 0.78;
+  transition: color 0.25s ease, opacity 0.25s ease, transform 0.25s ease;
+}
+
+.stack-tech-name {
+  color: #e2e8f0;
+  transition: color 0.25s ease;
+}
+
+@media (hover: hover) {
+  .stack-tech-chip:hover {
+    background: rgba(56, 189, 248, 0.06);
+    border-color: rgba(56, 189, 248, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .stack-tech-chip:hover .stack-tech-icon {
+    color: var(--brand-color, #38bdf8);
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  .stack-tech-chip:hover .stack-tech-name {
+    color: #ffffff;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PARTE D — "EL CRITERIO ANTE TODO" (FRANJA LIVIANA)
+   ───────────────────────────────────────────────────────────────────────────── */
+.stack-criterion-strip {
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid rgba(56, 189, 248, 0.14);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.65s ease 0.35s, transform 0.65s var(--ease-out-quint) 0.35s;
+}
+
+.stack-section[data-revealed="true"] .stack-criterion-strip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stack-criterion-inner {
+  max-width: 900px;
+}
+
+.stack-criterion-eyebrow {
+  font: 600 0.72rem/1 var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
   color: #38bdf8;
 }
 
-.radiant-ticker-bullet {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #38bdf8;
-  opacity: 0.6;
+.stack-criterion-headline {
+  font: 530 clamp(1.4rem, 2.6vw, 2.2rem)/1.25 var(--font-display), sans-serif;
+  letter-spacing: -0.025em;
+  color: #f8fafc;
+  margin-bottom: 1.25rem;
 }
 
-@keyframes radiantTickerSlide {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+.stack-criterion-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+  font-size: clamp(0.95rem, 1.25vw, 1.1rem);
+  line-height: 1.6;
 }
 
-/* Responsive adjustments */
-@media (max-width: 1023px) {
-  .methodology-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 1.25rem;
-  }
-  .team-radiant-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: 2rem;
-  }
-  .stack-bento-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .stack-bento-card-full {
+.stack-criterion-prefix {
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.stack-criterion-items {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.5rem;
+}
+
+.stack-criterion-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.20);
+}
+
+.stack-criterion-badge-icon {
+  display: inline-flex;
+  color: #38bdf8;
+}
+
+.stack-criterion-badge-text {
+  font: 500 0.85rem/1.2 var(--font-mono), monospace;
+  color: #e2e8f0;
+}
+
+.stack-criterion-comma,
+.stack-criterion-and {
+  color: #94a3b8;
+  font-family: var(--font-display), sans-serif;
+}
+
+.stack-criterion-suffix {
+  color: #94a3b8;
+}
+
+@media (max-width: 639px) {
+  .stack-criterion-flow {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.75rem;
+  }
+  .stack-criterion-items {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .stack-criterion-badge {
+    width: 100%;
+    padding: 7px 12px;
+  }
+  .stack-criterion-comma,
+  .stack-criterion-and {
+    display: none;
   }
 }
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .stack-headline-inner,
+  .stack-description,
+  .stack-card,
+  .stack-criterion-strip {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+  .stack-connector-pulse {
+    animation: none !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
