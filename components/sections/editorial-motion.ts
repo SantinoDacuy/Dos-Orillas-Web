@@ -69,7 +69,6 @@ function fullStudio(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
       const paragraph = root.querySelector<HTMLElement>('.studio-paragraph');
       const bridgePath = root.querySelector<SVGLineElement>('.studio-bridge-path');
       const bridgePin = root.querySelector<HTMLElement>('.studio-bridge-pin');
-      const terracotta = root.querySelector<HTMLElement>('.studio-terracotta-transition');
 
       if (!heading) return;
 
@@ -110,11 +109,6 @@ function fullStudio(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
       }
       if (bridgePin) {
         timeline.fromTo(bridgePin, { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.4)' }, 0.65);
-      }
-
-      // 4. Transición suave de fondo hacia naranja terracota (#B85838) del carrusel de equipo
-      if (terracotta) {
-        timeline.fromTo(terracotta, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.in' }, 0.7);
       }
     });
   } catch (error) { context.revert(); syncTriggerCount(); throw error; }

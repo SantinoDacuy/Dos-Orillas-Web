@@ -25,9 +25,9 @@ const CHARACTERS: CharacterSlide[] = [
     ghost: 'SANTINO',
     shortDesc: 'Diseño y desarrollo de interfaces digitales, experiencia de usuario y arquitectura frontend moderna y reactiva.',
     src: '/personajes/santino.png',
-    bg: '#B85838', // Terracota cálido / arcilla de río
-    panel: '#CF6F4C',
-    accent: '#FFE6DC',
+    bg: '#0c1d2e', // Azul noche profundo / medianoche oceánico
+    panel: '#132840',
+    accent: '#38bdf8',
   },
   {
     id: 'tobias',
@@ -37,9 +37,9 @@ const CHARACTERS: CharacterSlide[] = [
     ghost: 'TOBÍAS',
     shortDesc: 'Arquitectura de servidores, bases de datos y desarrollo de sistemas a medida para optimizar procesos.',
     src: '/personajes/tobias.png',
-    bg: '#1D635E', // Verde petróleo / teal profundo del río
-    panel: '#2A7A74',
-    accent: '#DCFCE7',
+    bg: '#082126', // Petróleo oscuro / teal profundo del río
+    panel: '#0e2f37',
+    accent: '#2dd4bf',
   },
 ];
 
@@ -122,6 +122,18 @@ export function Team() {
           aria-hidden="true"
         />
 
+        {/* Seamless top gradient: blends smoothly from the site's dark navy into the carousel */}
+        <div
+          className="absolute top-0 inset-x-0 h-36 bg-gradient-to-b from-[#071725] via-[#071725]/50 to-transparent pointer-events-none z-[4]"
+          aria-hidden="true"
+        />
+
+        {/* Seamless bottom gradient: blends smoothly from the carousel into the dossier */}
+        <div
+          className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#071725] via-[#071725]/50 to-transparent pointer-events-none z-[4]"
+          aria-hidden="true"
+        />
+
         {/* Top brand label (sits cleanly right below the 64px navbar) */}
         <div className="relative z-[60] pt-2 sm:pt-3 px-6 sm:px-12 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -138,7 +150,7 @@ export function Team() {
           </div>
         </div>
 
-        {/* Giant Anton Ghost Text (starts comfortably below the top brand label) */}
+        {/* Giant Anton Ghost Text (refined watermark opacity for dark theme) */}
         <div
           className="absolute inset-x-0 flex items-center justify-center pointer-events-none select-none z-[2]"
           style={{ top: '15%' }}
@@ -150,7 +162,7 @@ export function Team() {
               fontSize: 'clamp(50px, 14vw, 175px)',
               fontWeight: 900,
               color: 'white',
-              opacity: 0.85,
+              opacity: 0.18,
               lineHeight: 1,
               letterSpacing: '-0.02em',
               whiteSpace: 'nowrap',
@@ -162,7 +174,7 @@ export function Team() {
           </span>
         </div>
 
-        {/* Figurines Area: Sized so 100% of the character is visible (head to sneakers) */}
+        {/* Figurines Area: Sized slightly larger as requested while remaining fully visible */}
         <div className="absolute inset-0 z-[15] pointer-events-none">
           {CHARACTERS.map((char, index) => {
             const isCenter = index === activeIndex;
@@ -176,22 +188,22 @@ export function Team() {
                 opacity: 1,
                 zIndex: 25,
                 left: '50%',
-                height: isMobile ? '56%' : '68%',
-                bottom: '1.5%',
+                height: isMobile ? '64%' : '76%',
+                bottom: '1%',
                 pointerEvents: 'none',
               };
             } else {
               // Flanking co-founder
               const sideLeft = index === 1 ? (isMobile ? '84%' : '76%') : isMobile ? '16%' : '24%';
               roleStyle = {
-                transform: 'translateX(-50%) scale(0.82)',
+                transform: 'translateX(-50%) scale(0.84)',
                 transformOrigin: 'bottom center',
                 filter: 'blur(1.5px)',
                 opacity: 0.65,
                 zIndex: 10,
                 left: sideLeft,
-                height: isMobile ? '38%' : '45%',
-                bottom: isMobile ? '22%' : '4%',
+                height: isMobile ? '44%' : '52%',
+                bottom: isMobile ? '20%' : '3%',
                 pointerEvents: 'auto',
                 cursor: 'pointer',
               };

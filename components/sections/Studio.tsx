@@ -43,9 +43,6 @@ export function Studio() {
             strokeOpacity="0.07"
           />
         </svg>
-
-        {/* Seamless transition into the Team Carousel's Terracotta #B85838 */}
-        <div className="studio-terracotta-transition" />
       </div>
 
       <div className="studio-container">
