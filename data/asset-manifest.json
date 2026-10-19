@@ -71,6 +71,12 @@
     "height": 1906,
     "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4WAoAAAAQAAAACQAACQAAQUxQSC0AAAABYFvbNixzGUrQhyYUqROhJRPNhEL+PFQQERMAfo1vKHHBJD9oY/uIJXg3XwUAVlA4IBoAAAAwAQCdASoKAAoABIByJaQAA3AA/vDGigAAAA=="
   },
+  "/images/retro-pc.webp": {
+    "src": "/images/retro-pc.webp",
+    "width": 1920,
+    "height": 1080,
+    "blurDataURL": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoKAAYABIByJaQAAltQPcAA+IXIKfPjGKhR+ioKsOpWQAAA"
+  },
   "/images/river-delta.jpg": {
     "src": "/images/river-delta.jpg",
     "width": 1024,
@@ -94,6 +100,18 @@
     "width": 1024,
     "height": 768,
     "blurDataURL": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAADQAQCdASoKAAgABIByJQBOgCHfbxbmAAD+9IiUpAF5Cg9JZ8AAAA=="
+  },
+  "/personajes/santino.png": {
+    "src": "/personajes/santino.png",
+    "width": 1039,
+    "height": 1514,
+    "blurDataURL": "data:image/webp;base64,UklGRgIBAABXRUJQVlA4WAoAAAAQAAAACQAADgAAQUxQSIQAAAABgJpt27LleuWX9B//ADqAZsWZgObu2txpJE3QGIDqMAAMQKNadruxISIisBQuGrGAZ1QHf4bI0MdhBIOnR89awuGou/3SQwqLZ02PGsbh2NGjpv61StcxDJ4+vd9E/23oWB04PJPa0ywOS1nrt5eAJa/dK+UxhPfVtKRaDNHm6lD6qAdWUDggWAAAABACAJ0BKgoADwAEgHIlAF2AxWntbO1n1AAA/tDzPzkos3fHinPd6b/INpFWUvplhCievWb4o1ojpdzo9pubwpmUfKk9ImtvusQ6tT69MlLw/BHRXumQAAA="
+  },
+  "/personajes/tobias.png": {
+    "src": "/personajes/tobias.png",
+    "width": 1039,
+    "height": 1514,
+    "blurDataURL": "data:image/webp;base64,UklGRhgBAABXRUJQVlA4WAoAAAAQAAAACQAADgAAQUxQSIYAAAABgJpt27Llet7nd1vAJ/gb7kzgzRKNg+6SyDCBJW3uJJdmnR1c7jUiIgh0PlYJQIRJzeNAoOb7qEwAp+tXO44Zfql3DeNOu36/dYg5/fr50hrByF5ITxWMCAv6fc1hBNa/TtSHE2H6b17jOE6XRt/uMAJVLW6qESO6pLERTWPkBpqS+eXtPFZQOCBsAAAA8AEAnQEqCgAPAASAciUAToDF66X2J3FIAP66h4s3+5TeTH67cgITZgw41eGh93LhddtCRJGszeR1vucMUt7zYlWRaZFFenfWK3de1dO34gPMmwufilLQN20XNVxEFhNpQ7ReVtkDXW2gOoAA"
   },
   "/projects/clasificador-de-frutas/cover.webp": {
     "src": "/projects/clasificador-de-frutas/cover.webp",
