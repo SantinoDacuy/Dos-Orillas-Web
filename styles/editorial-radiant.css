@@ -67,121 +67,227 @@
   50% { transform: scale(1.4); opacity: 0.6; }
 }
 
-/* 3. Studio Section Layout & Cards */
-.studio-radiant-container {
+/* 3. Studio Section Layout & Components */
+.studio-section {
   position: relative;
+  width: 100%;
+  background: var(--navy-deep, #071725);
+  color: var(--foreground, #F2EEE6);
+  padding-block: clamp(4.5rem, 8vh, 8.5rem);
+  overflow: clip;
+}
+
+/* Background Layer: Glows, Waves & Continuous Transition to Terracotta */
+.studio-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.studio-ambient-glow {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.16;
+}
+
+.studio-glow-cyan {
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle, #38bdf8 0%, rgba(56, 189, 248, 0) 70%);
+}
+
+.studio-glow-teal {
+  width: 500px;
+  height: 500px;
+  bottom: 12%;
+  right: -5%;
+  background: radial-gradient(circle, #2dd4bf 0%, rgba(45, 212, 191, 0) 70%);
+}
+
+.studio-river-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Smooth continuous bottom transition into the Team Carousel's Terracotta #B85838 */
+.studio-terracotta-transition {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: clamp(140px, 22vh, 260px);
+  background: linear-gradient(180deg, rgba(7, 23, 37, 0) 0%, rgba(184, 88, 56, 0.4) 60%, rgba(184, 88, 56, 0.95) 96%, #B85838 100%);
+  pointer-events: none;
   z-index: 1;
+  opacity: 0.9;
 }
 
-.studio-lead-card {
+.studio-container {
   position: relative;
-  padding: clamp(2rem, 3.5vw, 3.2rem);
-  border-radius: 12px;
-  background: linear-gradient(135deg, rgba(16, 38, 62, 0.6) 0%, rgba(7, 23, 37, 0.8) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.22);
-  backdrop-filter: blur(16px);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+  z-index: 2;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 24px);
 }
 
-.studio-lead-card:hover {
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 25px 50px -10px rgba(56, 189, 248, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
+.studio-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(32px, 5vw, 56px);
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .studio-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+  }
+}
+
+/* Left Column: cols 1-7, sticky during scroll */
+.studio-col-left {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .studio-col-left {
+    grid-column: span 7;
+    position: sticky;
+    top: clamp(80px, 12vh, 120px);
+    align-self: start;
+  }
+}
+
+.studio-headline {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(2.75rem, 5.8vw, 6.2rem);
+  font-weight: 600;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.studio-headline-line {
+  display: block;
+  overflow: clip;
+}
+
+.studio-headline-cream {
+  color: #F2EEE6;
+  display: block;
+}
+
+.studio-headline-cyan {
+  color: #38bdf8;
+  display: block;
+}
+
+/* Right Column: cols 8-12 */
+.studio-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vh, 32px);
+}
+
+@media (min-width: 1024px) {
+  .studio-col-right {
+    grid-column: span 5;
+    padding-top: 16px;
+  }
 }
 
 .studio-lead-quote {
-  font: 450 clamp(1.35rem, 2.2vw, 2.1rem)/1.3 var(--font-display), sans-serif;
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(1.4rem, 2.1vw, 2.1rem);
+  font-weight: 450;
+  line-height: 1.35;
   letter-spacing: -0.02em;
-  color: #f8fafc;
+  color: #F2EEE6;
+  border-left: 2px solid #38bdf8;
+  padding-left: clamp(1.25rem, 2vw, 1.75rem);
+  margin: 0;
 }
 
-.studio-lead-quote strong {
-  color: #38bdf8;
-  font-weight: 500;
+.studio-paragraph {
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  line-height: 1.65;
+  color: rgba(242, 238, 230, 0.78);
+  max-width: 46ch;
+  margin: 0;
 }
 
-/* 4. Methodology 3-Step Radiant Process */
-.methodology-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1rem, 2vw, 1.75rem);
+/* Puente entre orillas: Cruza el ancho del contenedor con coordenadas centradas */
+.studio-bridge-wrapper {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: clamp(36px, 5vh, 60px);
 }
 
-.methodology-card {
+@media (min-width: 1024px) {
+  .studio-bridge-wrapper {
+    grid-column: 1 / -1;
+  }
+}
+
+.studio-bridge-container {
   position: relative;
-  padding: clamp(1.5rem, 2.2vw, 2.2rem);
-  border-radius: 10px;
-  background: linear-gradient(145deg, rgba(16, 38, 62, 0.45) 0%, rgba(7, 23, 37, 0.75) 100%);
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  backdrop-filter: blur(12px);
-  transition: all 0.4s var(--ease-out-expo);
+  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-}
-
-.methodology-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.6), transparent);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.methodology-card:hover {
-  border-color: rgba(56, 189, 248, 0.45);
-  background: linear-gradient(145deg, rgba(16, 38, 62, 0.65) 0%, rgba(7, 23, 37, 0.9) 100%);
-  box-shadow: 0 16px 36px -10px rgba(56, 189, 248, 0.18);
-  transform: translateY(-4px);
-}
-
-.methodology-card:hover::before {
-  opacity: 1;
-}
-
-.methodology-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 1.25rem;
-}
-
-.methodology-number {
-  font: 600 0.85rem/1 var(--font-mono), monospace;
-  color: #38bdf8;
-  letter-spacing: 0.1em;
-}
-
-.methodology-icon {
-  width: 28px;
-  height: 28px;
-  border-radius: 6px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(56, 189, 248, 0.1);
+}
+
+.studio-bridge-svg {
+  width: 100%;
+  height: 32px;
+  overflow: visible;
+  display: block;
+}
+
+.studio-bridge-path {
+  transition: stroke-dashoffset 0.1s linear;
+}
+
+.studio-bridge-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  background: rgba(7, 23, 37, 0.92);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+.studio-pin-icon {
   color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  flex-shrink: 0;
 }
 
-.methodology-title {
-  font: 530 clamp(1.3rem, 1.8vw, 1.7rem)/1.15 var(--font-display), sans-serif;
-  letter-spacing: -0.025em;
-  color: #f1f5f9;
-  margin-bottom: 0.75rem;
-}
-
-.methodology-desc {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #94a3b8;
+.studio-pin-coords {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: #e2e8f0;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 /* 5. Team Section: Executive Digital ID Dossiers */

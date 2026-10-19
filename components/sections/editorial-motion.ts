@@ -41,6 +41,9 @@ function nativeReveals(root: HTMLElement): Cleanup {
       reveal(block, Array.from(block.querySelectorAll<HTMLElement>('[data-editorial-line]')),
         [{ opacity: 0, transform: 'translateY(30%)' }, { opacity: 1, transform: 'none' }]);
     });
+    root.querySelectorAll<HTMLElement>('.studio-lead-quote, .studio-paragraph, .studio-bridge-wrapper').forEach(block => {
+      reveal(block, [block], [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }]);
+    });
     root.querySelectorAll<HTMLElement>('[data-editorial-photo][data-photo-real="true"]').forEach(photo => {
       const mask = photo.querySelector<HTMLElement>('.editorial-photo-mask');
       const side = photo.dataset.revealSide;
@@ -58,37 +61,61 @@ function fullStudio(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
   try {
     context.add(() => {
       const heading = root.querySelector<HTMLElement>('.studio-headline');
-      const reading = root.querySelector<HTMLElement>('.studio-reading');
-      if (heading && reading && heading.getBoundingClientRect().top >= innerHeight * 0.85) {
-        const timeline = gsap.timeline({ scrollTrigger: { trigger: reading, start: 'top 80%', end: 'bottom 60%', scrub: true } });
-        heading.querySelectorAll('[data-editorial-line]').forEach((line, index) => {
-          timeline.fromTo(line, { yPercent: distance.reveal }, { yPercent: 0, duration: 0.2, ease: ease.scrub }, index * 0.25);
-        });
-        timeline.to({}, { duration: 0.05 }, 0.95);
-      }
-      const lead = root.querySelector<HTMLElement>('[data-editorial-words]');
-      if (lead && lead.getBoundingClientRect().top >= innerHeight * 0.8) {
-        gsap.fromTo(lead.querySelectorAll('[data-editorial-word]'), { opacity: 0.68 }, { opacity: 1, stagger: stagger.words, ease: ease.scrub,
-          scrollTrigger: { trigger: lead, start: 'top 80%', end: 'bottom 45%', scrub: true } });
-      }
-      root.querySelectorAll<HTMLElement>('[data-editorial-bridge]').forEach(bridge => {
-        gsap.fromTo(bridge, { scaleY: 0 }, { scaleY: 1, ease: ease.scrub,
-          scrollTrigger: { trigger: bridge, start: 'top 85%', end: 'bottom 55%', scrub: true } });
+      const badge = root.querySelector<HTMLElement>('.radiant-badge');
+      const line1 = root.querySelector<HTMLElement>('[data-studio-line="1"] .studio-headline-inner');
+      const line2 = root.querySelector<HTMLElement>('[data-studio-line="2"] .studio-headline-inner');
+      const line3 = root.querySelector<HTMLElement>('[data-studio-line="3"] .studio-headline-inner');
+      const lead = root.querySelector<HTMLElement>('.studio-lead-quote');
+      const paragraph = root.querySelector<HTMLElement>('.studio-paragraph');
+      const bridgePath = root.querySelector<SVGLineElement>('.studio-bridge-path');
+      const bridgePin = root.querySelector<HTMLElement>('.studio-bridge-pin');
+      const terracotta = root.querySelector<HTMLElement>('.studio-terracotta-transition');
+
+      if (!heading) return;
+
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: root,
+          start: 'top 75%',
+          end: 'bottom 45%',
+          scrub: 0.6,
+        },
       });
-      root.querySelectorAll<HTMLElement>('[data-editorial-photo][data-photo-real="true"]').forEach(photo => {
-        const mask = photo.querySelector<HTMLElement>('.editorial-photo-mask');
-        if (mask && photo.getBoundingClientRect().top >= innerHeight * 0.85) {
-          gsap.fromTo(mask, { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0)', duration: 1.2, ease: ease.inOut,
-            scrollTrigger: { trigger: photo, start: 'top 85%', toggleActions: 'play none none reverse' } });
-          const camera = photo.querySelector<HTMLElement>('.editorial-photo-camera');
-          if (camera) gsap.fromTo(camera, { scale: 1.3 }, { scale: 1, duration: dur.xl, ease: ease.out,
-            scrollTrigger: { trigger: photo, start: 'top 85%', toggleActions: 'play none none reverse' } });
-        }
-        const speed = Number(photo.dataset.speed ?? 1);
-        const travel = () => (1 - speed) * (innerHeight + photo.offsetHeight);
-        gsap.fromTo(photo, { y: () => -travel() / 2 }, { y: () => travel() / 2, ease: ease.scrub,
-          scrollTrigger: { trigger: photo, start: 'top bottom', end: 'bottom top', scrub: true, invalidateOnRefresh: true } });
-      });
+
+      // 1. Entra el eyebrow y la línea 1 del titular
+      if (badge) {
+        timeline.fromTo(badge, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0);
+      }
+      if (line1) {
+        timeline.fromTo(line1, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.05);
+      }
+
+      // 2. Al avanzar el scroll, aparece la línea 2 y entra la frase principal
+      if (line2) {
+        timeline.fromTo(line2, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.25);
+      }
+      if (lead) {
+        timeline.fromTo(lead, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.3);
+      }
+
+      // 3. Aparece la línea 3 en cian y el párrafo, y el puente se dibuja con las coordenadas
+      if (line3) {
+        timeline.fromTo(line3, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.5);
+      }
+      if (paragraph) {
+        timeline.fromTo(paragraph, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.55);
+      }
+      if (bridgePath) {
+        timeline.fromTo(bridgePath, { strokeDashoffset: 968 }, { strokeDashoffset: 0, duration: 0.35, ease: 'none' }, 0.55);
+      }
+      if (bridgePin) {
+        timeline.fromTo(bridgePin, { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.4)' }, 0.65);
+      }
+
+      // 4. Transición suave de fondo hacia naranja terracota (#B85838) del carrusel de equipo
+      if (terracotta) {
+        timeline.fromTo(terracotta, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.in' }, 0.7);
+      }
     });
   } catch (error) { context.revert(); syncTriggerCount(); throw error; }
   syncTriggerCount();

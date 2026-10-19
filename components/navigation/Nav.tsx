@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useRef, useState, type MouseEvent } f
 import { usePathname, useSearchParams } from "next/navigation";
 import { Logo } from "@/components/layout/Logo";
 import { useMotion } from "@/components/motion/MotionProvider";
-import { accessibilityCopy, navigationItems, siteConfig, type ChapterId } from "@/content/site";
+import { accessibilityCopy, chapters, navigationItems, siteConfig, type ChapterId } from "@/content/site";
 import { getVisibleRoot } from "@/lib/get-visible-root";
 
 /** Only this empty query observer may suspend; the navigation stays in SSR. */
@@ -90,7 +90,9 @@ export function Nav({ home }: { home: boolean }) {
   };
 
   const moveTo = useCallback((id: ChapterId) => {
-    const target = getVisibleRoot(`#${CSS.escape(id)}`);
+    const chapter = chapters.find((c) => c.id === id);
+    const targetId = chapter?.sections?.[0] ?? id;
+    const target = getVisibleRoot(`#${CSS.escape(targetId)}`) ?? getVisibleRoot(`#${CSS.escape(id)}`);
     if (!target) return;
     const focusTarget = () => {
       const previouslyFocusable = target.hasAttribute("tabindex");

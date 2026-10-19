@@ -1,9 +1,7 @@
 import { studioCopy } from '@/content/site';
-import { EditorialLines } from './EditorialLines';
-import { staticSection } from '@/lib/static-section';
 
 export function Studio() {
-  const section = (
+  return (
     <section
       id="el-estudio"
       className="studio-section editorial-section radiant-section-wrap"
@@ -11,116 +9,129 @@ export function Studio() {
       data-theme="navy-deep"
       data-nav="dark"
       aria-labelledby="studio-heading"
+      suppressHydrationWarning
     >
-      {/* Radiant ambient light sources */}
-      <div className="radiant-ambient-glow radiant-glow-cyan" style={{ width: '650px', height: '650px', top: '-10%', left: '-10%' }} aria-hidden="true" />
-      <div className="radiant-ambient-glow radiant-glow-teal" style={{ width: '500px', height: '500px', bottom: '10%', right: '-5%' }} aria-hidden="true" />
+      {/* Background Decor: Ambient Glow + Subtle River Wave Curves + Terracotta Transition */}
+      <div className="studio-backdrop" aria-hidden="true">
+        {/* Soft radial ambient glows behind text */}
+        <div className="studio-ambient-glow studio-glow-cyan" />
+        <div className="studio-ambient-glow studio-glow-teal" />
 
-      <div className="studio-radiant-container studio-split">
-        <header className="studio-sticky">
-          <div className="radiant-badge mb-6">
-            <span className="radiant-beacon" />
-            <span>01 · {studioCopy.title}</span>
-          </div>
+        {/* 3 fine static river wave curves (8-10% opacity, pure vector, no blur) */}
+        <svg
+          className="studio-river-waves"
+          viewBox="0 0 1440 600"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M-40,180 C320,120 480,260 840,190 C1120,130 1320,240 1480,210"
+            stroke="#38bdf8"
+            strokeWidth="1.5"
+            strokeOpacity="0.10"
+          />
+          <path
+            d="M-40,320 C260,260 520,380 900,310 C1200,250 1360,340 1480,320"
+            stroke="#38bdf8"
+            strokeWidth="1.2"
+            strokeOpacity="0.08"
+          />
+          <path
+            d="M-40,460 C360,400 600,520 980,440 C1240,380 1380,460 1480,430"
+            stroke="#38bdf8"
+            strokeWidth="1"
+            strokeOpacity="0.07"
+          />
+        </svg>
 
-          <h2 id="studio-heading" className="studio-headline">
-            <EditorialLines lines={studioCopy.headline} accentIndex={2} />
-          </h2>
+        {/* Seamless transition into the Team Carousel's Terracotta #B85838 */}
+        <div className="studio-terracotta-transition" />
+      </div>
 
-          <div className="mt-8 flex items-center gap-3 text-xs font-mono tracking-wider text-slate-400">
-            <span className="inline-block w-8 h-[1px] bg-sky-400/50" />
-            <span>32°29′S 58°14′W · CONCEPCIÓN DEL URUGUAY</span>
-          </div>
-        </header>
-
-        <div className="studio-reading">
-          {/* Luminous Lead Manifesto Card */}
-          <div className="studio-lead-card w-full">
-            <p className="studio-lead-quote" data-editorial-words>
-              {studioCopy.lead.split(/\s+/).map((word, index) => (
-                <span key={`${index}-${word}`}>
-                  <span data-editorial-word>{word}</span>{' '}
-                </span>
-              ))}
-            </p>
-          </div>
-
-          {/* Context paragraphs with rich styling */}
-          <div className="studio-paragraphs text-slate-300">
-            <p>{studioCopy.paragraphs[0]}</p>
-            <p>{studioCopy.paragraphs[1]}</p>
-          </div>
-
-          {/* Radiant 3-Phase Methodology Grid */}
-          <div className="w-full">
-            <div className="mb-4 flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-sky-400">
-              <span className="w-2 h-2 rounded-full bg-sky-400" />
-              <span>Nuestra Metodología de Trabajo</span>
+      <div className="studio-container">
+        <div className="studio-grid">
+          {/* Left Column (Cols 1-7, sticky in desktop) */}
+          <div className="studio-col-left">
+            <div className="radiant-badge mb-6">
+              <span className="radiant-beacon" />
+              <span>{studioCopy.eyebrow}</span>
             </div>
-            
-            <p className="text-base text-slate-300 mb-6 italic font-serif">
-              &ldquo;No llegamos con una herramienta definida.&rdquo;
+
+            <h2
+              id="studio-heading"
+              className="studio-headline"
+              aria-label="DOS PERSONAS. DOS ORILLAS. UNA MISMA FORMA DE TRABAJAR."
+            >
+              <span className="editorial-line-mask studio-headline-line" data-studio-line="1">
+                <span className="editorial-line-inner studio-headline-cream" data-editorial-line>
+                  DOS PERSONAS.
+                </span>
+              </span>
+              <span className="editorial-line-mask studio-headline-line" data-studio-line="2">
+                <span className="editorial-line-inner studio-headline-cream" data-editorial-line>
+                  DOS ORILLAS.
+                </span>
+              </span>
+              <span className="editorial-line-mask studio-headline-line" data-studio-line="3">
+                <span className="editorial-line-inner studio-headline-cyan" data-editorial-line>
+                  UNA MISMA FORMA DE TRABAJAR.
+                </span>
+              </span>
+            </h2>
+          </div>
+
+          {/* Right Column (Cols 8-12) */}
+          <div className="studio-col-right">
+            {/* Frase principal grande con línea vertical cian de 2px a la izquierda */}
+            <div className="studio-lead-quote" data-studio-lead>
+              {studioCopy.lead}
+            </div>
+
+            {/* Párrafo unificado (máx 4 líneas en desktop, max-width ~46ch) */}
+            <p className="studio-paragraph" data-studio-paragraph>
+              {studioCopy.paragraph}
             </p>
+          </div>
 
-            <div className="methodology-grid">
-              {/* Step 1 */}
-              <div className="methodology-card">
-                <div className="methodology-top">
-                  <span className="methodology-number">01</span>
-                  <div className="methodology-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M3 18v-6a9 9 0 0 1 18 0v6" />
-                      <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="methodology-title">Escuchamos.</h4>
-                  <p className="methodology-desc">
-                    Entendemos la realidad y el funcionamiento de tu negocio, diagnosticando antes de prescribir.
-                  </p>
-                </div>
-              </div>
+          {/* Puente entre orillas: Cruza el ancho del contenedor debajo de la narrativa */}
+          <div className="studio-bridge-wrapper" data-studio-bridge>
+            <div className="studio-bridge-container">
+              <svg
+                className="studio-bridge-svg"
+                viewBox="0 0 1000 32"
+                fill="none"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                {/* Subtle base track */}
+                <line x1="16" y1="16" x2="984" y2="16" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="1" />
+                {/* Dynamic animated line with scroll scrub */}
+                <line
+                  className="studio-bridge-path"
+                  x1="16"
+                  y1="16"
+                  x2="984"
+                  y2="16"
+                  stroke="#38bdf8"
+                  strokeWidth="1.5"
+                  strokeDasharray="968"
+                  strokeDashoffset="968"
+                />
+                {/* Left shore node */}
+                <circle cx="16" cy="16" r="4" fill="#38bdf8" />
+                <circle cx="16" cy="16" r="8" stroke="#38bdf8" strokeWidth="1" strokeOpacity="0.3" />
+                {/* Right shore node */}
+                <circle cx="984" cy="16" r="4" fill="#38bdf8" />
+                <circle cx="984" cy="16" r="8" stroke="#38bdf8" strokeWidth="1" strokeOpacity="0.3" />
+              </svg>
 
-              {/* Step 2 */}
-              <div className="methodology-card">
-                <div className="methodology-top">
-                  <span className="methodology-number">02</span>
-                  <div className="methodology-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="m4.93 4.93 4.24 4.24" />
-                      <path d="m14.83 9.17 4.24-4.24" />
-                      <path d="m14.83 14.83 4.24 4.24" />
-                      <path d="m9.17 14.83-4.24 4.24" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="methodology-title">Analizamos.</h4>
-                  <p className="methodology-desc">
-                    Diseñamos la arquitectura y estrategia tecnológica óptima, priorizando simpleza y valor tangible.
-                  </p>
-                </div>
-              </div>
-
-              {/* Step 3 */}
-              <div className="methodology-card">
-                <div className="methodology-top">
-                  <span className="methodology-number">03</span>
-                  <div className="methodology-icon">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="16 18 22 12 16 6" />
-                      <polyline points="8 6 2 12 8 18" />
-                    </svg>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="methodology-title">Y después construimos.</h4>
-                  <p className="methodology-desc">
-                    Desarrollamos soluciones sólidas, escalables y a medida con tecnología moderna y alto criterio.
-                  </p>
-                </div>
+              {/* Centered coordinates badge over the bridge */}
+              <div className="studio-bridge-pin">
+                <svg className="studio-pin-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                  <circle cx="12" cy="12" r="3" fill="#38bdf8" />
+                  <path d="M12 2v3m0 14v3M2 12h3m14 0h3" />
+                </svg>
+                <span className="studio-pin-coords">{studioCopy.coordinates}</span>
               </div>
             </div>
           </div>
@@ -128,6 +139,4 @@ export function Studio() {
       </div>
     </section>
   );
-
-  return section;
 }

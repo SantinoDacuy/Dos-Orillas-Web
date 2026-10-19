@@ -165,20 +165,15 @@ export const manifestoCopy = {
 } as const;
 
 export const studioCopy = {
-  title: "El estudio",
-  headline: ["DOS PERSONAS.", "DOS ORILLAS.", "UNA MISMA FORMA", "DE TRABAJAR."],
+  title: "EL ESTUDIO",
+  eyebrow: "01 · EL ESTUDIO",
+  headline: ["DOS PERSONAS.", "DOS ORILLAS.", "UNA MISMA FORMA DE TRABAJAR."],
+  coordinates: "32°29′S 58°14′W · CONCEPCIÓN DEL URUGUAY",
   lead: "Dos Orillas nace de una idea simple: antes de construir una solución, hay que entender realmente el problema.",
+  paragraph: "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos. Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología.",
   paragraphs: [
-    "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos.",
-    "Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología.",
-    "No llegamos con una herramienta definida. Escuchamos. Analizamos. Y después construimos.",
+    "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos. Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología.",
   ],
-  statements: ["Escuchamos.", "Analizamos.", "Y después construimos."],
-  media: [
-    { src: "/projects/_studio/01.webp", width: 1800, height: 2400, alt: "" },
-    { src: "/projects/_studio/02.webp", width: 1800, height: 2250, alt: "" },
-    { src: "/projects/_studio/03.webp", width: 1800, height: 2400, alt: "" },
-  ] satisfies ContentMedia[],
 } as const;
 
 export const projectsCopy = {

@@ -56,7 +56,7 @@ export function ScrollProgress() {
       measureFrame = 0;
       range = Math.max(1, document.documentElement.scrollHeight - innerHeight);
       positions = chapters.flatMap((chapter) => {
-        const section = document.getElementById(chapter.id) ?? chapter.sections.map((id) => document.getElementById(id)).find(Boolean);
+        const section = chapter.sections.map((id) => document.getElementById(id)).find(Boolean) ?? document.getElementById(chapter.id);
         if (!section) return [];
         const measured = section.parentElement?.classList.contains("pin-spacer") ? section.parentElement : section;
         const top = measured.getBoundingClientRect().top + window.scrollY;
