@@ -224,57 +224,58 @@ export function ContactForm() {
             </div>
           </div>
 
-          {/* Row 2: Motivo de contacto (Selector) */}
-          <div className="contact-field">
-            <label htmlFor="contact-reason">Motivo de contacto</label>
-            <div className="contact-control contact-select-wrap">
-              <select
-                id="contact-reason"
-                name="reason"
-                value={selectedReason}
-                onChange={(e) => setSelectedReason(e.target.value)}
-                disabled={status === 'loading'}
-                className="contact-select"
-              >
-                {REASONS.map((r) => (
-                  <option key={r} value={r} className="contact-option">
-                    {r}
-                  </option>
-                ))}
-              </select>
-              <ChevronDown className="contact-select-chevron" size={18} aria-hidden="true" />
+          {/* Row 2: Motivo de contacto & Organización */}
+          <div className="contact-form-row">
+            <div className="contact-field">
+              <label htmlFor="contact-reason">Motivo de contacto</label>
+              <div className="contact-control contact-select-wrap">
+                <select
+                  id="contact-reason"
+                  name="reason"
+                  value={selectedReason}
+                  onChange={(e) => setSelectedReason(e.target.value)}
+                  disabled={status === 'loading'}
+                  className="contact-select"
+                >
+                  {REASONS.map((r) => (
+                    <option key={r} value={r} className="contact-option">
+                      {r}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown className="contact-select-chevron" size={16} aria-hidden="true" />
+              </div>
+            </div>
+
+            <div className="contact-field">
+              <label htmlFor="contact-organization">
+                {contactCopy.fields.organization}
+                <span className="contact-optional">{contactFeedback.optional}</span>
+              </label>
+              <div className="contact-control">
+                <input
+                  id="contact-organization"
+                  name="organization"
+                  type="text"
+                  autoComplete="organization"
+                  placeholder="Empresa o marca (opcional)"
+                  maxLength={contactLimits.organization}
+                  suppressHydrationWarning
+                  disabled={status === 'loading'}
+                  aria-invalid={Boolean(errors.organization)}
+                  aria-describedby={description('organization')}
+                  onChange={() => edit('organization')}
+                />
+              </div>
+              {errors.organization && (
+                <p id="contact-organization-error" className="contact-field-error">
+                  {errors.organization}
+                </p>
+              )}
             </div>
           </div>
 
-          {/* Row 3: Organización o empresa (opcional) */}
-          <div className="contact-field">
-            <label htmlFor="contact-organization">
-              {contactCopy.fields.organization}
-              <span className="contact-optional">{contactFeedback.optional}</span>
-            </label>
-            <div className="contact-control">
-              <input
-                id="contact-organization"
-                name="organization"
-                type="text"
-                autoComplete="organization"
-                placeholder="Nombre de tu empresa o marca (opcional)"
-                maxLength={contactLimits.organization}
-                suppressHydrationWarning
-                disabled={status === 'loading'}
-                aria-invalid={Boolean(errors.organization)}
-                aria-describedby={description('organization')}
-                onChange={() => edit('organization')}
-              />
-            </div>
-            {errors.organization && (
-              <p id="contact-organization-error" className="contact-field-error">
-                {errors.organization}
-              </p>
-            )}
-          </div>
-
-          {/* Row 4: Tu mensaje */}
+          {/* Row 3: Tu mensaje */}
           <div className="contact-field">
             <label htmlFor="contact-message">
               {contactCopy.fields.message} <span className="contact-required">*</span>
@@ -284,7 +285,7 @@ export function ContactForm() {
                 id="contact-message"
                 name="message"
                 required
-                rows={5}
+                rows={3}
                 maxLength={contactLimits.message}
                 placeholder="Contanos brevemente qué querés resolver, objetivos o plazos estimados..."
                 suppressHydrationWarning

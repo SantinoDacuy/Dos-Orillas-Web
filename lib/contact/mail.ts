@@ -13,7 +13,16 @@ export async function sendContactMail(mail: ContactMail, config: ContactMailConf
     headers: { Authorization: `Bearer ${config.apiKey}`, 'Content-Type': 'application/json', 'Idempotency-Key': mail.idempotencyKey },
     body: JSON.stringify({ from: mail.from, to: [mail.to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text, html: mail.html }),
   });
-  if (!response.ok) { void response.body?.cancel().catch(() => {}); return { accepted: false }; }
-  const payload: unknown = await response.json();
-  return { accepted: Boolean(payload && typeof payload === 'object' && 'id' in payload && typeof payload.id === 'string' && payload.id.length > 0) };
+  if (!response.ok) {
+    const errorBody = await response.text().catch(() => '');
+    console.error(`[contact-mail-error] Status: ${response.status}`, errorBody);
+    void response.body?.cancel().catch(() => {});
+    return { accepted: false };
+  }
+  const payload = await response.json().catch(() => null) as { id?: string } | null;
+  const accepted = Boolean(payload && typeof payload.id === 'string' && payload.id.length > 0);
+  if (accepted) {
+    console.log(`[contact-mail] 🚀 Email entregado con éxito a ${config.to} (ID: ${payload?.id})`);
+  }
+  return { accepted };
 }

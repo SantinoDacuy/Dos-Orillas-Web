@@ -2,12 +2,15 @@
 
 .contact-section {
   position: relative;
-  padding: clamp(1rem, 3vw, 3rem) var(--gutter) clamp(4rem, 8vw, 8rem);
+  scroll-margin-top: 80px;
+  padding: clamp(1rem, 2.5vw, 2.5rem) var(--gutter) clamp(3rem, 5vw, 5rem);
 }
 
 .contact-card-container {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  max-width: 1240px;
+  margin: 0 auto;
   border-radius: 20px;
   background: linear-gradient(145deg, rgba(16, 38, 62, 0.7) 0%, rgba(7, 23, 37, 0.95) 100%);
   border: 1px solid rgba(56, 189, 248, 0.2);
@@ -20,11 +23,11 @@
 .contact-visual-panel {
   position: relative;
   overflow: hidden;
-  min-height: 540px;
+  min-height: 480px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: clamp(2rem, 3.5vw, 3.5rem);
+  padding: clamp(1.5rem, 2.2vw, 2.25rem);
   background: linear-gradient(180deg, rgba(12, 31, 50, 0.95) 0%, rgba(4, 14, 24, 0.98) 100%);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
@@ -134,7 +137,7 @@
 }
 
 .contact-visual-title-light {
-  font: 530 clamp(1.8rem, 2.5vw, 2.6rem)/1.15 var(--font-display), sans-serif;
+  font: 530 clamp(1.4rem, 1.9vw, 2rem)/1.18 var(--font-display), sans-serif;
   color: #0f172a;
   letter-spacing: -0.02em;
 }
@@ -146,10 +149,11 @@
 }
 
 .contact-visual-desc-light {
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.5;
   color: #475569;
-  margin-top: 1rem;
+  margin-top: 0.6rem;
+  max-width: 36ch;
 }
 
 .contact-canvas-gradient-top-light {
@@ -157,7 +161,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 200px;
+  height: 140px;
   background: linear-gradient(180deg, #fbf9f5 0%, rgba(251, 249, 245, 0.85) 50%, transparent 100%);
   pointer-events: none;
   z-index: 2;
@@ -191,7 +195,7 @@
 
 /* 2. Right Form Panel */
 .contact-form-panel {
-  padding: clamp(2rem, 3.5vw, 3.5rem);
+  padding: clamp(1.5rem, 2.2vw, 2.25rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -199,38 +203,38 @@
 }
 
 .contact-eyebrow {
-  font: 600 0.72rem/1 var(--font-mono), monospace;
+  font: 600 0.68rem/1 var(--font-mono), monospace;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: #38bdf8;
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .contact-main-title {
-  font: 530 clamp(2rem, 3vw, 2.75rem)/1.15 var(--font-display), sans-serif;
+  font: 530 clamp(1.6rem, 2.2vw, 2.2rem)/1.15 var(--font-display), sans-serif;
   color: #f8fafc;
   letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
 }
 
 .contact-main-desc {
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: #94a3b8;
-  margin-bottom: 2rem;
+  margin-bottom: 1.15rem;
   max-width: 44ch;
 }
 
 .contact-modern-form {
   display: grid;
-  gap: 1.25rem;
+  gap: 0.75rem;
 }
 
 .contact-form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
 .contact-field {
@@ -243,9 +247,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font: 500 0.8rem/1 var(--font-mono), monospace;
+  font: 500 0.75rem/1 var(--font-mono), monospace;
   color: #cbd5e1;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.35rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -256,7 +260,7 @@
 }
 
 .contact-optional {
-  font: 400 0.72rem/1 var(--font-mono), monospace;
+  font: 400 0.68rem/1 var(--font-mono), monospace;
   color: #64748b;
   text-transform: none;
 }
@@ -265,11 +269,11 @@
 .contact-control select,
 .contact-control textarea {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.14);
-  padding: 0.8rem 1rem;
-  font: 400 0.95rem/1.5 var(--font-body), sans-serif;
+  padding: 0.58rem 0.85rem;
+  font: 400 0.9rem/1.4 var(--font-body), sans-serif;
   color: #f8fafc;
   transition: all 0.22s ease;
   outline: none;
@@ -290,7 +294,7 @@
 
 .contact-control textarea {
   resize: vertical;
-  min-height: 110px;
+  min-height: 72px;
 }
 
 .contact-select-wrap {
@@ -343,18 +347,18 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  padding: 1rem 1.75rem;
-  border-radius: 10px;
+  padding: 0.75rem 1.4rem;
+  border-radius: 8px;
   border: 1px solid rgba(56, 189, 248, 0.4);
   background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
   color: #ffffff;
-  font: 600 0.88rem/1 var(--font-mono), monospace;
+  font: 600 0.82rem/1 var(--font-mono), monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   cursor: pointer;
   transition: all 0.25s ease;
   box-shadow: 0 4px 15px rgba(2, 132, 199, 0.3);
-  margin-top: 0.5rem;
+  margin-top: 0.2rem;
 }
 
 .contact-submit:hover:not(:disabled) {
@@ -394,7 +398,7 @@
 .contact-privacy-notice {
   color: #64748b;
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: 0.4rem;
 }
 
 .contact-privacy-notice a {
@@ -408,10 +412,10 @@
   justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #94a3b8;
 }
 
@@ -429,21 +433,21 @@
 
 /* Terms & Privacy Card */
 .contact-terms-card {
-  margin-top: 1.25rem;
-  padding: 1.1rem 1.25rem;
-  border-radius: 12px;
+  margin-top: 0.55rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(56, 189, 248, 0.18);
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: 0.25rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .contact-terms-header {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .contact-terms-icon {
@@ -452,15 +456,15 @@
 }
 
 .contact-terms-title {
-  font: 600 0.78rem/1.2 var(--font-mono), monospace;
+  font: 600 0.72rem/1.2 var(--font-mono), monospace;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #e2e8f0;
 }
 
 .contact-terms-text {
-  font-size: 0.82rem;
-  line-height: 1.55;
+  font-size: 0.74rem;
+  line-height: 1.4;
   color: #94a3b8;
   margin: 0;
 }
