@@ -31,7 +31,7 @@ export const team: readonly TeamMember[] = [
   {
     id: "tobias",
     name: "Tobías Carballo",
-    role: "Analista en Sistemas",
+    role: "Analista en Sistemas · Licenciatura en Sistemas de Información en curso",
     bio: null,
     focus: null,
     pendingFocus: ["Desarrollo web", "Bases de datos"],
