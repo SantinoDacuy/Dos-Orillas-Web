@@ -435,7 +435,7 @@ export function Team() {
               <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-[#071725] via-[#071725]/90 to-transparent transition-opacity duration-300 group-hover:opacity-0 group-focus:opacity-0 pointer-events-none">
                 <span className="text-xs font-mono text-teal-400 tracking-widest uppercase">02 // CO-FUNDADOR</span>
                 <h3 className="text-2xl font-bold text-white tracking-tight">Tobías Carballo</h3>
-                <p className="text-xs text-slate-300 mt-1 font-mono">Analista en Sistemas</p>
+                <p className="text-xs text-slate-300 mt-1 font-mono">Analista en Sistemas · Licenciatura en Sistemas en curso</p>
                 <div className="mt-3 flex items-center gap-2 text-xs text-teal-300/80 font-mono">
                   <span>Posá el cursor para ver la info total</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -457,7 +457,7 @@ export function Team() {
                     Tobías Carballo
                   </h3>
                   <p className="text-teal-300 text-xs font-mono mt-1 mb-4">
-                    Analista en Sistemas
+                    Analista en Sistemas · Licenciatura en Sistemas de Información en curso
                   </p>
 
                   <p className="text-slate-300 text-sm leading-relaxed mb-6">

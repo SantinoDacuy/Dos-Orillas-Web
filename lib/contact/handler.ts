@@ -87,7 +87,22 @@ export function createContactHandler(overrides: Partial<HandlerDependencies> = {
       const parsed = validateContact(input);
       if (!parsed.success) return json({ ok: false, code: 'invalid', errors: parsed.errors }, 400);
       const config = mailConfig(environment);
-      if (!config) { dependencies.log('configuration_missing'); return json({ ok: false, code: 'unavailable' }, 503); }
+      if (!config) {
+        if (process.env.NODE_ENV !== 'production') {
+          console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('📬 [MENSAJE DE CONTACTO RECIBIDO - MODO LOCAL]');
+          console.log(`👤 Nombre: ${parsed.data.name}`);
+          console.log(`✉️ Correo: ${parsed.data.email}`);
+          console.log(`🏢 Organización: ${parsed.data.organization || '(No especificada)'}`);
+          console.log(`📝 Mensaje:\n${parsed.data.message}`);
+          console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+          console.log('ℹ️ Para recibir el correo real en dosorillasestudio@gmail.com:');
+          console.log('   Agregá tu RESEND_API_KEY en .env.local (obtenela gratis en https://resend.com)\n');
+          return json({ ok: true, code: 'sent' }, 200);
+        }
+        dependencies.log('configuration_missing');
+        return json({ ok: false, code: 'unavailable' }, 503);
+      }
       const { name, email, organization, message, requestId } = parsed.data;
       const text = `${contactCopy.fields.name}: ${name}\n${contactCopy.fields.email}: ${email}\n${contactCopy.fields.organization}: ${organization}\n\n${message}`;
       const html = `<p><strong>${escapeContactHTML(contactCopy.fields.name)}</strong>: ${escapeContactHTML(name)}</p><p><strong>${escapeContactHTML(contactCopy.fields.email)}</strong>: ${escapeContactHTML(email)}</p><p><strong>${escapeContactHTML(contactCopy.fields.organization)}</strong>: ${escapeContactHTML(organization)}</p><p>${escapeContactHTML(message).replace(/\r?\n/g, '<br>')}</p>`;
