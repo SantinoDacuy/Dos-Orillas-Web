@@ -14,7 +14,7 @@
   .process-opening { max-width:1000px; padding-bottom:88px; }
   .process-opening-statement { font-family:var(--font-display),sans-serif; font-size:clamp(40px,6.5vw,100px); line-height:1.03; letter-spacing:-.05em; font-weight:600; }
   .process-opening-line { display:block; max-width:20ch; padding-block:.1em; margin-block:-.1em; }
-  .process-opening-line.editorial { font-family:var(--font-editorial),Georgia,serif; font-weight:400; font-style:italic; color:var(--bridge-on-dark); letter-spacing:-.025em; }
+  .process-opening-line.editorial { font-family:var(--font-display),sans-serif; font-weight:400; color:var(--bridge-on-dark); letter-spacing:-.025em; }
   .process-journey { position:relative; }
   .process-steps { list-style:none; margin:0 0 0 32px; padding:0; }
   .process-step { position:relative; display:grid; grid-template-columns:max-content minmax(0,1fr) minmax(0,1fr); gap:32px; align-items:center; padding:56px 0; border-top:1px solid rgb(127 166 207 / 24%); }

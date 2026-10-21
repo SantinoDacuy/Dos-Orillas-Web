@@ -37,9 +37,6 @@ export function Contact() {
               Cada gran producto <br />
               <span className="contact-accent-text-light">empieza con una charla.</span>
             </h3>
-            <p className="contact-visual-desc-light">
-              Nos contás tu idea o el problema que querés resolver, analizamos la mejor arquitectura técnica y armamos un plan claro y a medida.
-            </p>
           </div>
 
           {/* Interactive Crowd Canvas on light background */}
@@ -64,7 +61,7 @@ export function Contact() {
               CANAL DIRECTO
             </span>
             <h2 id="contact-heading" className="contact-main-title">
-              Contáctanos
+              Conversemos
             </h2>
             <p className="contact-main-desc">
               Completá el formulario para contarnos sobre tu proyecto. Respondemos dentro de las 24 horas hábiles.

@@ -42,13 +42,13 @@ export function Hero() {
             </div>
 
             <div className="hero-actions">
-              <a className="hero-btn-primary" href={heroCopy.primaryCta.href}>
-                <span className="hero-btn-label">Contanos qué querés resolver</span>
-                <span className="hero-btn-icon" aria-hidden="true">→</span>
+              <a className="btn btn-primary" href={heroCopy.primaryCta.href}>
+                <span>Contanos qué querés resolver</span>
+                <span className="btn-icon" aria-hidden="true">→</span>
               </a>
-              <a className="hero-btn-secondary" href={heroCopy.secondaryCta.href}>
-                <span className="hero-btn-label">Ver proyectos</span>
-                <span className="hero-btn-icon" aria-hidden="true">↓</span>
+              <a className="btn btn-ghost" href={heroCopy.secondaryCta.href}>
+                <span>Ver proyectos</span>
+                <span className="btn-icon" aria-hidden="true">↓</span>
               </a>
             </div>
           </div>

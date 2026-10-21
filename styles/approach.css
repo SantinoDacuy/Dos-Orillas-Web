@@ -1,0 +1,103 @@
+/* Manifiesto → Soluciones: un solo recorrido. Lectura en flujo por defecto (tier 0, sin JS,
+   poca altura, móvil); el recorrido fijado es una mejora opt-in por tier al final del archivo. */
+@layer components {
+  .ap-act {
+    position:relative; background:#071725; color:#F2EEE6;
+    --a-accent:var(--bridge-on-dark,#7FA6CF); --a-cream:#F2EEE6; --a-line:rgb(242 238 230 / 16%);
+  }
+  .ap-stage { position:relative; isolation:isolate; overflow:clip; }
+  .ap-grain { position:absolute; inset:0; z-index:5; pointer-events:none; background:url(/textures/grain.svg); opacity:.08; mix-blend-mode:soft-light; }
+  .ap-line { display:block; overflow:clip; padding:.14em .1em .08em 0; margin:-.14em 0 -.08em; }
+  .ap-line-in { display:block; width:max-content; max-width:100%; }
+
+  /* ── Manifiesto ── */
+  .ap-telemetry { position:absolute; z-index:4; top:calc(88px + 2.5svh); left:var(--gutter); right:calc(var(--gutter) + 112px); display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:11px; letter-spacing:.16em; color:var(--a-accent); }
+  .ap-telemetry-badge { display:inline-flex; align-items:center; gap:10px; color:var(--a-cream); }
+  .ap-dot { width:6px; height:6px; border-radius:50%; background:var(--a-accent); box-shadow:0 0 12px var(--a-accent); }
+  .ap-beat { position:relative; isolation:isolate; overflow:clip; min-height:92svh; display:grid; align-content:center; padding:clamp(128px,19svh,210px) var(--gutter) clamp(72px,12svh,140px); }
+  .ap-photo { position:absolute; inset:0; z-index:-3; }
+  .ap-photo .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
+  .ap-photo img { object-fit:cover; }
+  .ap-beat-a .ap-photo img { opacity:.55; }
+  .ap-beat-b .ap-photo img { object-position:72% 50%; }
+  .ap-veil { position:absolute; inset:0; z-index:-2; }
+  .ap-beat-a .ap-veil { background:linear-gradient(180deg,#071725 0%,rgb(7 23 37 / 28%) 30%,rgb(7 23 37 / 40%) 70%,#071725 100%),radial-gradient(120% 90% at 50% 50%,transparent 40%,rgb(3 10 18 / 60%) 100%); }
+  .ap-beat-b .ap-veil { background:linear-gradient(90deg,rgb(7 23 37 / 92%) 0%,rgb(7 23 37 / 62%) 34%,rgb(7 23 37 / 8%) 68%),linear-gradient(180deg,#071725 0%,transparent 24%,transparent 68%,#071725 100%); }
+  .ap-dusk { position:absolute; inset:0; z-index:-1; background:#071725; opacity:0; }
+  .ap-statement { margin:0; font-family:var(--font-display),sans-serif; font-weight:650; letter-spacing:-.05em; line-height:.9; color:var(--a-cream); text-shadow:0 4px 44px rgb(3 10 18 / 60%); }
+  .ap-statement-a { font-size:clamp(40px,11vw,190px); }
+  .ap-statement-b { font-size:clamp(34px,6.2vw,110px); }
+  .ap-emphasis { color:var(--a-accent); }
+  .ap-struck,.ap-underlined { position:relative; display:inline-block; }
+  .ap-underlined { padding-right:.08em; }
+  .ap-strike { position:absolute; left:-2%; right:-2%; top:54%; height:clamp(3px,.42vw,8px); border-radius:2px; background:linear-gradient(90deg,var(--a-accent),#fff 50%,var(--a-accent)); box-shadow:0 0 28px rgb(127 166 207 / 80%); transform-origin:left center; }
+  .ap-underline { position:absolute; left:0; right:.08em; bottom:.02em; height:2px; background:var(--a-accent); transform-origin:left center; }
+
+  /* ── Soluciones: plana, sin recorrido fijado. Cuatro tarjetas y la línea de IA. ── */
+  .ap-solutions .ap-stage { display:grid; gap:clamp(40px,7svh,72px); padding:clamp(88px,12svh,128px) var(--gutter) clamp(64px,10svh,112px); }
+  .ap-sol-head { display:grid; gap:14px; }
+  .ap-sol-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:650; font-size:clamp(44px,8vw,128px); line-height:.9; letter-spacing:-.055em; color:var(--a-cream); }
+  .ap-sol-sub { margin:0; max-width:34ch; font-size:clamp(16px,1.35vw,20px); line-height:1.5; color:var(--a-soft,#C9D4DE); }
+  .ap-services { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(36px,6svh,56px) clamp(20px,2.4vw,40px); }
+  .ap-service { display:grid; grid-template-areas:"media" "name" "detail"; align-content:start; row-gap:16px; min-width:0; }
+  .ap-service-media { grid-area:media; margin:0; }
+  .ap-service-name { grid-area:name; position:relative; display:flex; align-items:baseline; gap:clamp(10px,1.2vw,16px); min-width:0; padding-top:16px; border-top:1px solid var(--a-line); }
+  .ap-service-name::before { content:''; position:absolute; left:0; right:0; top:-1px; height:1px; background:var(--a-accent); transform:scaleX(0); transform-origin:left center; transition:transform .8s var(--ease-out-expo); }
+  .ap-service:hover .ap-service-name::before,.ap-service:focus-within .ap-service-name::before { transform:scaleX(1); }
+  .ap-service-detail { grid-area:detail; }
+  .ap-num,.ap-full,.ap-ai-label { font-size:11px; letter-spacing:.16em; color:var(--a-accent); }
+  .ap-name { margin:0; font-family:var(--font-display),sans-serif; font-weight:650; font-size:min(clamp(30px,3.2vw,46px),calc((100vw - 2 * var(--gutter) - 56px) / (var(--chars,8) * .66))); line-height:.95; letter-spacing:-.05em; color:var(--a-cream); min-width:0; }
+  .ap-name-rule { display:none; }
+  .ap-full { margin:0 0 10px; }
+  .ap-desc { margin:0; max-width:34ch; font-size:clamp(15px,1.15vw,18px); line-height:1.5; color:#C9D4DE; }
+  .ap-slide { position:relative; aspect-ratio:16 / 11; overflow:clip; border-radius:2px; }
+  .ap-slide .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
+  .ap-slide img { object-fit:cover; transition:transform 1.2s var(--ease-out-expo); }
+  .ap-service:hover .ap-slide img { transform:scale(1.05); }
+  .ap-ai { display:grid; gap:14px; padding-top:clamp(28px,4.5svh,48px); border-top:1px solid var(--a-line); }
+  .ap-ai-label { margin:0; }
+  .ap-ai-copy { margin:0; max-width:26ch; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(24px,3vw,46px); line-height:1.08; letter-spacing:-.04em; color:var(--a-cream); }
+  .ap-ai-copy .ap-line-in { width:auto; }
+}
+
+@media (max-width:767px) {
+  .ap-beat { min-height:88svh; padding-top:clamp(128px,20svh,180px); }
+  .ap-statement-a { font-size:clamp(36px,14vw,96px); }
+  .ap-statement-b { font-size:clamp(32px,11vw,80px); }
+  .ap-beat-b { align-content:end; }
+  .ap-name { font-size:min(9.4vw,calc((100vw - 2 * var(--gutter) - 56px) / (var(--chars,8) * .66))); }
+}
+
+@media (min-width:768px) {
+  .ap-services { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .ap-slide { aspect-ratio:4 / 3; }
+  .ap-name { font-size:min(clamp(30px,3.6vw,46px),calc((50vw - var(--gutter) - 76px) / (var(--chars,8) * .66))); }
+}
+@media (min-width:768px) and (min-height:681px) {
+  .ap-sol-head { grid-template-columns:minmax(0,1fr) auto; align-items:end; column-gap:32px; }
+}
+@media (min-width:1100px) {
+  .ap-services { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .ap-slide { aspect-ratio:5 / 6; }
+  .ap-name { font-size:min(clamp(26px,2.5vw,40px),calc(((100vw - 2 * var(--gutter)) / 4 - 48px) / (14 * .66))); }
+  .ap-ai { grid-template-columns:minmax(0,.34fr) minmax(0,1fr); column-gap:clamp(24px,4vw,64px); align-items:start; }
+  .ap-ai-label { padding-top:1.1em; }
+}
+
+/* Lectura estática: el cambio de tier no debe animar tipografía ni geometría. */
+html[data-motion-tier="0"] .ap-act,html[data-motion-tier="0"] .ap-act * { transition-property:none!important; }
+
+/* Recorrido fijado (sólo el Manifiesto; Soluciones es plana): desde 768px y con altura suficiente. La pista se reserva antes de cargar
+   GSAP; el escenario es sticky y GSAP sólo escribe transforms, opacidades y clip-path. */
+@media (min-width:768px) and (min-height:681px) {
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) { height:250svh; }
+  html:is([data-motion-tier="2"],[data-motion-tier="3"]) .ap-manifesto:not([data-scene-flow="true"]) { height:310svh; }
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-stage { position:sticky; top:0; display:block; height:100svh; padding:0; }
+
+  /* Manifiesto: dos tomas apiladas; la segunda se abre desde la línea que tacha «PORQUE SÍ.». */
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-beat { position:absolute; inset:0; min-height:0; padding:0 var(--gutter); }
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-beat-b { z-index:2; clip-path:inset(54% 0 46% 0); }
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-statement-a { font-size:min(11vw,21svh); }
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-statement-b { position:absolute; left:var(--gutter); bottom:14svh; font-size:min(6.4vw,12svh); }
+  html:not([data-motion-tier="0"]) .ap-manifesto:not([data-scene-flow="true"]) .ap-beat-a .ap-photo img { transform-origin:50% 50%; }
+}

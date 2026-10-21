@@ -318,7 +318,7 @@ export function ContactForm() {
 
           {/* Submit button */}
           <button
-            className="contact-submit"
+            className="btn btn-primary btn-block contact-submit"
             type="submit"
             suppressHydrationWarning
             disabled={!interactive || status === 'loading'}

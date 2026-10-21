@@ -21,7 +21,6 @@
   --font-display: "display", "display Fallback";
   --font-body: "body", "body Fallback";
   --font-mono: "mono", "mono Fallback";
-  --font-editorial: "editorial", "editorial Fallback";
 }
 
 @font-face {
@@ -51,19 +50,4 @@
   descent-override:22.43%;
   line-gap-override:0%;
   size-adjust:131.49%;
-}
-@font-face {
-  font-family:"editorial";
-  src:url("/fonts/instrument-serif-italic.woff2") format("woff2");
-  font-display:swap;
-  font-weight:400;
-  font-style:italic;
-}
-@font-face {
-  font-family:"editorial Fallback";
-  src:local("Arial");
-  ascent-override:121.98%;
-  descent-override:38.19%;
-  line-gap-override:0%;
-  size-adjust:81.16%;
 }

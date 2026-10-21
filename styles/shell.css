@@ -183,7 +183,7 @@
   .footer-wordmark-frame { width:100%; height:min(37svh,440px); }
   .footer-wordmark.brand-logo { width:100%; height:min(37svh,440px); object-fit:contain; max-width:100%; filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.15)); }
   .footer-details { display:grid; grid-template-columns:1.8fr 1fr .7fr; gap:24px; padding:20px 0 36px; border-bottom:1px solid rgba(255, 255, 255, 0.1); }
-  .footer-philosophy>p:first-child { font:500 clamp(20px,2.3vw,34px)/1.2 var(--font-editorial),serif; color: #f8fafc; }
+  .footer-philosophy>p:first-child { font:500 clamp(20px,2.3vw,34px)/1.2 var(--font-display),sans-serif; color: #f8fafc; }
   .footer-philosophy>.mono { margin-top:20px; max-width:34ch; font-size:12px; color:#94a3b8; }
   .footer-nav { display:grid; grid-template-columns:1fr 1fr; column-gap:20px; align-content:start; }
   .footer-nav a,.footer-social a { display:flex; align-items:center; min-height:44px; width:fit-content; font-size:14px; font-weight: 450; color:#cbd5e1; position:relative; transition: color .25s ease; }

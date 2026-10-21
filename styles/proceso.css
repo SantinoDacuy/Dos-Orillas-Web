@@ -1,0 +1,62 @@
+/* Cómo trabajamos: sección plana. Texto legible sin JS; los reveals sólo se arman con
+   `data-reveal-ready` (los marca SectionReveal) y tier > 0. */
+@layer components {
+  .pr {
+    position:relative; background:#0b1f33; color:#F2EEE6;
+    padding:clamp(64px,9svh,104px) var(--gutter); scroll-margin-top:calc(88px + 24px);
+    --p-accent:var(--bridge-on-dark,#7FA6CF); --p-cream:#F2EEE6; --p-line:rgb(242 238 230 / 18%); --p-soft:#C9D4DE;
+  }
+  .pr-wrap { display:grid; gap:clamp(40px,7svh,72px); max-width:1480px; margin-inline:auto; }
+  .pr-head { display:grid; gap:14px; }
+  .pr-eyebrow { margin:0; display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.16em; color:var(--p-accent); }
+  .pr-dot { width:6px; height:6px; border-radius:50%; background:var(--p-accent); box-shadow:0 0 12px var(--p-accent); }
+  .pr-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(30px,4.4vw,70px); line-height:.98; letter-spacing:-.05em; text-wrap:balance; }
+  .pr-line { display:block; overflow:clip; padding:.12em .1em .08em 0; margin:-.12em 0 -.08em; }
+  .pr-line-in { display:block; }
+  .pr-accent { color:var(--p-accent); }
+
+  .pr-steps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(28px,4svh,40px); }
+  .pr-step { position:relative; display:grid; align-content:start; gap:10px; min-width:0; padding-left:28px; }
+  .pr-rail { position:absolute; inset:0 auto 0 0; width:9px; }
+  .pr-node { position:absolute; left:0; top:.5em; width:9px; height:9px; rotate:45deg; background:var(--p-cream); box-shadow:0 0 14px 2px rgb(127 166 207 / 60%); }
+  .pr-rail-line { position:absolute; left:4px; top:1.4em; bottom:-40px; width:1px; background:var(--p-line); transform-origin:top center; }
+  .pr-step:last-child .pr-rail-line { display:none; }
+  .pr-num { font-size:11px; letter-spacing:.18em; color:var(--p-accent); }
+  .pr-step-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(22px,2.1vw,32px); line-height:1.08; letter-spacing:-.035em; }
+  .pr-step-desc { margin:0; max-width:32ch; font-size:clamp(15px,1.15vw,17px); line-height:1.55; color:var(--p-soft); }
+}
+
+@media (min-width:768px) {
+  .pr-steps { grid-template-columns:repeat(4,minmax(0,1fr)); gap:0 clamp(20px,2.6vw,44px); }
+  .pr-step { padding-left:0; padding-top:30px; }
+  .pr-rail { inset:0 0 auto 0; width:auto; height:9px; }
+  .pr-node { top:0; }
+  .pr-rail-line { left:18px; right:calc(clamp(20px,2.6vw,44px) * -1 + 6px); top:4px; bottom:auto; width:auto; height:1px; transform-origin:left center; }
+}
+
+/* Reveals: sólo con JS y movimiento. */
+html:not([data-motion-tier="0"]) .pr[data-reveal-ready="true"] {
+  .pr-head:not([data-in="true"]) .pr-line-in { transform:translateY(112%); }
+  .pr-line-in { transition:transform 1s var(--ease-out-expo); }
+  .pr-accent .pr-line-in { transition-delay:.12s; }
+  .pr-head .pr-eyebrow { transition:opacity .8s var(--ease-out-quint); }
+  .pr-head:not([data-in="true"]) .pr-eyebrow { opacity:0; }
+
+  .pr-step { transition:opacity .9s calc(var(--i) * .13s) var(--ease-out-quint),transform .9s calc(var(--i) * .13s) var(--ease-out-expo); }
+  .pr-step:not([data-in="true"]) { opacity:0; transform:translateY(24px); }
+  .pr-rail-line { transition:transform 1.1s calc(var(--i) * .13s + .2s) var(--ease-out-expo); }
+  .pr-step:not([data-in="true"]) .pr-rail-line { transform:scale(0); }
+  .pr-node { transition:scale .6s calc(var(--i) * .13s + .15s) var(--ease-out-expo); }
+  .pr-step:not([data-in="true"]) .pr-node { scale:.2; }
+}
+@media (min-width:768px) {
+  html:not([data-motion-tier="0"]) .pr[data-reveal-ready="true"] .pr-step:not([data-in="true"]) .pr-rail-line { transform:scaleX(0); }
+}
+@media (max-width:767px) {
+  html:not([data-motion-tier="0"]) .pr[data-reveal-ready="true"] .pr-step:not([data-in="true"]) .pr-rail-line { transform:scaleY(0); }
+}
+
+html[data-motion-tier="0"] .pr,html[data-motion-tier="0"] .pr * { transition-property:none!important; }
+@media (prefers-reduced-motion:reduce) {
+  .pr [data-reveal],.pr [data-reveal] * { opacity:1!important; transform:none!important; scale:none!important; transition:none!important; }
+}

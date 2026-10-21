@@ -8,7 +8,7 @@
   .featured-meta { position:relative; z-index:4; display:flex; justify-content:space-between; gap:32px; align-items:end; padding:0 var(--gutter) 48px; }
   .featured-section-title { max-width:13ch; font:600 clamp(32px,5.5vw,88px)/.94 var(--font-display),sans-serif; letter-spacing:-.05em; }
   .featured-section-title>span { display:block; }
-  .featured-section-title-editorial { font-family:var(--font-editorial),serif; font-weight:400; font-style:italic; color:var(--bridge-on-dark); letter-spacing:-.035em; }
+  .featured-section-title-editorial { font-family:var(--font-display),sans-serif; font-weight:400; color:var(--bridge-on-dark); letter-spacing:-.035em; }
   .featured-meta-note { display:flex; align-items:center; gap:28px; padding-bottom:8px; font-size:10px; white-space:nowrap; color:var(--bridge-on-dark); }
   .featured-meta-note>span { font-size:28px; }
   .featured-stage { position:relative; min-width:0; }

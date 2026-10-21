@@ -1,9 +1,10 @@
-'use client';
-
-import * as React from 'react';
-import Link from 'next/link';
+import type { CSSProperties } from 'react';
 import Image from 'next/image';
-import { GlassFold } from '@/components/ui/glass-fold';
+import Link from 'next/link';
+import { getProjectBySlug } from '@/data/projects';
+import { ProjectMedia } from '@/components/projects/ProjectMedia';
+import { ProjectCoverTransition } from '@/components/motion/ProjectTransitions';
+import { ProjectsMotion } from './ProjectsMotion';
 
 export interface ShowcaseProject {
   id: string;
@@ -100,299 +101,94 @@ export interface ProjectsCinematicSectionProps {
   className?: string;
 }
 
-export function ProjectsCinematicSection({
-  items = SHOWCASE_PROJECTS,
-  className = '',
-}: ProjectsCinematicSectionProps) {
-  const [active, setActive] = React.useState(0);
-  const [animating, setAnimating] = React.useState(false);
+const two = (value: number) => String(value).padStart(2, '0');
+
+export function ProjectsCinematicSection({ items = SHOWCASE_PROJECTS, className = '' }: ProjectsCinematicSectionProps) {
   const count = items.length;
-
   if (count === 0) return null;
-
-  const currentProject = items[active] ?? items[0];
-  if (!currentProject) return null;
-
-  const go = React.useCallback((index: number) => {
-    const next = Math.max(0, Math.min(count - 1, index));
-    if (next !== active) {
-      setAnimating(true);
-      setActive(next);
-      const timer = setTimeout(() => setAnimating(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [active, count]);
-
-  const goNext = React.useCallback(() => {
-    go(active < count - 1 ? active + 1 : 0);
-  }, [active, count, go]);
-
-  const goPrev = React.useCallback(() => {
-    go(active > 0 ? active - 1 : count - 1);
-  }, [active, count, go]);
-
-  // Keyboard navigation (ArrowLeft / ArrowRight)
-  React.useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const activeEl = document.activeElement;
-      if (activeEl?.tagName === 'INPUT' || activeEl?.tagName === 'TEXTAREA') return;
-
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        goNext();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        goPrev();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [goNext, goPrev]);
-
-  // Touch / mouse swipe detection
-  const [dragStart, setDragStart] = React.useState<number | null>(null);
-
-  const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
-    const clientX = 'touches' in e ? (e.touches[0]?.clientX ?? 0) : e.clientX;
-    setDragStart(clientX);
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent | React.MouseEvent) => {
-    if (dragStart === null) return;
-    const clientX = 'changedTouches' in e ? (e.changedTouches[0]?.clientX ?? 0) : e.clientX;
-    const diff = clientX - dragStart;
-    if (Math.abs(diff) > 40) {
-      if (diff < 0) {
-        goNext();
-      } else {
-        goPrev();
-      }
-    }
-    setDragStart(null);
-  };
-
-  // Preload next and previous images
-  React.useEffect(() => {
-    if (count === 0) return;
-    const nextItem = items[(active + 1) % count];
-    const prevItem = items[(active - 1 + count) % count];
-    if (nextItem) {
-      const nextImg = new window.Image();
-      nextImg.src = nextItem.imagen;
-    }
-    if (prevItem) {
-      const prevImg = new window.Image();
-      prevImg.src = prevItem.imagen;
-    }
-  }, [active, count, items]);
-
-  const prevProject = items[(active - 1 + count) % count] ?? currentProject;
-  const nextProject = items[(active + 1) % count] ?? currentProject;
-
-  return (
-    <section
-      id="proyectos"
-      className={`cinematic-showcase-section ${className}`}
-      data-scene="proyectos"
-      data-theme="navy-deep"
-      data-nav="dark"
-      role="region"
-      aria-roledescription="carousel"
-      aria-label="Proyectos seleccionados de Dos Orillas Estudio"
-    >
-      {/* Live region for accessibility screen readers */}
-      <div className="sr-only" aria-live="polite">
-        Proyecto {active + 1} de {count}: {currentProject.titulo}. {currentProject.categoria}.
+  return <section id="proyectos" className={`pj ${className}`} data-scene="proyectos" data-cover-restore="native" data-theme="navy-deep" data-nav="dark" aria-labelledby="projects-title">
+    <div className="pj-stage">
+      {/* Atmósfera: la portada de cada proyecto, desenfocada, tiñe toda la escena. */}
+      <div className="pj-atmosphere" aria-hidden="true">
+        {items.map(item => <div className="pj-ambient" key={item.id}>
+          <Image src={item.imagen} alt="" fill sizes="24vw" />
+        </div>)}
+        <span className="pj-vignette" />
+        <span className="pj-grain" />
       </div>
 
-      {/* Full-bleed Ambient Background */}
-      <div className="projects-glassfold-backdrop" aria-hidden="true">
-        <GlassFold
-          color1="#0c2d4a"
-          color2="#06121d"
-          color3="#2575a2"
-          speed={0.3}
-          scale={1.0}
-          noise={0.04}
-          className="absolute inset-0 h-full w-full pointer-events-none"
-        />
-        <div className="projects-backdrop-vignette" />
-        <div className="projects-bg-mask-top" />
-        <div className="projects-bg-mask-bottom" />
-      </div>
-
-      <div className="cinematic-container">
-        {/* Streamlined Section Header: Title & Subtitle left, View All right */}
-        <div className="cinematic-header-wrap">
-          <div className="cinematic-header-left">
-            <div className="cinematic-eyebrow">
-              <span className="cinematic-eyebrow-dot" />
-              <span>03 // Portafolio Seleccionado</span>
-            </div>
-            <div className="cinematic-title-row">
-              <h2 className="cinematic-title">PROYECTOS.</h2>
-              <p className="cinematic-subtitle">
-                Soluciones digitales diseñadas desde el problema real, sin atajos tecnológicos.
-              </p>
-            </div>
-          </div>
-
-          <div className="cinematic-header-right">
-            <Link
-              href="/projects"
-              className="cinematic-view-all-btn"
-              title="Ver el catálogo completo de proyectos"
-            >
-              <span>VER TODOS LOS PROYECTOS ({String(count).padStart(2, '0')})</span>
-              <span className="cinematic-view-all-arrow" aria-hidden="true">↗</span>
-            </Link>
-          </div>
+      <header className="pj-head">
+        <p className="pj-eyebrow mono"><span className="pj-dot" aria-hidden="true" />03 // Portafolio Seleccionado</p>
+        <div className="pj-title-row">
+          <h2 id="projects-title" className="pj-title"><span className="pj-line"><span className="pj-line-in">PROYECTOS.</span></span></h2>
         </div>
+        <Link href="/projects" className="btn btn-ghost btn-sm pj-all" title="Ver el catálogo completo de proyectos">
+          <span>Ver todos los proyectos ({two(count)})</span><span className="btn-icon" aria-hidden="true">↗</span>
+        </Link>
+      </header>
 
-        {/* 2-Column Showcase Arena */}
-        <div className="cinematic-arena">
-          {/* Left Column: Narrative (Strictly top-to-bottom hierarchy) */}
-          <div className="cinematic-narrative" style={{ minHeight: '260px' }}>
-            <div className={`cinematic-narrative-content ${animating ? 'cinematic-fade-out' : 'cinematic-fade-in'}`}>
-              {/* 1. Category in small mono (No duplicate 'CASO 01 // 05') */}
-              <div className="cinematic-project-category">
-                {currentProject.categoria}
-              </div>
-
-              {/* 2. Project Title */}
-              <h3 className="cinematic-project-name">
-                {currentProject.titulo}
-              </h3>
-
-              {/* 3. Short description (≤ 140 chars, max 2 lines, ~52ch) */}
-              <p className="cinematic-project-summary">
-                {currentProject.descripcion}
-              </p>
-
-              {/* 4. Tech stack pills (Max 5, subtle, no internal tools like Figma/UML) */}
-              <div className="cinematic-tech-pills">
-                {currentProject.stack.map((tech) => (
-                  <span key={tech} className="cinematic-tech-pill">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              {/* 5. Actions in a single horizontal row */}
-              <div className="cinematic-actions-row">
-                <Link
-                  href={currentProject.href}
-                  className="cinematic-primary-btn"
-                >
-                  <span>VER CASO DE ESTUDIO</span>
-                  <span className="cinematic-btn-arrow" aria-hidden="true">→</span>
-                </Link>
-
-                <Link
-                  href={`/#contacto?tipo=${currentProject.contactQuery}`}
-                  className="cinematic-secondary-link"
-                >
-                  <span>QUIERO ALGO ASÍ</span>
-                  <span className="cinematic-btn-arrow" aria-hidden="true">→</span>
-                </Link>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Visual Focus (16:10 Canvas + Navigation + Thumbnails) */}
-          <div className="cinematic-stage-wrap">
-            {/* Main Image Canvas with integrated corner navigation */}
-            <div
-              className="cinematic-canvas-wrapper"
-              onTouchStart={handleTouchStart}
-              onTouchEnd={handleTouchEnd}
-              onMouseDown={handleTouchStart}
-              onMouseUp={handleTouchEnd}
-            >
-              <div className={`cinematic-canvas-image-layer ${animating ? 'cinematic-image-out' : 'cinematic-image-in'}`}>
-                <Image
-                  src={currentProject.imagen}
-                  alt={currentProject.alt}
-                  fill
-                  sizes="(min-width: 1024px) 50vw, 92vw"
-                  className="cinematic-main-image"
-                  priority
-                />
-              </div>
-
-              {/* Persistent Navigation Controls on Bottom-Right Corner */}
-              <div className="cinematic-corner-controls" aria-label="Controles de navegación">
-                <button
-                  type="button"
-                  className="cinematic-corner-btn"
-                  onClick={goPrev}
-                  aria-label={`Proyecto anterior: ${prevProject.nombreCorto}`}
-                  title="Anterior (←)"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="m15 18-6-6 6-6" />
-                  </svg>
-                </button>
-
-                <div className="cinematic-corner-counter" aria-hidden="true">
-                  <span>{String(active + 1).padStart(2, '0')}</span>
-                  <span className="text-white/30">/</span>
-                  <span className="text-white/60">{String(count).padStart(2, '0')}</span>
-                </div>
-
-                <button
-                  type="button"
-                  className="cinematic-corner-btn"
-                  onClick={goNext}
-                  aria-label={`Siguiente proyecto: ${nextProject.nombreCorto}`}
-                  title="Siguiente (→)"
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="m9 18 6-6-6-6" />
-                  </svg>
-                </button>
+      <div className="pj-items">
+        {items.map((item, index) => {
+          const project = getProjectBySlug(item.id);
+          const sourceId = `home:${item.id}`;
+          const transition = { 'data-project-transition-link': item.id, 'data-project-transition-source': sourceId };
+          return <article className="pj-item" key={item.id} data-project={item.id} style={{ '--i': index } as CSSProperties}>
+            <div className="pj-info">
+              <p className="pj-category mono">{item.categoria}</p>
+              <h3 className="pj-name"><span className="pj-line"><span className="pj-line-in">{item.titulo}</span></span></h3>
+              <p className="pj-summary">{item.descripcion}</p>
+              <ul className="pj-pills" aria-label="Tecnologías">
+                {item.stack.map(tech => <li className="pj-pill mono" key={tech}>{tech}</li>)}
+              </ul>
+              <div className="pj-actions">
+                <a href={item.href} className="btn btn-primary btn-sm" {...transition}>
+                  <span>Ver caso de estudio</span><span className="btn-icon" aria-hidden="true">→</span>
+                </a>
+                <a href="#contacto" className="btn btn-ghost btn-sm">
+                  <span>Quiero algo así</span><span className="btn-icon" aria-hidden="true">→</span>
+                </a>
               </div>
             </div>
 
-            {/* 5 Thumbnails Strip (Immediately under the image, visible in 1080p) */}
-            <div
-              className="cinematic-thumbs-row"
-              role="tablist"
-              aria-label="Seleccionar proyecto"
-            >
-              {items.map((project, i) => {
-                const isActive = i === active;
-                return (
-                  <button
-                    key={project.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    data-active={String(isActive)}
-                    className="cinematic-thumb-card"
-                    onClick={() => go(i)}
-                    title={`Caso ${i + 1}: ${project.nombreCorto}`}
-                  >
-                    <Image
-                      src={project.imagen}
-                      alt={project.nombreCorto}
-                      width={180}
-                      height={112}
-                      className="cinematic-thumb-img"
-                    />
-                    <div className="cinematic-thumb-label">
-                      <span className="cinematic-thumb-num">{String(i + 1).padStart(2, '0')}</span>
-                      <span className="cinematic-thumb-name">{project.nombreCorto}</span>
-                    </div>
-                  </button>
-                );
-              })}
+            <div className="pj-card">
+              <a className="pj-card-link" href={item.href} data-cursor="ver" aria-label={`Ver caso de estudio: ${item.titulo}`} {...transition}>
+                <ProjectCoverTransition className="pj-cover" slug={item.id} role="source" sourceId={sourceId}>
+                  <div className="pj-tilt">
+                    {project
+                      ? <ProjectMedia project={project} ratio="16 / 10" sizes="(min-width:1024px) 50vw, 92vw" className="pj-media" idScope={`pj-${item.id}`} />
+                      : <Image src={item.imagen} alt={item.alt} width={2400} height={1500} sizes="(min-width:1024px) 50vw, 92vw" />}
+                    <span className="pj-sheen" aria-hidden="true" />
+                    <span className="pj-badge mono" aria-hidden="true">{two(index + 1)}</span>
+                  </div>
+                </ProjectCoverTransition>
+              </a>
             </div>
-          </div>
+          </article>;
+        })}
+      </div>
+
+      {/* Controles: sólo cobran sentido en el recorrido fijado. */}
+      <div className="pj-controls">
+        <div className="pj-rail">
+          <span className="pj-rail-fill" aria-hidden="true" />
+          {items.map((item, index) => <button type="button" className="pj-rail-item mono" key={item.id} data-index={index}
+            aria-label={`Ir al proyecto ${index + 1} de ${count}: ${item.nombreCorto}`}>
+            <span className="pj-rail-num">{two(index + 1)}</span><span className="pj-rail-name">{item.nombreCorto}</span>
+          </button>)}
+        </div>
+        <div className="pj-pager mono">
+          <button type="button" className="pj-step" data-step="-1" aria-label="Proyecto anterior" title="Anterior (←)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+          </button>
+          <span className="pj-counter" aria-hidden="true"><b className="pj-counter-now">01</b><i>/</i><span>{two(count)}</span></span>
+          <button type="button" className="pj-step" data-step="1" aria-label="Siguiente proyecto" title="Siguiente (→)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
         </div>
       </div>
-    </section>
-  );
+    </div>
+    <ProjectsMotion />
+  </section>;
 }
 
 export default ProjectsCinematicSection;

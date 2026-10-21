@@ -64,9 +64,11 @@ Las filas Hero documentan la coreografía histórica, reemplazada en F4. La dist
 | Hero: filosofía | ENTENDER → HACER: dos pasos de trabajo | Beats .35 y .60 | y, opacity | Frases legibles, CTAs siempre presentes | Texto completo y estático |
 | Hero: profundidad de puntero | ACERCAR: dos capas responden en sentidos opuestos | Puntero dentro del escenario, sólo full | x/y en wrapper independiente, ±6px | Desactivado | Desactivado |
 | Hero: CTAs y salida | CRUZAR: dar lugar al siguiente capítulo | Beat .30 y salida .82 | autoAlpha, yPercent, opacity | CTAs conservan foco y progreso | Enlaces nativos visibles |
-| Distance: mundos tipográficos | ACERCAR: reducir la distancia real entre negocio y tecnología | Scroll reversible, 300% desktop | x/y, scale en padres y spans | Vertical en móvil; fila horizontal desde768 | Fila final con cota en desktop; lectura natural móvil |
-| Distance: cota y puente | CONECTAR: una línea comunica el vínculo | .18–.62 y .72 | scaleX/scaleY, x/y | Cota vertical en móvil | Línea completa decorativa |
-| Distance: conclusión y frases | REVELAR: explicar el criterio del estudio | .72–1.0 | y, opacity | Tres frases secuenciales | Todas visibles en flujo |
+| Distance: recorrido | ACERCAR: viajar la distancia entre negocio y tecnología | Scroll reversible sobre 640svh (460svh en tier 1), stage sticky sin pin JS | x de la pista; capas a 0,8× (foto) y 1,2× (regla), palabras por líneas con máscara | Flujo vertical en móvil con reveals por entrada | Lectura en flujo, todo visible |
+| Distance: llegada | REVELAR: la otra orilla aparece fantasma y se solidifica | .27–.52 | yPercent, color | Reveal por entrada | Texto sólido |
+| Distance: zoom-out y puente | CONECTAR: la cámara se aleja y el puente se dibuja de orilla a orilla | .58–.86 | x, y, scale de la pista; strokeDashoffset | Línea vertical con scrub | Sin puente SVG |
+| Distance: río | Profundidad: líneas de agua que reaccionan a la velocidad de scroll | Sólo tier 2/3 y escena visible | Canvas 2D (≤1,5 dpr), ticker GSAP | Desactivado | Desactivado |
+| Distance: cierre | REVELAR: «Ahí trabajamos nosotros.» y tres frases | .86–.95 | yPercent, y, autoAlpha, scaleX | Reveal por entrada | Todo visible |
 
 El primer scroll nativo inicia la carga diferida. CSS reserva350svh y400svh en full y mantiene stages sticky antes de GSAP; pinSpacing:false conserva esa reserva al montar. Tier1 usa 190/210svh en Hero y220svh en Distance, sin pin JS. La geometría de la fila y su cota se cachea al montar/refresh: baseline real, anchos, gap y offsets; ninguna lectura de layout en onUpdate.
 
@@ -124,3 +126,23 @@ El estudio revela líneas y conserva una columna de lectura sticky cuando cabe. 
 Los controladores de narrativa, proyectos, separador y editorial se importan tras scroll, hash/restauración o foco real. En móvil alto, las secciones alejadas pueden usar `content-visibility:auto` con estimaciones de altura; se desbloquean antes de medir, ante Tab/enlaces y al aproximarse. Altura corta, reduced/no-JS y destinos por hash conservan flujo natural. Cada controlador limpia sus observers, listeners, RAF, contextos y estilos temporales al cambiar tier o desmontarse.
 
 El formulario anima sólo líneas de foco, progreso y confirmación. Sus estados accesibles y validación no dependen del movimiento. La lógica de envío se solicita al enfocar o enviar; un fallo conserva campos y alternativa por email. Reduced elimina animaciones de carga/éxito. Las comprobaciones y sus fechas se registran en `DECISIONS.md`; esta descripción no sustituye los gates de rendimiento ni acredita publicación.
+
+## Manifiesto → Soluciones (21/10/2026)
+
+| Escena / intención | Disparador | Full (≥768px, ≥681px alto) | Móvil | Reduced / sin JS |
+|---|---|---|---|---|
+| Manifiesto · REVELAR | Scroll sobre 440svh (340 en tier 1), stage sticky | Líneas con máscara; foto A con zoom lento | Reveals por entrada + parallax de foto | Todo visible |
+| Manifiesto · CONECTAR | .20–.54 | Línea que tacha «PORQUE SÍ.» → `clip-path` abre la foto B desde esa línea | Línea con scrub | Línea completa |
+| Manifiesto · CRUZAR | .5–1 | Segunda afirmación + subrayado; la foto cae a navy | Reveal | Visible |
+| Soluciones · ACERCAR | Scroll sobre 680svh (520 en tier 1) | Lista tipográfica; cada servicio releva al anterior (cortina `clip-path` + zoom de imagen); inclinación 3D al puntero (sólo puntero fino, tier completo) | Cada servicio con reveal y parallax | Cuatro servicios en flujo |
+| Soluciones · CONECTAR | .85–1 | IA: línea transversal con cuatro nodos sobre la frase | Reveal de la frase | Frase visible |
+
+Sin pin de GSAP: CSS sticky reserva la altura antes de cargar el runtime. Errores de import activan `data-scene-flow` y vuelve la lectura estática.
+
+## Criterio & Stack + cierre (21/10/2026)
+
+Una sola sección `#herramientas` (`Stack.tsx`, `StackMotion.tsx`, `styles/stack.css`), en flujo y sin pin. Reveals por transición CSS disparados por `IntersectionObserver` (`data-in` en bloques `data-st="reveal"`): titular por líneas enmascaradas, vía de cada capa (`scaleX`), nodos (`scale`), puente de «HABLEMOS.». Sólo se arman con `data-st-ready` y tier > 0; reduced motion los anula. Sin GSAP ni ScrollTrigger en esta sección.
+
+## Equilibrio scroll / plano (21/10/2026)
+
+Pinned (sticky + un ScrollTrigger): Distancia (440/340svh), Manifiesto (310/250svh), Proyectos (460/380svh). Planas con reveals: Soluciones (`flowSolutions`, escalonado por fila), Proceso y Stack (`SectionReveal` + transiciones CSS), El Estudio (`flowStudio`). Equipo conserva su escena propia.

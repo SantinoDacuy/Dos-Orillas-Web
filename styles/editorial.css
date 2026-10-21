@@ -9,22 +9,17 @@
     content-visibility: auto;
     contain-intrinsic-block-size: auto var(--editorial-intrinsic-height, 900px);
   }
-  .studio-section { --editorial-intrinsic-height: 750px; }
   .team-section { --editorial-intrinsic-height: 900px; }
-  .stack-section { --editorial-intrinsic-height: 700px; }
-  .final-cta-section { --editorial-intrinsic-height: 800px; }
 }
 .editorial-section, .editorial-section * { min-inline-size: 0; }
 .editorial-line-mask, .editorial-line-inner { display: block; }
 .editorial-line-mask { overflow: visible; padding-block: 0.07em; }
 .editorial-section[data-editorial-profile="full"] .editorial-line-mask { overflow: clip; }
 .editorial-line-inner { overflow-wrap: anywhere; }
-.editorial-line-accent { color: var(--accent); font-family: var(--font-editorial), serif; font-style: italic; font-weight: 400; }
+.editorial-line-accent { color: var(--accent); font-family: var(--font-display),sans-serif; font-weight: 400; }
 .editorial-eyebrow { margin-block-end: 2rem; font: 400 0.75rem/1.5 var(--font-mono), monospace; text-transform: uppercase; letter-spacing: 0.04em; }
 .editorial-photo-mask { overflow: clip; }
 .editorial-photo-camera { inline-size: 100%; }
-.studio-section[data-editorial-profile="full"] .studio-col-left { position: sticky; top: clamp(80px, 12vh, 120px); }
-.studio-section[data-editorial-profile="full"] .studio-headline .editorial-line-mask { overflow: clip; }
 .team-section { padding-block: clamp(5rem, 9vw, 10rem) clamp(4rem, 8vw, 8rem); }
 .team-header { margin-block-end: clamp(3.5rem, 8vw, 8rem); }
 .team-headline { font: 510 clamp(2.5rem, 7vw, 7.8rem)/0.95 var(--font-display), sans-serif; letter-spacing: -0.06em; }
@@ -57,25 +52,9 @@
 .team-section[data-editorial-profile="full"] .team-caption-mask { overflow: clip; }
 .team-section[data-editorial-profile="full"] .team-member:focus-within .team-caption { opacity: 1 !important; transform: none !important; }
 
-.stack-section { padding-block: clamp(5rem, 10vw, 10rem); }
 
-.final-cta-section { min-block-size: 100svh; padding-block: clamp(5.5rem, 12vw, 12rem); }
-.final-cta-inner { max-inline-size: 100%; }
-.final-cta-premise { font: 510 clamp(2.5rem, 6.8vw, 8rem)/0.99 var(--font-display), sans-serif; letter-spacing: -0.06em; }
-.final-cta-title { position: relative; inline-size: fit-content; max-inline-size: 100%; overflow-wrap: anywhere; margin-block: clamp(3.5rem, 7vw, 7rem) clamp(3rem, 5vw, 5rem); padding-block-end: 0.13em; font: 530 clamp(4rem, 13.5vw, 15rem)/0.98 var(--font-display), sans-serif; letter-spacing: -0.065em; }
-.final-cta-bridge { display: block; position: absolute; inset-inline: 0; inset-block-end: 0; block-size: 2px; background: var(--accent); transform-origin: left; }
-.final-cta-link { position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: space-between; gap: 2rem; max-inline-size: 100%; padding: 1.4rem 1.8rem; border: 1px solid var(--line); font: 400 clamp(0.8rem, 1.35vw, 1.1rem)/1.5 var(--font-mono), monospace; transition: color 500ms var(--ease-out-quint), padding-inline 500ms var(--ease-out-quint); }
-.final-cta-fill { position: absolute; z-index: -1; inset: 0; background: var(--bridge); clip-path: inset(0 100% 0 0); transition: clip-path 700ms var(--ease-out-expo); pointer-events: none; }
-.final-cta-arrow { flex: none; transition: transform 500ms var(--ease-out-quint); }
-.final-cta-button-bridge { position: absolute; inset-inline: 0; inset-block-end: 0.8rem; block-size: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; pointer-events: none; transition: transform 700ms var(--ease-out-expo); }
-.final-cta-link:is(:hover, :focus-visible) { color: #071725; padding-inline: 2rem; }
-.final-cta-link:is(:hover, :focus-visible) .final-cta-fill { clip-path: inset(0); }
-.final-cta-link:is(:hover, :focus-visible) .final-cta-arrow { transform: translateX(6px); }
-.final-cta-link:is(:hover, :focus-visible) .final-cta-button-bridge { transform: scaleX(1); }
-.final-cta-link-text { overflow-wrap: anywhere; }
-.final-cta-location { margin-block-start: 2rem; font: 400 0.75rem/1.7 var(--font-mono), monospace; overflow-wrap: anywhere; }
 html[data-motion-tier="0"] .editorial-section * { transition: none; }
-html[data-motion-tier="0"] :is(.team-portrait-zoom, .final-cta-arrow) { transform: none !important; }
+html[data-motion-tier="0"] .team-portrait-zoom { transform: none !important; }
 @media (hover: hover) and (pointer: fine) {
   .team-pair:has(.team-member:is(:hover, :focus-within)) .team-member:not(:hover):not(:focus-within) .team-portrait-zoom { transform: scale(0.98); }
   .team-pair:has(.team-member:is(:hover, :focus-within)) .team-member:not(:hover):not(:focus-within) .team-portrait-shade { opacity: 0.45; }
@@ -89,27 +68,16 @@ html[data-motion-tier="0"] :is(.team-portrait-zoom, .final-cta-arrow) { transfor
   .team-portrait, .team-caption, .team-identity { max-inline-size: 100%; }
   .team-pair { gap: 2.5rem; }
   .team-headline { font-size: clamp(2.4rem, 8vw, 5.5rem); }
-  .stack-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 767px) {
-  .studio-section, .team-section, .stack-section { padding-block: 4.5rem; }
-  .studio-headline { font-size: clamp(2.05rem, 7.8vw, 4rem); }
-  .studio-lead { font-size: clamp(1.4rem, 5.4vw, 2.3rem); }
-  .studio-statements { font-size: clamp(1.65rem, 6vw, 2.4rem); }
+  .team-section { padding-block: 4.5rem; }
   .team-pair { grid-template-columns: minmax(0, 1fr); gap: 4rem; padding-inline-start: 1.25rem; }
   .team-seam { inset-inline-start: 0; inset-block: 0; }
   .team-headline { font-size: clamp(2rem, 8vw, 4rem); }
   .team-role { font-size: 1rem; }
-  .stack-headline { font-size: clamp(2.2rem, 7.8vw, 4rem); }
-  .final-cta-section { padding-block: 5rem; }
-  .final-cta-premise { font-size: clamp(2.2rem, 7.8vw, 4.5rem); }
-  .final-cta-title { font-size: clamp(3.2rem, 14vw, 7rem); }
-  .final-cta-link { inline-size: 100%; padding-inline: 1.2rem; gap: 1rem; }
-  .final-cta-link:is(:hover, :focus-visible) { padding-inline: 1.3rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .editorial-line-mask { overflow: visible !important; }
-  .editorial-line-inner, .studio-sticky, .team-portrait-zoom, .team-focus { transform: none !important; }
-  .studio-sticky { position: static !important; }
+  .editorial-line-inner, .team-portrait-zoom, .team-focus { transform: none !important; }
   .team-focus, .team-caption { opacity: 1 !important; }
 }

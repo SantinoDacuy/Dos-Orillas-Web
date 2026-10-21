@@ -1,82 +1,6 @@
 import { loadGSAP } from '@/lib/gsap';
 import type { MotionTier } from '@/hooks/useMotionTier';
-
-interface DistanceGeometry {
-  scale: number;
-  leftX: number;
-  rightX: number;
-  leftY: number;
-  rightY: number;
-  leftFirstY: number;
-  leftSecondX: number;
-  rightFirstX: number;
-  rightFirstY: number;
-  measureScaleX: number;
-  measureX: number;
-  measureY: number;
-}
-
-/** Zero-size inline marker gives the actual baseline in offset-parent coordinates.
- * It is inserted and removed only during setup/refresh, never during a scroll tick. */
-function baselineOffset(span: HTMLElement): number {
-  const marker = document.createElement('i');
-  marker.setAttribute('aria-hidden', 'true');
-  marker.style.cssText = 'display:inline-block;width:0;height:0;padding:0;margin:0;border:0;vertical-align:baseline;position:static;font:inherit;line-height:0;';
-  span.append(marker);
-  const world = span.closest<HTMLElement>('.distance-world');
-  let node: HTMLElement | null = marker;
-  let baseline = 0;
-  // A transformed word can become the marker's offset parent during refresh.
-  // Summing offsets preserves the original world coordinate without reading a
-  // transform-dependent bounding rectangle.
-  while (node && node !== world) {
-    baseline += node.offsetTop;
-    node = node.offsetParent as HTMLElement | null;
-  }
-  marker.remove();
-  return baseline;
-}
-
-function measureDistanceGeometry(stage: HTMLElement, left: HTMLElement, right: HTMLElement, measure: HTMLElement, leftFirst: HTMLElement, leftSecond: HTMLElement, rightFirst: HTMLElement, rightSecond: HTMLElement): DistanceGeometry {
-  const style = getComputedStyle(stage);
-  const paddingLeft = parseFloat(style.paddingLeft) || 0;
-  const paddingRight = parseFloat(style.paddingRight) || 0;
-  const viewportWidth = stage.clientWidth;
-  const available = Math.max(1, viewportWidth - paddingLeft - paddingRight);
-  const gap = Math.max(32, viewportWidth * .04);
-  const wordSpace = 20;
-  const leftWidth = leftFirst.offsetWidth + wordSpace + leftSecond.offsetWidth;
-  const rightWidth = rightFirst.offsetWidth + wordSpace + rightSecond.offsetWidth;
-  const scale = Math.min(.58, Math.max(.01, (available - gap) / (leftWidth + rightWidth)));
-  const pairWidth = scale * (leftWidth + rightWidth) + gap;
-  const pairLeft = paddingLeft + (available - pairWidth) / 2;
-  const pairRight = pairLeft + pairWidth;
-  const leftRowStart = leftFirst.offsetLeft;
-  const rightRowEnd = rightSecond.offsetLeft + rightSecond.offsetWidth;
-  const leftBaseline = baselineOffset(leftSecond);
-  const rightBaseline = baselineOffset(rightSecond);
-  const finalBaseline = stage.clientHeight * .43;
-  const leftRowCenter = leftSecond.offsetTop + leftSecond.offsetHeight / 2;
-  const rightRowCenter = rightSecond.offsetTop + rightSecond.offsetHeight / 2;
-  const finalRowCenter = finalBaseline - scale * ((leftBaseline - leftRowCenter) + (rightBaseline - rightRowCenter)) / 2;
-  const gapCenter = pairLeft + scale * leftWidth + gap / 2;
-
-  return {
-    scale,
-    // Parent origins are left-center and right-center respectively.
-    leftX: pairLeft - (left.offsetLeft + scale * leftRowStart),
-    rightX: pairRight - (right.offsetLeft + right.offsetWidth * (1 - scale) + scale * rightRowEnd),
-    leftY: finalBaseline - left.offsetTop - left.offsetHeight / 2 * (1 - scale) - scale * leftBaseline,
-    rightY: finalBaseline - right.offsetTop - right.offsetHeight / 2 * (1 - scale) - scale * rightBaseline,
-    leftFirstY: leftSecond.offsetTop - leftFirst.offsetTop,
-    leftSecondX: leftRowStart + leftFirst.offsetWidth + wordSpace - leftSecond.offsetLeft,
-    rightFirstX: rightSecond.offsetLeft - wordSpace - rightFirst.offsetWidth - rightFirst.offsetLeft,
-    rightFirstY: rightSecond.offsetTop - rightFirst.offsetTop,
-    measureScaleX: gap / Math.max(1, measure.offsetWidth),
-    measureX: gapCenter - (measure.offsetLeft + measure.offsetWidth / 2),
-    measureY: finalRowCenter - (measure.offsetTop + measure.offsetHeight / 2),
-  };
-}
+import { buildDistance } from './distance-timeline';
 
 export async function mountScene(root: HTMLElement, name: 'hero' | 'distance', tier: MotionTier, signal?: AbortSignal) {
   const { gsap, ScrollTrigger } = await loadGSAP();
@@ -158,49 +82,7 @@ export async function mountScene(root: HTMLElement, name: 'hero' | 'distance', t
         cleanupListeners = () => { previousCleanup(); stage.removeEventListener('pointermove', move); stage.removeEventListener('pointerleave', leave); };
       }
     } else {
-      const stage = root.querySelector<HTMLElement>('.distance-stage');
-      const left = root.querySelector<HTMLElement>('.distance-left');
-      const right = root.querySelector<HTMLElement>('.distance-right');
-      if (!stage || !left || !right) return;
-      const leftFirst = left.querySelector<HTMLElement>('h3 span:first-child');
-      const leftSecond = left.querySelector<HTMLElement>('h3 span:last-child');
-      const rightFirst = right.querySelector<HTMLElement>('h3 span:first-child');
-      const rightSecond = right.querySelector<HTMLElement>('h3 span:last-child');
-      const measure = root.querySelector<HTMLElement>('.distance-measure');
-      let geometry: DistanceGeometry | undefined;
-      const cacheGeometry = () => {
-        if (!vertical && measure && leftFirst && leftSecond && rightFirst && rightSecond) {
-          geometry = measureDistanceGeometry(stage, left, right, measure, leftFirst, leftSecond, rightFirst, rightSecond);
-        }
-      };
-      cacheGeometry();
-      const tl = gsap.timeline({ defaults: { ease: 'power2.inOut' }, scrollTrigger: {
-        trigger: root, start: 'top top', end: lite ? 'bottom bottom' : () => `+=${innerHeight * 3}`,
-        pin: lite ? false : stage, pinSpacing: false, scrub: true, anticipatePin: 1, invalidateOnRefresh: true, markers: debug,
-        onRefreshInit: cacheGeometry, onRefresh: st => range(st.start, st.end),
-      } });
-      tl.addLabel('separar', 0).fromTo(left, { xPercent: vertical ? 0 : -8, opacity: .7 }, { xPercent: 0, opacity: 1, duration: .18 }, 0)
-        .fromTo(right, { xPercent: vertical ? 0 : 8, opacity: .7 }, { xPercent: 0, opacity: 1, duration: .18 }, 0)
-        .addLabel('acercar', .18);
-      if (vertical) {
-        tl.to(left, { y: () => innerHeight * .085, scale: .65, duration: .44 }, .18)
-          .to(right, { y: () => -innerHeight * .085, scale: .65, duration: .44 }, .18)
-          .to(q('.distance-measure'), { scaleY: .4, duration: .44 }, .18);
-      } else {
-        tl.to(left, { x: () => geometry?.leftX ?? 0, y: () => geometry?.leftY ?? 0, scale: () => geometry?.scale ?? .58, duration: .44 }, .18)
-          .to(right, { x: () => geometry?.rightX ?? 0, y: () => geometry?.rightY ?? 0, scale: () => geometry?.scale ?? .58, duration: .44 }, .18)
-          .to(q('.distance-measure'), { x: () => geometry?.measureX ?? 0, y: () => geometry?.measureY ?? 0, scaleX: () => geometry?.measureScaleX ?? 1, duration: .44 }, .18);
-        if (leftFirst && leftSecond) tl.to(leftFirst, { y: () => geometry?.leftFirstY ?? 0, duration: .44 }, .18)
-          .to(leftSecond, { x: () => geometry?.leftSecondX ?? 0, duration: .44 }, .18);
-        if (rightFirst && rightSecond) tl.to(rightFirst, { x: () => geometry?.rightFirstX ?? 0, y: () => geometry?.rightFirstY ?? 0, duration: .44 }, .18);
-      }
-      tl.to(q('.distance-description'), { opacity: 0, duration: .12 }, .3)
-        .to(q('.measure-label'), { opacity: 0, duration: .12 }, .3)
-        .addLabel('conectar', .72).fromTo(q('.distance-bridge'), { scaleX: 0 }, { scaleX: 1, duration: .12 }, .72)
-        .fromTo(q('.distance-connection p'), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: .12 }, .72)
-        .addLabel('resolver', .82).fromTo(q('.distance-statement'), { y: 18, opacity: 0 }, { y: 0, opacity: 1, stagger: .045, duration: .09 }, .82)
-        .fromTo(q('.distance-endline'), { scaleX: 0 }, { scaleX: 1, duration: .1 }, .9)
-        .to({}, { duration: .01 }, .99);
+      cleanupListeners = buildDistance({ gsap, ScrollTrigger }, { root, tier, narrow: innerWidth < 768, debug, range });
       root.dataset.sceneReady = 'true';
     }
     });

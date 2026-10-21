@@ -1,73 +1,81 @@
-import { distanceCopy } from '@/content/site';
-import { DistanceMotion } from './SceneMotion';
 import { Suspense } from 'react';
-import { GlassFold } from '@/components/ui/glass-fold';
+import { distanceCopy } from '@/content/site';
+import { Media } from '@/components/ui/Media';
+import { DistanceMotion } from './SceneMotion';
 
-const statementPhases = ['DIAGNÓSTICO', 'ESTRATEGIA', 'DESARROLLO'] as const;
+/** Words sit in their own clipping boxes so the timeline can lift them line by line.
+ * The accessible text is the plain sentence; the split copy is presentational. */
+function Words({ text, className }: { text: string; className?: string }) {
+  return <>
+    <span className="sr-only">{text}</span>
+    <span className={className} aria-hidden="true">
+      {text.split(' ').map((word, index) => <span key={`${word}-${index}`}>
+        {index > 0 && ' '}<span className="dw"><span className="dw-in">{word}</span></span>
+      </span>)}
+    </span>
+  </>;
+}
+
+const HANGERS = Array.from({ length: 19 }, (_, index) => {
+  const t = (index + 1) / 20;
+  return { x: 60 + 880 * t, cable: 18 + 224 * t * (1 - t) };
+});
 
 export function Distance() {
+  const { left, right } = distanceCopy;
   return <section id="distancia" className="distance-scene" data-theme="navy-deep" data-scene="distance" aria-labelledby="distance-title">
     <div className="distance-stage">
-      {/* Full-bleed GlassFold WebGL Ambient Background */}
-      <div className="distance-glassfold-backdrop" aria-hidden="true">
-        <GlassFold
-          color1="#0c2d4a"
-          color2="#06121d"
-          color3="#2575a2"
-          speed={0.3}
-          scale={1.0}
-          noise={0.04}
-          className="absolute inset-0 h-full w-full pointer-events-none"
-        />
-        <div className="distance-backdrop-vignette" />
-        <div className="distance-bg-mask-top" />
-        <div className="distance-bg-mask-bottom" />
+      <h2 id="distance-title" className="sr-only">{distanceCopy.title}</h2>
+
+      <div className="distance-atmosphere" aria-hidden="true">
+        <canvas className="distance-river" />
+        <span className="distance-grain" />
+        <span className="distance-vignette" />
       </div>
 
-      <h2 id="distance-title" className="sr-only">{distanceCopy.title}</h2>
-      <div className="distance-topline">
-        <div className="shore-badge shore-left">
-          <span className="shore-pulse" aria-hidden="true" />
-          <span className="mono shore-label">{distanceCopy.left.orilla}</span>
-          <span className="mono shore-role">// NEGOCIO</span>
-        </div>
-        <div className="shore-badge shore-right">
-          <span className="mono shore-role">TECNOLOGÍA //</span>
-          <span className="mono shore-label">{distanceCopy.right.orilla}</span>
-          <span className="shore-pulse" aria-hidden="true" />
-        </div>
+      <div className="distance-hud" aria-hidden="true">
+        <span className="hud-label mono">{left.orilla}</span>
+        <span className="hud-rail"><span className="hud-fill" /><span className="hud-mark" /></span>
+        <span className="hud-label mono">{right.orilla}</span>
       </div>
-      <div className="distance-worlds">
-        <div className="distance-world distance-left"><h3><span>{distanceCopy.left.lines[0]}</span><span>{distanceCopy.left.lines[1]}</span></h3></div>
-        <div className="distance-world distance-right"><h3><span>{distanceCopy.right.lines[0]}</span><span>{distanceCopy.right.lines[1]}</span></h3></div>
-      </div>
-      <div className="distance-measure" aria-hidden="true">
-        <span className="measure-cap" />
-        <span className="measure-line" />
-        <div className="measure-bridge-core">
-          <span className="measure-label mono">{distanceCopy.measure}</span>
-          <span className="measure-bridge-node">
-            <span className="measure-bridge-glow" />
-          </span>
+
+      <div className="distance-track">
+        <div className="distance-bank distance-left">
+          <span className="bank-label mono" aria-hidden="true">{left.orilla}</span>
+          <h3 className="bank-word">
+            {left.lines.map(line => <span key={line} className="line"><span className="line-in">{line}</span></span>)}
+          </h3>
         </div>
-        <span className="measure-line" />
-        <span className="measure-cap" />
-      </div>
-      <p className="distance-description">{distanceCopy.description}</p>
-      <div className="distance-connection"><span className="distance-bridge" aria-hidden="true"/><p className="distance-connection-text">{distanceCopy.connection}</p></div>
-      <div className="distance-statements">{distanceCopy.statements.map((statement,index) => (
-        <div key={statement} className={`distance-statement statement-${index}`}>
-          <div className="statement-head">
-            <span className="statement-badge mono">
-              <span className="statement-dot" aria-hidden="true" />
-              <span className="statement-number">FASE 0{index+1}</span>
-            </span>
-            <span className="statement-role mono">{statementPhases[index]}</span>
+
+        <div className="distance-gap">
+          <div className="distance-aerial" aria-hidden="true">
+            <Media path="/images/distance/river-aerial.webp" alt="" width={1600} height={1200} sizes="(min-width:768px) 150vw, 100vw" />
           </div>
-          <p className="statement-text">{statement}</p>
+          <div className="distance-ruler" aria-hidden="true" />
+          <span className="distance-gap-label mono" aria-hidden="true">{distanceCopy.measure}</span>
+          <p className="distance-description"><Words text={distanceCopy.description} className="dd-text" /></p>
+          <svg className="distance-bridge-svg" viewBox="0 0 1000 120" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <line className="bridge-deck" x1="0" y1="100" x2="1000" y2="100" pathLength="1" />
+            <line className="bridge-pylon" x1="60" y1="100" x2="60" y2="14" pathLength="1" />
+            <line className="bridge-pylon" x1="940" y1="100" x2="940" y2="14" pathLength="1" />
+            <path className="bridge-cable" d="M60 18 Q500 130 940 18" pathLength="1" />
+            {HANGERS.map(({ x, cable }) => <line key={x} className="bridge-hanger" x1={x} y1={cable} x2={x} y2="100" pathLength="1" />)}
+          </svg>
         </div>
-      ))}</div>
-      <div className="distance-endline" aria-hidden="true" />
+
+        <div className="distance-bank distance-right">
+          <span className="bank-label mono" aria-hidden="true">{right.orilla}</span>
+          <h3 className="bank-word">
+            {right.lines.map(line => <span key={line} className="line"><span className="line-in">{line}</span></span>)}
+          </h3>
+        </div>
+
+      </div>
+
+      <div className="distance-outro">
+        <span className="distance-vline" aria-hidden="true" />
+        <p className="distance-connection"><Words text={distanceCopy.connection} className="dc-text" /></p>
+      </div>
     </div>
     <Suspense fallback={null}><DistanceMotion /></Suspense>
   </section>;

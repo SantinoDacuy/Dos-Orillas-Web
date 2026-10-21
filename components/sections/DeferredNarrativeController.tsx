@@ -5,8 +5,6 @@ import { useMotion } from '@/components/motion/MotionProvider';
 import { getMountedSceneRoot } from '@/lib/get-visible-root';
 
 const loaders = {
-  manifiesto: () => import('./ManifestoMotion').then(module => module.ManifestoMotion),
-  soluciones: () => import('./SolutionsMotion').then(module => module.SolutionsMotion),
   proceso: () => import('./ProcessMotion').then(module => module.ProcessMotion),
 };
 type Scene = keyof typeof loaders;
@@ -35,7 +33,7 @@ export function DeferredNarrativeController() {
       void loaders[scene]().then(Component => {
         if (alive) setComponents(previous => ({ ...previous, [scene]: Component }));
       }).catch(() => {
-        if (alive && scene === 'manifiesto' && root) root.dataset.manifestoFlow = 'true';
+        /* El contenido del servidor sigue completo si falla el import. */
       });
     };
     const observer = new IntersectionObserver(entries => {

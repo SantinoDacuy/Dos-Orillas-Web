@@ -84,6 +84,9 @@ export function ProjectTransitionsProvider({ children }: { children: ReactNode }
     const operation = pending.current;
     if (!operation || operation.restored || operation.pathname !== pathname || operation.restore?.sourceId !== sourceId) return;
     operation.restored = true;
+    // Un escenario fijado (sticky) fija su propio progreso con el scroll: la posición nativa del
+    // historial ya es la correcta y reubicar la portada por su rectángulo la movería de proyecto.
+    if (element.closest('[data-cover-restore="native"]')) return;
     unlockGridLayout(element);
     // Synchronous positioning/focus precedes the new snapshot's layout callback.
     const bounds = element.getBoundingClientRect();

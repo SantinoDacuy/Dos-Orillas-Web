@@ -10,7 +10,6 @@ import { ProjectsCinematicSection } from '@/components/sections/ProjectsCinemati
 import { Studio } from '@/components/sections/Studio';
 import { Team } from '@/components/sections/Team';
 import { Stack } from '@/components/sections/Stack';
-import { FinalCTA } from '@/components/sections/FinalCTA';
 import { Contact } from '@/components/sections/Contact';
 import { EditorialMotion } from '@/components/sections/EditorialMotion';
 import { StructuredData } from '@/components/seo/StructuredData';
@@ -29,7 +28,6 @@ export default function Home() {
     <Studio />
     <Team />
     <Stack />
-    <FinalCTA />
     <Contact />
     <Suspense fallback={null}><EditorialMotion /></Suspense>
   </>;

@@ -47,11 +47,35 @@
     "height": 821,
     "blurDataURL": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAABwAQCdASoKAAQABIByJYwCdAF1AAD+8EJQfNT4WTbaggAA"
   },
+  "/images/approach/manifest-a.webp": {
+    "src": "/images/approach/manifest-a.webp",
+    "width": 1916,
+    "height": 755,
+    "blurDataURL": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAABwAQCdASoKAAQABIByJagCdAFAAAD+8EJK5+0EBYcjnez4M2Cm9VAA"
+  },
+  "/images/approach/manifest-b.webp": {
+    "src": "/images/approach/manifest-b.webp",
+    "width": 1916,
+    "height": 821,
+    "blurDataURL": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAACQAQCdASoKAAQABIByJZQAAtw21YAA/uwR0qDXQuXAa134d5gcAA=="
+  },
   "/images/cosmos-stars.jpg": {
     "src": "/images/cosmos-stars.jpg",
     "width": 1024,
     "height": 576,
     "blurDataURL": "data:image/webp;base64,UklGRjwAAABXRUJQVlA4IDAAAACwAQCdASoKAAYABIByJagCdAEOuwSAAP7y2pfAlbMaHiwODoUvSn1HWmHlS5WwAAA="
+  },
+  "/images/crowd-peeps.png": {
+    "src": "/images/crowd-peeps.png",
+    "width": 3600,
+    "height": 2268,
+    "blurDataURL": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4WAoAAAAQAAAACQAABQAAQUxQSDMAAAABYNBIkuKow2OamX3mj4jIGClwNDhc/3a8x/WYoxbPCMQwDdW5UNm+7VhsscOadWtd2GcAVlA4IDoAAACwAQCdASoKAAYABIByJaQAAlRhymgAAPZY0a6BBJcl6sw2s7NIgG60hCt3aDsdUNyKWSi40Y0mfAAA"
+  },
+  "/images/distance/river-aerial.webp": {
+    "src": "/images/distance/river-aerial.webp",
+    "width": 1600,
+    "height": 1200,
+    "blurDataURL": "data:image/webp;base64,UklGRjIAAABXRUJQVlA4ICYAAADQAQCdASoKAAgABIByJZQCdAEQ/hTd4AD+7ojRs3DEq8pXfGgAAA=="
   },
   "/images/parallax/layer-1.webp": {
     "src": "/images/parallax/layer-1.webp",
@@ -71,17 +95,17 @@
     "height": 1906,
     "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4WAoAAAAQAAAACQAACQAAQUxQSC0AAAABYFvbNixzGUrQhyYUqROhJRPNhEL+PFQQERMAfo1vKHHBJD9oY/uIJXg3XwUAVlA4IBoAAAAwAQCdASoKAAoABIByJaQAA3AA/vDGigAAAA=="
   },
-  "/images/retro-pc.webp": {
-    "src": "/images/retro-pc.webp",
-    "width": 1920,
-    "height": 1080,
-    "blurDataURL": "data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAACQAQCdASoKAAYABIByJaQAAltQPcAA+IXIKfPjGKhR+ioKsOpWQAAA"
-  },
   "/images/river-delta.jpg": {
     "src": "/images/river-delta.jpg",
     "width": 1024,
     "height": 768,
     "blurDataURL": "data:image/webp;base64,UklGRi4AAABXRUJQVlA4ICIAAADQAQCdASoKAAgABIByJYwCdAEQ/hTQoAD+6+PSBdnLvAAA"
+  },
+  "/images/studio/notebook.webp": {
+    "src": "/images/studio/notebook.webp",
+    "width": 1200,
+    "height": 1600,
+    "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAQCdASoKAA0ABIByJQBOgB5wQBoAAP7d2zeRInot1bDx49GA8yI8/ehBER95HBgZz9BW9JPc/HOP6f+evuMPVmAa9OAqQ2J210gyAAAAAA=="
   },
   "/images/tech-vr.png": {
     "src": "/images/tech-vr.png",

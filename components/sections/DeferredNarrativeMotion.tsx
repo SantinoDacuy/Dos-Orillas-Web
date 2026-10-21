@@ -6,5 +6,5 @@ const loadController = () => import('./DeferredNarrativeController').then(module
 
 /** Native anchors/Tab unlock immediately; runtime orchestration waits for travel. */
 export function DeferredNarrativeMotion() {
-  return useDeferredSceneController('#manifiesto,#soluciones,#proceso', loadController);
+  return useDeferredSceneController('#proceso', loadController);
 }

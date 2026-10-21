@@ -380,7 +380,7 @@ async function stateOfMotion(page) {
     tier: document.documentElement.dataset.motionTier,
     pins: document.querySelectorAll(".pin-spacer").length,
     triggers: typeof window.__stCount === "number" ? window.__stCount : null,
-    staleSceneTransforms: Array.from(document.querySelectorAll('.hero-title, .hero-photo, .distance-world')).map((element) => {
+    staleSceneTransforms: Array.from(document.querySelectorAll('.hero-title, .hero-photo, .distance-track')).map((element) => {
       const transform = getComputedStyle(element).transform;
       return { class: element.className, transform, hasVisualEffect: transform !== "none" && !new DOMMatrixReadOnly(transform).isIdentity };
     }).filter((element) => element.hasVisualEffect),

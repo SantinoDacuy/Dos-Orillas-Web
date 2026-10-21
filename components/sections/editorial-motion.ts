@@ -3,7 +3,7 @@ import { loadGSAP, type GSAPRuntime } from '@/lib/gsap';
 import { distance, dur, ease, motionCssEase, stagger } from '@/lib/motion-tokens';
 
 type Cleanup = () => void;
-const readableTargets = '.studio-headline,.team-caption,.final-cta-premise,.stack-header';
+const readableTargets = '.team-caption';
 
 function nativeReveals(root: HTMLElement): Cleanup {
   const animations: Animation[] = [];
@@ -37,12 +37,9 @@ function nativeReveals(root: HTMLElement): Cleanup {
     animations.forEach(animation => { animation.onfinish = null; animation.cancel(); });
   };
   try {
-    root.querySelectorAll<HTMLElement>('.studio-headline,.team-headline,.stack-headline,.final-cta-premise').forEach(block => {
+    root.querySelectorAll<HTMLElement>('.team-headline').forEach(block => {
       reveal(block, Array.from(block.querySelectorAll<HTMLElement>('[data-editorial-line]')),
         [{ opacity: 0, transform: 'translateY(30%)' }, { opacity: 1, transform: 'none' }]);
-    });
-    root.querySelectorAll<HTMLElement>('.studio-lead-quote, .studio-paragraph, .studio-bridge-wrapper').forEach(block => {
-      reveal(block, [block], [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }]);
     });
     root.querySelectorAll<HTMLElement>('[data-editorial-photo][data-photo-real="true"]').forEach(photo => {
       const mask = photo.querySelector<HTMLElement>('.editorial-photo-mask');
@@ -50,70 +47,9 @@ function nativeReveals(root: HTMLElement): Cleanup {
       if (mask) reveal(photo, [mask], [{ clipPath: side === 'left' ? 'inset(0 100% 0 0)' : side === 'right' ? 'inset(0 0 0 100%)' : 'inset(100% 0 0 0)' }, { clipPath: 'inset(0)' }]);
     });
     root.querySelectorAll<HTMLElement>('[data-editorial-bridge]').forEach(bridge => reveal(bridge, [bridge],
-      [{ transform: bridge.classList.contains('final-cta-bridge') ? 'scaleX(0)' : 'scaleY(0)' }, { transform: 'none' }]));
+      [{ transform: 'scaleY(0)' }, { transform: 'none' }]));
     return cleanup;
   } catch (error) { cleanup(); throw error; }
-}
-
-function fullStudio(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
-  const { gsap, syncTriggerCount } = runtime;
-  const context = gsap.context(() => {}, root);
-  try {
-    context.add(() => {
-      const heading = root.querySelector<HTMLElement>('.studio-headline');
-      const badge = root.querySelector<HTMLElement>('.radiant-badge');
-      const line1 = root.querySelector<HTMLElement>('[data-studio-line="1"] .studio-headline-inner');
-      const line2 = root.querySelector<HTMLElement>('[data-studio-line="2"] .studio-headline-inner');
-      const line3 = root.querySelector<HTMLElement>('[data-studio-line="3"] .studio-headline-inner');
-      const lead = root.querySelector<HTMLElement>('.studio-lead-quote');
-      const paragraph = root.querySelector<HTMLElement>('.studio-paragraph');
-      const bridgePath = root.querySelector<SVGLineElement>('.studio-bridge-path');
-      const bridgePin = root.querySelector<HTMLElement>('.studio-bridge-pin');
-
-      if (!heading) return;
-
-      const timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: root,
-          start: 'top 75%',
-          end: 'bottom 45%',
-          scrub: 0.6,
-        },
-      });
-
-      // 1. Entra el eyebrow y la línea 1 del titular
-      if (badge) {
-        timeline.fromTo(badge, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }, 0);
-      }
-      if (line1) {
-        timeline.fromTo(line1, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.05);
-      }
-
-      // 2. Al avanzar el scroll, aparece la línea 2 y entra la frase principal
-      if (line2) {
-        timeline.fromTo(line2, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.25);
-      }
-      if (lead) {
-        timeline.fromTo(lead, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.3);
-      }
-
-      // 3. Aparece la línea 3 en cian y el párrafo, y el puente se dibuja con las coordenadas
-      if (line3) {
-        timeline.fromTo(line3, { yPercent: 100, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, 0.5);
-      }
-      if (paragraph) {
-        timeline.fromTo(paragraph, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' }, 0.55);
-      }
-      if (bridgePath) {
-        timeline.fromTo(bridgePath, { strokeDashoffset: 968 }, { strokeDashoffset: 0, duration: 0.35, ease: 'none' }, 0.55);
-      }
-      if (bridgePin) {
-        timeline.fromTo(bridgePin, { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'back.out(1.4)' }, 0.65);
-      }
-    });
-  } catch (error) { context.revert(); syncTriggerCount(); throw error; }
-  syncTriggerCount();
-  return () => { context.revert(); syncTriggerCount(); };
 }
 
 function fullTeam(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
@@ -161,60 +97,6 @@ function fullTeam(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
   return cleanup;
 }
 
-function finalCtaInteractions(root: HTMLElement, runtime?: GSAPRuntime): Cleanup {
-  const link = root.querySelector<HTMLAnchorElement>('[data-final-cta]');
-  if (!link) return () => {};
-  const context = runtime?.gsap.context(() => {}, root);
-  const listeners: Cleanup[] = [];
-  const listen = <K extends keyof HTMLElementEventMap>(event: K, callback: (event: HTMLElementEventMap[K]) => void) => {
-    link.addEventListener(event, callback); listeners.push(() => link.removeEventListener(event, callback));
-  };
-  listen('click', event => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
-    const target = document.querySelector<HTMLElement>(link.getAttribute('href') ?? '');
-    if (!target || !window.__lenis) return;
-    event.preventDefault();
-    window.__lenis.scrollTo(target, { duration: dur.lg });
-    // Keep the native destination discoverable after smooth anchor navigation.
-    if (location.hash !== link.hash) history.pushState(history.state, '', link.hash);
-  });
-  if (runtime && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    context?.add(() => {
-      const xTo = runtime.gsap.quickTo(link, 'x', { duration: dur.sm, ease: ease.soft });
-      const yTo = runtime.gsap.quickTo(link, 'y', { duration: dur.sm, ease: ease.soft });
-      let centerX = 0; let centerY = 0;
-      listen('pointerenter', () => { const rect = link.getBoundingClientRect(); centerX = rect.left + rect.width / 2; centerY = rect.top + rect.height / 2; });
-      listen('pointermove', event => { xTo((event.clientX - centerX) * distance.magnet); yTo((event.clientY - centerY) * distance.magnet); });
-      listen('pointerleave', () => { xTo(0); yTo(0); });
-      listen('focus', () => { xTo(0); yTo(0); });
-    });
-  }
-  return () => { listeners.forEach(remove => remove()); context?.revert(); };
-}
-
-function fullCTA(root: HTMLElement, runtime: GSAPRuntime): Cleanup {
-  const { gsap, syncTriggerCount } = runtime;
-  const context = gsap.context(() => {}, root);
-  let removeInteractions = () => {};
-  try {
-    context.add(() => {
-      const premise = root.querySelector<HTMLElement>('.final-cta-premise');
-      if (premise && premise.getBoundingClientRect().top >= innerHeight * 0.85) {
-        gsap.fromTo(premise.querySelectorAll('[data-editorial-line]'), { yPercent: distance.reveal, opacity: 0 },
-          { yPercent: 0, opacity: 1, stagger: stagger.lines, ease: ease.scrub,
-            scrollTrigger: { trigger: premise, start: 'top 80%', end: 'bottom 45%', scrub: true } });
-      }
-      const heading = root.querySelector<HTMLElement>('.final-cta-title');
-      const bridge = root.querySelector<HTMLElement>('.final-cta-bridge');
-      if (heading && bridge) gsap.fromTo(bridge, { scaleX: 0 }, { scaleX: 1, ease: ease.scrub,
-        scrollTrigger: { trigger: heading, start: 'top 85%', end: 'bottom 55%', scrub: true } });
-    });
-    removeInteractions = finalCtaInteractions(root, runtime);
-  } catch (error) { context.revert(); removeInteractions(); syncTriggerCount(); throw error; }
-  syncTriggerCount();
-  return () => { removeInteractions(); context.revert(); syncTriggerCount(); };
-}
-
 export function mountEditorial(root: HTMLElement, tier: MotionTier, signal: AbortSignal): Cleanup {
   let alive = true; let generation = 0; let frame = 0; let key = ''; let stop: Cleanup = () => {};
   const targets = Array.from(root.querySelectorAll<HTMLElement>(readableTargets));
@@ -232,32 +114,26 @@ export function mountEditorial(root: HTMLElement, tier: MotionTier, signal: Abor
     // Without real portraits the team remains a complete typographic pair.
     // Its names and roles never wait behind a photo reveal or a pinned stage.
     if (scene === 'team' && !root.querySelector('[data-editorial-photo][data-photo-real="true"]')) { notify(); return; }
-    if (scene === 'stack') {
-      root.dataset.editorialReady = 'true';
-      key = footprint();
-      notify();
-      return;
-    }
+    // Sólo el equipo tiene escena propia; el resto de las secciones editoriales se lee en flujo.
+    if (scene !== 'team') { root.dataset.editorialReady = 'true'; key = footprint(); notify(); return; }
     if (tier === 1 || innerWidth < 1024 || innerHeight <= 700) {
       root.dataset.editorialProfile = 'lite';
       try {
-        const removeReveal = nativeReveals(root); const removeLinks = scene === 'cta' ? finalCtaInteractions(root) : () => {};
-        stop = () => { removeReveal(); removeLinks(); }; root.dataset.editorialReady = 'true'; key = footprint();
+        const removeReveal = nativeReveals(root);
+        stop = removeReveal; root.dataset.editorialReady = 'true'; key = footprint();
       } catch { fallback(); }
       return;
     }
     void loadGSAP().then(runtime => {
       if (!alive || signal.aborted || current !== generation) return;
       root.dataset.editorialProfile = 'full';
-      const heading = root.querySelector<HTMLElement>('.studio-headline');
       const stage = root.querySelector<HTMLElement>('.team-stage');
       const pair = root.querySelector<HTMLElement>('.team-pair');
-      const studioFits = !heading || heading.scrollHeight + 144 <= innerHeight && heading.scrollWidth <= heading.clientWidth + 2;
       const teamFits = !stage || !pair || pair.scrollHeight + innerHeight * 0.12 <= stage.clientHeight && pair.scrollWidth <= pair.clientWidth + 2;
-      if (!studioFits || !teamFits || scene === 'team' && stage && stage.getBoundingClientRect().top < innerHeight * 0.85) {
+      if (!teamFits || stage && stage.getBoundingClientRect().top < innerHeight * 0.85) {
         fallback(); key = footprint(); return;
       }
-      stop = scene === 'studio' ? fullStudio(root, runtime) : scene === 'team' ? fullTeam(root, runtime) : fullCTA(root, runtime);
+      stop = fullTeam(root, runtime);
       root.dataset.editorialReady = 'true'; key = footprint(); notify();
     }).catch(() => { if (alive && !signal.aborted && current === generation) fallback(); });
   };

@@ -85,13 +85,8 @@ function useScene(name: 'hero' | 'distance') {
         return phraseFits && title.scrollWidth <= title.clientWidth + 2 &&
           titleEnd + 8 <= bottom.offsetTop && photo.offsetTop + photo.offsetHeight <= stage.clientHeight;
       }
-      const connection = root.querySelector<HTMLElement>('.distance-connection');
-      const statements = root.querySelector<HTMLElement>('.distance-statements');
-      const description = root.querySelector<HTMLElement>('.distance-description');
-      if (!connection || !statements || getComputedStyle(connection).position === 'static') return true;
-      const lateContentFits = connection.offsetTop + connection.offsetHeight + 8 <= statements.offsetTop;
-      const staticCopyFits = tier !== 0 || !description || description.offsetTop + description.offsetHeight + 12 <= connection.offsetTop;
-      return lateContentFits && staticCopyFits;
+      // Distance lays itself out with viewport units; only short viewports fall back to flow, in CSS and below.
+      return true;
     };
 
     const updateLayout = () => {
@@ -120,7 +115,7 @@ function useScene(name: 'hero' | 'distance') {
       if (!flow && tier > 0) enhance();
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(updateLayout); };
-    const watched = name === 'hero' ? '.hero-stage,.hero-title,.hero-title-dos,.hero-title-orillas,.hero-second,.hero-bottom,.hero-studio' : '.distance-stage,.distance-description,.distance-connection,.distance-statements';
+    const watched = name === 'hero' ? '.hero-stage,.hero-title,.hero-title-dos,.hero-title-orillas,.hero-second,.hero-bottom,.hero-studio' : '.distance-stage,.distance-description,.distance-connection';
     let resize: ResizeObserver | undefined;
     let restoredPosition: IntersectionObserver | undefined;
     let watching = false;
