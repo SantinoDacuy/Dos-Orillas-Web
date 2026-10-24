@@ -4,24 +4,23 @@
   .pr {
     position:relative; background:#0b1f33; color:#F2EEE6;
     padding:clamp(64px,9svh,104px) var(--gutter); scroll-margin-top:calc(88px + 24px);
-    --p-accent:var(--bridge-on-dark,#7FA6CF); --p-cream:#F2EEE6; --p-line:rgb(242 238 230 / 18%); --p-soft:#C9D4DE;
+    --p-accent:var(--bridge-on-dark,#68B1FF); --p-cream:#F2EEE6; --p-line:rgb(242 238 230 / 18%); --p-soft:#C9D4DE;
   }
   .pr-wrap { display:grid; gap:clamp(40px,7svh,72px); max-width:1480px; margin-inline:auto; }
   .pr-head { display:grid; gap:14px; }
-  .pr-eyebrow { margin:0; display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.16em; color:var(--p-accent); }
-  .pr-dot { width:6px; height:6px; border-radius:50%; background:var(--p-accent); box-shadow:0 0 12px var(--p-accent); }
+  .pr-eyebrow { margin:0; display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.03em; color:var(--p-accent); }
   .pr-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(30px,4.4vw,70px); line-height:.98; letter-spacing:-.05em; text-wrap:balance; }
   .pr-line { display:block; overflow:clip; padding:.12em .1em .08em 0; margin:-.12em 0 -.08em; }
   .pr-line-in { display:block; }
-  .pr-accent { color:var(--p-accent); }
+  .pr-accent { font-weight:300; letter-spacing:-.035em; }
 
   .pr-steps { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(28px,4svh,40px); }
   .pr-step { position:relative; display:grid; align-content:start; gap:10px; min-width:0; padding-left:28px; }
   .pr-rail { position:absolute; inset:0 auto 0 0; width:9px; }
-  .pr-node { position:absolute; left:0; top:.5em; width:9px; height:9px; rotate:45deg; background:var(--p-cream); box-shadow:0 0 14px 2px rgb(127 166 207 / 60%); }
+  .pr-node { position:absolute; left:0; top:.5em; width:9px; height:9px; rotate:45deg; background:var(--p-cream); box-shadow:0 0 14px 2px rgb(104 177 255 / 60%); }
   .pr-rail-line { position:absolute; left:4px; top:1.4em; bottom:-40px; width:1px; background:var(--p-line); transform-origin:top center; }
   .pr-step:last-child .pr-rail-line { display:none; }
-  .pr-num { font-size:11px; letter-spacing:.18em; color:var(--p-accent); }
+  .pr-num { font-size:11px; letter-spacing:.03em; color:var(--p-accent); }
   .pr-step-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(22px,2.1vw,32px); line-height:1.08; letter-spacing:-.035em; }
   .pr-step-desc { margin:0; max-width:32ch; font-size:clamp(15px,1.15vw,17px); line-height:1.55; color:var(--p-soft); }
 }

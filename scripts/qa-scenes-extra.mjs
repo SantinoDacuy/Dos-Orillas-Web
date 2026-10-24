@@ -91,7 +91,7 @@ async function checkContent(page, result, suffix) {
       "Dos Orillas Estudio", "Primero entendemos.", "Después hacemos.",
       "Soluciones digitales pensadas desde el problema, no desde la herramienta.",
       "Entre tener un problema y encontrar la herramienta correcta hay una distancia.",
-      "Ahí trabajamos nosotros.", "Entendemos el problema.", "Pensamos la solución.", "Construimos el puente.",
+      "Ahí trabajamos nosotros.",
     ];
     const text = document.querySelector("main")?.textContent.replace(/\s+/g, " ") ?? "";
     const accessibleTitle = document.querySelector("main h1")?.getAttribute("aria-label") ?? "";

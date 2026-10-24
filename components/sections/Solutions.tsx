@@ -15,7 +15,6 @@ export function Solutions() {
       <ul className="ap-services">
         {services.map((service, index) => <li className="ap-service" data-service={service.id} key={service.id} style={{ '--i': index } as CSSProperties}>
           <div className="ap-service-name">
-            <span className="ap-num mono" aria-hidden="true">{service.number}</span>
             <h3 className="ap-name" style={{ '--chars': service.name.length } as CSSProperties}><span className="ap-line"><span className="ap-line-in">{service.name}</span></span></h3>
             <span className="ap-name-rule" aria-hidden="true" />
           </div>
@@ -38,6 +37,6 @@ export function Solutions() {
       </div>
       <span className="ap-grain" aria-hidden="true" />
     </div>
-    <ApproachMotion scene="soluciones" />
+    <ApproachMotion />
   </section>;
 }

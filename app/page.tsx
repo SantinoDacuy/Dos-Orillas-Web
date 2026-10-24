@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { DeferredNarrativeStyles } from '@/components/sections/DeferredNarrativeStyles';
 import { Hero } from '@/components/sections/Hero';
 import { Distance } from '@/components/sections/Distance';
-import { Manifesto } from '@/components/sections/Manifesto';
 import { Solutions } from '@/components/sections/Solutions';
 import { Process } from '@/components/sections/Process';
 import { DeferredNarrativeMotion } from '@/components/sections/DeferredNarrativeMotion';
@@ -20,7 +19,6 @@ export default function Home() {
     <DeferredNarrativeStyles />
     <Hero />
     <Distance />
-    <Manifesto />
     <Solutions />
     <Process />
     <Suspense fallback={null}><DeferredNarrativeMotion /></Suspense>

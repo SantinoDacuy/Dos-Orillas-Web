@@ -1,4 +1,4 @@
-"""Regenerate the four local WOFF2 files without changing their type design.
+"""Regenerate the three local WOFF2 files without changing their type design.
 
 Optional asset maintenance tool: python -m pip install "fonttools[woff]==4.66.1"
 then python scripts/subset-fonts.py. Normal pnpm builds do not need Python.
@@ -12,10 +12,9 @@ from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCES = {
-    "bricolage.woff2": "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wght-normal.woff2",
+    "archivo.woff2": "@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2",
     "geist.woff2": "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
     "geist-mono.woff2": "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2",
-    "instrument-serif-italic.woff2": "@fontsource/instrument-serif/files/instrument-serif-latin-400-italic.woff2",
 }
 
 # Keep all ASCII, every Spanish accented letter, and every character in the

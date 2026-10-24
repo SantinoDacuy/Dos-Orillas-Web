@@ -1,6 +1,6 @@
 import type { GSAPRuntime } from '@/lib/gsap';
 import type { MotionTier } from '@/hooks/useMotionTier';
-import { createRiver } from './distance-river';
+import { createCrossing } from './distance-crossing';
 
 interface DistanceOptions {
   root: HTMLElement;
@@ -13,19 +13,56 @@ interface DistanceOptions {
 
 type Runtime = Pick<GSAPRuntime, 'gsap' | 'ScrollTrigger'>;
 
-/** Timeline beats, as fractions of the pinned runway. */
+/** Timeline beats, as fractions of the pinned runway. The trip ends on the far shore and rests there for the
+ * last stretch; then the pin lets go and the page keeps scrolling down (no pull-back, no overview). */
 const BEAT = {
-  pan: .56,
-  descriptionIn: .13,
-  rightIn: .27,
-  rightFill: .42,
-  zoom: .58,
-  zoomLength: .28,
-  deck: .7,
-  cable: .76,
-  hangers: .8,
-  outro: .86,
+  pan: .88,
+  /** The camera starts tilted and levels out over this part of the trip. */
+  level: .45,
 } as const;
+
+/** Shape of the dwell around the centred sentence: half-width in trip fractions and how many times
+ * longer (in scroll) the trip spends at its centre. */
+const DWELL = { width: .22, weight: 5, lead: .03 } as const;
+
+/** Ease for the trip. Time is first cosine-eased (soft start and stop), then warped so the track
+ * lingers where the description sits centred. `center` is that point as a fraction of the pan and
+ * is re-fed on every measure; `timeAt` gives the (0–1) trip time at which a pan fraction is reached,
+ * so reveals can be placed by where things are on screen rather than by guessed numbers. */
+function createTravel() {
+  const steps = 240;
+  const clock = new Float32Array(steps + 1);
+  const tick = (i: number) => clock[i] ?? 0;
+  const center = (at: number) => {
+    let sum = 0;
+    for (let i = 1; i <= steps; i += 1) {
+      const d = Math.abs((i - .5) / steps - at) / DWELL.width;
+      sum += 1 + (d < 1 ? (DWELL.weight - 1) * (.5 + .5 * Math.cos(Math.PI * d)) : 0);
+      clock[i] = sum;
+    }
+    for (let i = 1; i <= steps; i += 1) clock[i] = tick(i) / sum;
+  };
+  center(.45);
+  const clockAt = (x: number) => {
+    const f = Math.min(Math.max(x, 0), 1) * steps;
+    const i = Math.min(steps - 1, Math.floor(f));
+    return tick(i) + (tick(i + 1) - tick(i)) * (f - i);
+  };
+  const position = (u: number) => {
+    let lo = 0;
+    let hi = steps;
+    while (hi - lo > 1) {
+      const mid = (lo + hi) >> 1;
+      if (tick(mid) < u) lo = mid; else hi = mid;
+    }
+    return (lo + (u - tick(lo)) / (tick(hi) - tick(lo) || 1)) / steps;
+  };
+  return {
+    center,
+    ease: (t: number) => position(.5 - .5 * Math.cos(Math.PI * t)),
+    timeAt: (x: number) => Math.acos(1 - 2 * clockAt(x)) / Math.PI,
+  };
+}
 
 /** Builds the Distance scene inside the caller's gsap.context and returns extra cleanup
  * for what the context cannot revert (ticker callbacks, observers). */
@@ -38,108 +75,105 @@ export function buildDistance({ gsap, ScrollTrigger }: Runtime, options: Distanc
   const descriptionWords = q('.distance-description .dw-in');
   const connectionWords = q('.distance-connection .dw-in');
 
-  if (narrow) return buildFlow({ gsap, ScrollTrigger }, { root, leftLines, rightLines, descriptionWords, connectionWords });
+  if (narrow) {
+    return buildFlow({ gsap }, { root, leftLines, rightLines, descriptionWords, connectionWords });
+  }
 
+  const runway = one<HTMLElement>('.distance-runway');
   const stage = one<HTMLElement>('.distance-stage');
   const track = one<HTMLElement>('.distance-track');
   const gap = one<HTMLElement>('.distance-gap');
-  const aerial = one<HTMLElement>('.distance-aerial');
-  const near = q('.distance-ruler, .distance-gap-label');
   const rail = one<HTMLElement>('.hud-rail');
-  const canvas = one<HTMLCanvasElement>('.distance-river');
-  if (!stage || !track || !gap) return () => {};
+  const particle = one<HTMLElement>('.distance-particle');
+  if (!runway || !stage || !track || !gap) return () => {};
 
   const full = tier >= 2;
-  const river = full && canvas ? createRiver(gsap, { stage, track, gap, canvas }) : undefined;
+  const crossing = particle ? createCrossing(gsap, { stage, track, gap, particle }) : undefined;
+  const travel = createTravel();
 
   let pan = 0;
-  let fit = .4;
   let railWidth = 0;
+  let sentenceAt = .45;
   const measure = () => {
     const viewport = stage.clientWidth;
-    const length = track.offsetWidth;
-    pan = Math.max(0, length - viewport);
-    fit = Math.min(1, viewport / Math.max(1, length));
+    pan = Math.max(0, track.offsetWidth - viewport);
     railWidth = rail?.offsetWidth ?? 0;
-    river?.remeasure();
+    // The sentence sits at the middle of the gap: that is where the trip should linger.
+    sentenceAt = pan > 0 ? Math.min(.9, Math.max(.1, (gap.offsetLeft + gap.offsetWidth / 2 - viewport / 2) / pan)) : .45;
+    travel.center(sentenceAt + DWELL.lead);
+    crossing?.remeasure();
   };
   measure();
+  /** Timeline position (in beats) where the trip has covered `x` of the pan. */
+  const at = (x: number) => BEAT.pan * travel.timeAt(x);
 
   // Initial composition for the enhanced scene: lines wait below their clipping boxes.
-  gsap.set([...leftLines, ...rightLines, ...descriptionWords, ...connectionWords], { yPercent: 118 });
-  gsap.set(q('.bridge-deck,.bridge-pylon,.bridge-cable,.bridge-hanger'), { strokeDashoffset: 1 });
-  gsap.set(q('.bank-label,.distance-hud'), { autoAlpha: 0 });
-  gsap.set(q('.distance-bank'), { '--bank-line': 0 });
-  const bankLines = q('.distance-bank');
+  gsap.set([...leftLines, ...rightLines, ...descriptionWords], { yPercent: 118 });
+  gsap.set(q('.distance-hud'), { autoAlpha: 0 });
 
-  // Before the pin: the first shore rises as the scene scrolls into view.
+  // Before the pin: the first shore rises as the scene scrolls into view. Lenis already smooths the
+  // wheel on tier 2, so the scrub follows 1:1 there (a second smoothing layer would trail the scroll).
   gsap.timeline({
     defaults: { ease: 'none' },
-    scrollTrigger: { trigger: root, start: 'top 82%', end: 'top 6%', scrub: full ? .6 : .4, invalidateOnRefresh: true },
+    scrollTrigger: { trigger: runway, start: 'top 82%', end: 'top 6%', scrub: full ? true : .4, invalidateOnRefresh: true },
   })
     .to(leftLines, { yPercent: 0, stagger: .22, duration: .62, ease: 'power4.out' }, 0)
-    .to(q('.distance-left .bank-label,.distance-hud'), { autoAlpha: 1, duration: .3 }, .35);
+    .to(q('.distance-hud'), { autoAlpha: 1, duration: .3 }, .35);
 
   const tl = gsap.timeline({
     defaults: { ease: 'none' },
     scrollTrigger: {
-      trigger: root, start: 'top top', end: 'bottom bottom', scrub: full ? true : .5, invalidateOnRefresh: true, markers: debug,
+      trigger: runway, start: 'top top', end: 'bottom bottom', scrub: full ? true : .5, invalidateOnRefresh: true, markers: debug,
       onRefreshInit: measure,
       onRefresh: st => range(st.start, st.end),
-      onUpdate: st => river?.pulse(st.getVelocity()),
     },
   });
 
-  // 1 · El viaje: el contenido avanza en horizontal y cada capa a su velocidad.
+  // 1 · El viaje: el contenido avanza en horizontal y cada capa a su velocidad. Arranca y frena suave y se
+  // demora donde la descripción queda centrada. La cámara parte inclinada y se endereza.
+  gsap.set(track, { transformPerspective: 1500 });
   tl.addLabel('viajar', 0)
-    .to(track, { x: () => -pan, duration: BEAT.pan }, 0)
-    .fromTo(aerial, { x: () => -pan * .1 }, { x: () => pan * .1, duration: BEAT.pan }, 0)
-    .fromTo(near, { x: () => pan * .1 }, { x: () => -pan * .1, duration: BEAT.pan }, 0)
-    .fromTo(q('.hud-fill'), { scaleX: 0 }, { scaleX: 1, duration: BEAT.zoom + BEAT.zoomLength * .5 }, 0)
-    .fromTo(q('.hud-mark'), { x: 0 }, { x: () => railWidth, duration: BEAT.zoom + BEAT.zoomLength * .5 }, 0);
+    .fromTo(track, { rotationX: 12 }, { rotationX: 0, duration: BEAT.level, ease: 'power1.inOut' }, 0)
+    .to(track, { x: () => -pan, duration: BEAT.pan, ease: travel.ease }, 0)
+    .fromTo(q('.hud-fill'), { scaleX: 0 }, { scaleX: 1, duration: BEAT.pan }, 0)
+    .fromTo(q('.hud-mark'), { x: 0 }, { x: () => railWidth, duration: BEAT.pan }, 0);
 
-  // 2 · La distancia, dicha en voz alta.
-  tl.addLabel('distancia', BEAT.descriptionIn)
-    .to(descriptionWords, { yPercent: 0, stagger: .007, duration: .07, ease: 'power3.out' }, BEAT.descriptionIn)
-    .to(descriptionWords, { yPercent: -118, stagger: .003, duration: .05, ease: 'power2.in' }, .47);
+  // 2 · La distancia, dicha en voz alta: las palabras suben justo antes de que la frase entre en su remanso,
+  // así se lee entera mientras el viaje casi se detiene, y se retiran cuando la frase sale de cuadro.
+  tl.addLabel('distancia', at(sentenceAt - .17))
+    .to(descriptionWords, { yPercent: 0, stagger: .004, duration: .05, ease: 'power3.out' }, at(sentenceAt - .17))
+    .to(descriptionWords, { yPercent: -118, stagger: .003, duration: .04, ease: 'power2.in' }, at(sentenceAt + .34));
 
-  // 3 · La otra orilla aparece como contorno y se rellena al llegar.
-  tl.addLabel('llegar', BEAT.rightIn)
-    .to(q('.distance-right .bank-label'), { autoAlpha: 1, duration: .05 }, BEAT.rightIn)
-    .to(rightLines, { yPercent: 0, stagger: .035, duration: .1, ease: 'power4.out' }, BEAT.rightIn)
-    .to(rightLines, { color: '#F2EEE6', duration: .1, ease: 'power2.inOut' }, BEAT.rightFill);
+  // 3 · La otra orilla aparece como contorno cuando asoma por la derecha y se rellena al llegar.
+  tl.addLabel('llegar', at(.43))
+    .to(rightLines, { yPercent: 0, stagger: .035, duration: .1, ease: 'power4.out' }, at(.43))
+    .to(rightLines, { opacity: 1, duration: BEAT.pan - at(.75), ease: 'power2.inOut' }, at(.75))
+    // Reposo en la otra orilla antes de soltar el pin.
+    .to({}, { duration: .001 }, .999);
 
-  // 4 · La cámara se aleja: ambas orillas entran en cuadro.
-  tl.addLabel('alejar', BEAT.zoom)
-    .fromTo(track, { x: () => -pan, y: 0, scaleX: 1, scaleY: 1 },
-      { x: 0, y: () => -innerHeight * .1, scaleX: () => fit, scaleY: () => fit, duration: BEAT.zoomLength, ease: 'power2.inOut', immediateRender: false }, BEAT.zoom)
-    .to(aerial, { x: 0, duration: BEAT.zoomLength, ease: 'power2.inOut' }, BEAT.zoom)
-    .to(near, { x: 0, duration: BEAT.zoomLength, ease: 'power2.inOut' }, BEAT.zoom)
-    .to(q('.bank-label'), { autoAlpha: 0, duration: .06 }, BEAT.zoom)
-    .to(q('.distance-gap-label'), { autoAlpha: 0, duration: .06 }, BEAT.zoom + .12)
-    .to(bankLines, { '--bank-line': 1, duration: .1 }, BEAT.zoom + .06);
+  // 4 · «Ahí trabajamos nosotros.» entra ya en el scroll normal, debajo de la escena fijada.
+  rise(gsap, connectionWords, root.querySelector('.distance-connection'), .05, 'top 88%');
 
-  // 5 · El puente se dibuja de orilla a orilla.
-  tl.addLabel('conectar', BEAT.deck)
-    .to(q('.bridge-deck'), { strokeDashoffset: 0, duration: .12, ease: 'power2.inOut' }, BEAT.deck)
-    .to(q('.bridge-pylon'), { strokeDashoffset: 0, duration: .06, stagger: .02, ease: 'power2.out' }, BEAT.cable - .02)
-    .to(q('.bridge-cable'), { strokeDashoffset: 0, duration: .1, ease: 'power2.inOut' }, BEAT.cable)
-    .to(q('.bridge-hanger'), { strokeDashoffset: 0, duration: .04, stagger: { each: .0035, from: 'edges' }, ease: 'power2.out' }, BEAT.hangers);
-
-  // 6 · Ahí trabajamos nosotros.
-  tl.addLabel('resolver', BEAT.outro)
-    .to(connectionWords, { yPercent: 0, stagger: .012, duration: .05, ease: 'power3.out' }, BEAT.outro)
-    .to({}, { duration: .01 }, .99);
-
-  // The river only draws while the scene is on screen, including the approach before the pin.
-  if (river) ScrollTrigger.create({ trigger: root, start: 'top bottom', end: 'bottom top', onToggle: st => river.setActive(st.isActive) });
-
-  const refresh = () => river?.remeasure();
+  // La partícula sólo se mueve mientras el tramo fijado está en pantalla (incluida la aproximación).
+  ScrollTrigger.create({
+    trigger: runway, start: 'top bottom', end: 'bottom top',
+    onToggle: st => crossing?.setActive(st.isActive),
+  });
+  const refresh = () => crossing?.remeasure();
   ScrollTrigger.addEventListener('refresh', refresh);
   return () => {
     ScrollTrigger.removeEventListener('refresh', refresh);
-    river?.dispose();
+    crossing?.dispose();
   };
+}
+
+/** Sube las palabras de su caja de recorte cuando el disparador entra en pantalla (y vuelven a bajar al retroceder). */
+function rise(gsap: Runtime['gsap'], targets: Element[], trigger: Element | null, stagger = .08, start = 'top 88%') {
+  if (!targets.length || !trigger) return;
+  gsap.fromTo(targets, { yPercent: 118 }, {
+    yPercent: 0, stagger, duration: 1, ease: 'power4.out',
+    scrollTrigger: { trigger, start, toggleActions: 'play none none reverse' },
+  });
 }
 
 interface FlowParts {
@@ -150,30 +184,14 @@ interface FlowParts {
   connectionWords: Element[];
 }
 
-/** Phones: nothing is pinned. Words rise as they enter, the aerial drifts and the line
- * toward the closing sentence draws with the scroll. */
-function buildFlow({ gsap }: Runtime, parts: FlowParts): () => void {
+/** Phones: nothing is pinned. Words rise as they enter and the line toward the closing sentence draws with the scroll. */
+function buildFlow({ gsap }: Pick<Runtime, 'gsap'>, parts: FlowParts): () => void {
   const { root, leftLines, rightLines, descriptionWords, connectionWords } = parts;
-  const rise = (targets: Element[], trigger: Element | null, stagger = .08, start = 'top 88%') => {
-    if (!targets.length || !trigger) return;
-    gsap.fromTo(targets, { yPercent: 118 }, {
-      yPercent: 0, stagger, duration: 1, ease: 'power4.out',
-      scrollTrigger: { trigger, start, toggleActions: 'play none none reverse' },
-    });
-  };
-  rise(leftLines, root.querySelector('.distance-left .bank-word'));
-  rise(rightLines, root.querySelector('.distance-right .bank-word'));
-  rise(descriptionWords, root.querySelector('.distance-description'), .018, 'top 82%');
-  rise(connectionWords, root.querySelector('.distance-connection'), .05, 'top 90%');
+  rise(gsap, leftLines, root.querySelector('.distance-left .bank-word'));
+  rise(gsap, rightLines, root.querySelector('.distance-right .bank-word'));
+  rise(gsap, descriptionWords, root.querySelector('.distance-description'), .018, 'top 82%');
+  rise(gsap, connectionWords, root.querySelector('.distance-connection'), .05, 'top 90%');
 
-  const aerialImage = root.querySelector('.distance-aerial img');
-  const gap = root.querySelector('.distance-gap');
-  if (aerialImage && gap) {
-    gsap.fromTo(aerialImage, { yPercent: -7, scale: 1.14 }, {
-      yPercent: 7, scale: 1.14, ease: 'none',
-      scrollTrigger: { trigger: gap, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-  }
   const vline = root.querySelector('.distance-vline');
   if (vline) {
     gsap.fromTo(vline, { scaleY: 0 }, {

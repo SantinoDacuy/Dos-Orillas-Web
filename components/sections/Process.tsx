@@ -8,7 +8,7 @@ export function Process() {
   return <section id="proceso" className="pr" data-theme="navy" data-nav="dark" data-scene="proceso" aria-labelledby="process-title">
     <div className="pr-wrap">
       <header className="pr-head" data-reveal>
-        <p className="pr-eyebrow mono"><span className="pr-dot" aria-hidden="true" />{processCopy.title}</p>
+        <p className="pr-eyebrow mono">{processCopy.title}</p>
         <h2 id="process-title" className="pr-title">
           <span className="pr-line"><span className="pr-line-in">{first}</span></span>
           <span className="pr-line pr-accent"><span className="pr-line-in">{second}</span></span>

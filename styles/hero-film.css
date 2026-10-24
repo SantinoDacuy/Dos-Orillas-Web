@@ -1,6 +1,6 @@
 /* The user-selected film replaces the old two-photo runway. Content stays in
    natural flow at every motion tier, short height and text enlargement. */
-html .hero-scene.hero-film { position:relative; height:auto!important; background:#071725; color:#F2EEE6; --accent:#7FA6CF; }
+html .hero-scene.hero-film { position:relative; height:auto!important; background:#071725; color:#F2EEE6; --accent:#68B1FF; }
 html .hero-scene.hero-film .hero-film-shell { position:relative!important; height:auto!important; min-height:100svh; padding:0; overflow:clip; display:block; isolation:isolate; }
 .hero-film-video,.hero-film-poster { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 45%; pointer-events:none; }
 .hero-film-video { opacity:0; }
@@ -17,7 +17,7 @@ html:not([data-nav]) .site-shell[data-home="true"] .scroll-progress-label { colo
 .hero-brand-block { display:flex; flex-direction:column; align-items:flex-start; gap:20px; max-width:clamp(340px,46vw,620px); z-index:3; }
 .hero-brand-heading { margin:0; padding:0; line-height:1; }
 .hero-brand-logo.brand-logo { width:clamp(320px,36vw,540px); height:auto; display:block; filter:drop-shadow(0 6px 28px rgba(7,23,37,.9)); }
-.hero-narrative { display:flex; flex-direction:column; gap:12px; padding-left:18px; border-left:2px solid rgba(127,166,207,.55); background:linear-gradient(90deg,rgba(7,23,37,.45) 0%,transparent 100%); border-radius:0 12px 12px 0; padding-block:4px; max-width:46ch; }
+.hero-narrative { display:flex; flex-direction:column; gap:12px; padding-left:18px; border-left:2px solid rgba(104,177,255,.55); background:linear-gradient(90deg,rgba(7,23,37,.45) 0%,transparent 100%); border-radius:0 12px 12px 0; padding-block:4px; max-width:46ch; }
 html .hero-scene.hero-film .hero-philosophy { position:static; width:auto; padding:0; background:none; z-index:3; display:flex; flex-direction:column; gap:2px; }
 html .hero-scene.hero-film .hero-first { font-family:var(--font-display),Arial,sans-serif; font-size:clamp(13px,1.1vw,16px); font-weight:400; line-height:1.35; letter-spacing:-.01em; color:rgba(242,238,230,.7); text-shadow:0 1px 12px rgba(7,23,37,.8); }
 html .hero-scene.hero-film .hero-second { font-family:var(--font-display),Arial,sans-serif; font-size:clamp(17px,1.4vw,22px); font-weight:600; line-height:1.25; letter-spacing:-.015em; color:#F2EEE6; opacity:1!important; text-shadow:0 2px 16px rgba(7,23,37,.9); }

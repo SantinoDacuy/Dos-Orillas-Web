@@ -3,25 +3,22 @@
 @layer components {
   .es {
     position:relative; background:#071725; color:#F2EEE6;
-    --e-accent:var(--bridge-on-dark,#7FA6CF); --e-cream:#F2EEE6; --e-line:rgb(242 238 230 / 16%);
+    --e-accent:var(--bridge-on-dark,#68B1FF); --e-cream:#F2EEE6; --e-line:rgb(242 238 230 / 16%);
   }
   .es-stage {
     position:relative; isolation:isolate; overflow:clip; display:grid; gap:clamp(40px,7svh,80px);
     padding:clamp(88px,11svh,120px) var(--gutter) clamp(64px,9svh,96px);
   }
   .es-atmosphere { position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-  .es-glow { position:absolute; width:70vw; height:70vw; max-width:900px; max-height:900px; left:50%; top:46%; translate:-50% -50%; border-radius:50%; background:radial-gradient(circle,rgb(127 166 207 / 20%) 0%,transparent 68%); filter:blur(30px); }
   .es-vignette { position:absolute; inset:0; background:radial-gradient(130% 90% at 50% 50%,transparent 40%,rgb(3 10 18 / 65%) 100%); }
   .es-grain { position:absolute; inset:0; background:url(/textures/grain.svg); opacity:.09; mix-blend-mode:soft-light; }
 
-  .es-eyebrow { margin:0; display:inline-flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.16em; color:var(--e-accent); }
-  .es-dot { width:6px; height:6px; border-radius:50%; background:var(--e-accent); box-shadow:0 0 12px var(--e-accent); }
-  .es-headline { margin:0; display:grid; grid-template-columns:minmax(0,1fr); font-family:var(--font-display),sans-serif; font-weight:650; font-size:clamp(44px,8.8vw,150px); line-height:.9; letter-spacing:-.055em; color:var(--e-cream); text-shadow:0 4px 44px rgb(3 10 18 / 55%); }
+  .es-headline { margin:0; display:grid; grid-template-columns:minmax(0,1fr); font-family:var(--font-display),sans-serif; font-weight:700; font-stretch:118%; font-size:clamp(36px,7.2vw,124px); line-height:.92; letter-spacing:-.045em; color:var(--e-cream); text-shadow:0 4px 44px rgb(3 10 18 / 55%); }
   .es-line { display:block; overflow:clip; padding:.14em .1em .08em 0; margin:-.14em 0 -.08em; }
   .es-line-in { display:block; width:max-content; max-width:100%; }
   .es-line-2 { text-align:right; }
   .es-line-2 .es-line-in { margin-left:auto; }
-  .es-line-3 { margin-top:.5em; font-size:clamp(22px,3.6vw,58px); line-height:1.05; letter-spacing:-.035em; color:var(--e-accent); }
+  .es-line-3 { margin-top:.5em; font-size:clamp(22px,3.6vw,58px); line-height:1.05; letter-spacing:-.035em; color:var(--e-cream); opacity:.72; font-weight:400; font-stretch:100%; }
   .es-line-3 .es-line-in { width:auto; }
 
   .es-photo { margin:0; justify-self:center; width:min(100%,460px); }
@@ -36,22 +33,21 @@
   .es-paragraph { margin:0; max-width:52ch; font-size:clamp(16px,1.3vw,19px); line-height:1.6; color:#C9D4DE; }
 
   .es-bridge { display:grid; grid-template-columns:auto 1fr auto; align-items:center; padding-top:8px; }
-  .es-node { width:9px; height:9px; rotate:45deg; background:var(--e-cream); box-shadow:0 0 14px 2px rgb(127 166 207 / 70%); }
+  .es-node { width:9px; height:9px; rotate:45deg; background:var(--e-cream); box-shadow:0 0 14px 2px rgb(104 177 255 / 70%); }
   .es-bridge-line { position:relative; height:1px; background:var(--e-line); }
-  .es-bridge-draw { position:absolute; inset:0; background:var(--e-accent); box-shadow:0 0 12px rgb(127 166 207 / 60%); transform-origin:left center; }
-  .es-coords { grid-column:1 / -1; justify-self:center; margin-top:16px; font-size:11px; letter-spacing:.16em; color:#DDE6EE; text-align:center; }
+  .es-bridge-draw { position:absolute; inset:0; background:var(--e-accent); box-shadow:0 0 12px rgb(104 177 255 / 60%); transform-origin:left center; }
+  .es-coords { grid-column:1 / -1; justify-self:center; margin-top:16px; font-size:11px; letter-spacing:.03em; color:#DDE6EE; text-align:center; }
 }
 
 @media (min-width:768px) {
-  .es-stage { grid-template-columns:minmax(0,.85fr) minmax(0,1fr); grid-template-areas:"eyebrow eyebrow" "headline headline" "photo read" "bridge bridge"; column-gap:clamp(32px,5vw,96px); align-items:center; }
-  .es-eyebrow { grid-area:eyebrow; }
+  .es-stage { grid-template-columns:minmax(0,.85fr) minmax(0,1fr); grid-template-areas:"headline headline" "photo read" "bridge bridge"; column-gap:clamp(32px,5vw,96px); align-items:center; }
   .es-headline { grid-area:headline; }
   .es-photo { grid-area:photo; justify-self:start; }
   .es-read { grid-area:read; }
   .es-bridge { grid-area:bridge; }
 }
 @media (max-width:767px) {
-  .es-headline { font-size:clamp(34px,10.4vw,96px); }
+  .es-headline { font-size:clamp(30px,9vw,80px); }
   .es-line-3 { font-size:clamp(20px,6.4vw,34px); }
 }
 

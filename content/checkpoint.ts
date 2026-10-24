@@ -1,6 +1,5 @@
 export const checkpointSections = [
   { id: 'distancia', title: 'La distancia entre dos orillas', theme: 'navy-deep' },
-  { id: 'manifiesto', title: 'Manifiesto', theme: 'navy-deep' },
   { id: 'soluciones', title: 'Soluciones', theme: 'white' },
   { id: 'proceso', title: 'Cómo trabajamos', theme: 'navy' },
   { id: 'proyectos', title: 'Proyectos seleccionados', theme: 'cream' },

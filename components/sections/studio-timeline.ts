@@ -3,19 +3,21 @@ import { loadGSAP, type GSAPRuntime } from '@/lib/gsap';
 type Runtime = Pick<GSAPRuntime, 'gsap' | 'ScrollTrigger'>;
 
 /** El Estudio es plano en todos los tamaños: reveals por scroll, sin recorrido fijado. */
-export async function mountStudio(root: HTMLElement, signal: AbortSignal) {
+export async function mountStudio(root: HTMLElement, full: boolean, signal: AbortSignal) {
   const runtime = await loadGSAP();
   if (signal.aborted || !root.isConnected) return () => {};
   const { gsap, ScrollTrigger } = runtime;
   const context = gsap.context(() => {}, root);
+  let extra = () => {};
   const cleanup = () => {
+    extra();
     context.revert();
     delete root.dataset.sceneReady;
     window.dispatchEvent(new Event('dos-orillas:refresh'));
   };
   try {
     context.add(() => {
-      flowStudio(runtime, root);
+      extra = flowStudio(runtime, root, full);
       root.dataset.sceneReady = 'true';
     });
   } catch (error) {
@@ -28,7 +30,7 @@ export async function mountStudio(root: HTMLElement, signal: AbortSignal) {
 
 /* ───────────────────────── Reveals en flujo ───────────────────────── */
 
-function flowStudio({ gsap }: Runtime, root: HTMLElement) {
+function flowStudio({ gsap }: Runtime, root: HTMLElement, full: boolean): () => void {
   const q = gsap.utils.selector(root);
   q('.es-line').forEach((line, index) => {
     const inner = line.querySelector('.es-line-in');
@@ -78,4 +80,30 @@ function flowStudio({ gsap }: Runtime, root: HTMLElement) {
       scrollTrigger: { trigger: bridge, start: 'top 90%', toggleActions: 'play none none reverse' },
     });
   }
+
+  // Capas con el cursor: cada frase se desplaza hacia su orilla, la foto se inclina y avanza en sentido contrario.
+  const listeners: Array<() => void> = [];
+  if (full && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const lines = q('.es-line');
+    const photo = root.querySelector<HTMLElement>('.es-photo');
+    if (photo && frame) gsap.set(frame, { transformPerspective: 1000 });
+    const shift = lines.map(line => gsap.quickTo(line, 'x', { duration: .9, ease: 'power3.out' }));
+    const photoX = photo ? gsap.quickTo(photo, 'x', { duration: .9, ease: 'power3.out' }) : null;
+    const rotY = frame ? gsap.quickTo(frame, 'rotationY', { duration: .9, ease: 'power3.out' }) : null;
+    const rotX = frame ? gsap.quickTo(frame, 'rotationX', { duration: .9, ease: 'power3.out' }) : null;
+    const move = (event: PointerEvent) => {
+      const box = root.getBoundingClientRect();
+      const px = (event.clientX - box.left) / box.width - .5;
+      const py = (event.clientY - box.top) / box.height - .5;
+      shift.forEach((to, index) => to((index === 1 ? 1 : index === 0 ? -1 : .4) * px * 38));
+      photoX?.(-px * 26);
+      rotY?.(px * 12);
+      rotX?.(-py * 9);
+    };
+    const leave = () => { shift.forEach(to => to(0)); photoX?.(0); rotY?.(0); rotX?.(0); };
+    root.addEventListener('pointermove', move, { passive: true });
+    root.addEventListener('pointerleave', leave);
+    listeners.push(() => { root.removeEventListener('pointermove', move); root.removeEventListener('pointerleave', leave); });
+  }
+  return () => listeners.forEach(off => off());
 }

@@ -14,17 +14,17 @@ interface Layer {
 
 const LAYERS: readonly Layer[] = [
   {
-    id: 'interface', tag: 'INTERFAZ', eyebrow: '01 // INTERFACES & WEB', title: 'Frontend & Experiencia',
+    id: 'interface', tag: 'Interfaz', eyebrow: 'Interfaces & web', title: 'Frontend & Experiencia',
     desc: 'Interfaces interactivas, renderizado optimizado y sistemas de diseño consistentes.',
     technologies: ['Next.js', 'React', 'TypeScript', 'JavaScript', 'GSAP', 'Tailwind', 'Figma'],
   },
   {
-    id: 'server', tag: 'SERVIDOR', eyebrow: '02 // SERVIDORES & LÓGICA', title: 'Backend & Arquitectura',
+    id: 'server', tag: 'Servidor', eyebrow: 'Servidores & lógica', title: 'Backend & Arquitectura',
     desc: 'APIs REST, pipelines de datos y entornos contenerizados listos para producción.',
     technologies: ['Node.js', 'Python', 'APIs REST', 'Supabase', 'Docker', 'AWS'],
   },
   {
-    id: 'data', tag: 'DATOS', eyebrow: '03 // PERSISTENCIA & RENDIMIENTO', title: 'Bases de Datos & Caché',
+    id: 'data', tag: 'Datos', eyebrow: 'Persistencia & rendimiento', title: 'Bases de Datos & Caché',
     desc: 'Modelos de datos robustos, integridad relacional y almacenamiento de alta velocidad.',
     technologies: ['PostgreSQL', 'SQL', 'Redis', 'MongoDB'],
   },
@@ -37,11 +37,11 @@ const line = (text: string) => <span className="st-line"><span className="st-lin
 export function Stack() {
   const premise = finalCtaCopy.lines;
   return <section id="herramientas" className="st" data-theme="navy-deep" data-nav="dark" data-scene="stack" aria-labelledby="stack-heading">
-    <div className="st-atmosphere" aria-hidden="true"><span className="st-glow" /><span className="st-vignette" /><span className="st-grain" /></div>
+    <div className="st-atmosphere" aria-hidden="true"><span className="st-vignette" /><span className="st-grain" /></div>
 
     <div className="st-wrap">
       <header className="st-head" data-reveal>
-        <p className="st-eyebrow mono"><span className="st-dot" aria-hidden="true" />05 · Criterio &amp; Stack</p>
+        <p className="st-eyebrow mono">Criterio &amp; stack</p>
         <h2 id="stack-heading" className="st-title">
           {line('LAS HERRAMIENTAS CAMBIAN.')}
           <span className="st-accent">{line('EL CRITERIO NO.')}</span>
@@ -67,7 +67,7 @@ export function Stack() {
       </ol>
 
       <div className="st-criterio" data-reveal>
-        <p className="st-kicker mono">EL CRITERIO ANTE TODO</p>
+        <p className="st-kicker mono">El criterio ante todo</p>
         <p className="st-claim">No llegamos con una herramienta predeterminada.</p>
         <p className="st-analysis">
           Analizamos <b>El problema real</b>, <b>La escala requerida</b> y <b>Los recursos</b> para seleccionar la tecnología adecuada.

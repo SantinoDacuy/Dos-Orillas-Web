@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { useMotion } from '@/components/motion/MotionProvider';
 import { getMountedSceneRoot } from '@/lib/get-visible-root';
 
-/** El servidor entrega todos los proyectos; esta isla elige por viewport entre el mazo fijado
- * (≥1024px y ≥681px de alto), los reveals en flujo (resto) o la lectura estática (tier 0). */
+/** El servidor entrega todos los proyectos; esta isla activa el carrusel (flechas, riel, teclado y arrastre,
+ * sin scroll): mazo 3D en ≥1024px y ≥681px de alto, una portada por vez en el resto; tier 0 queda en lista. */
 export function ProjectsMotion() {
   const { tier, ready } = useMotion();
   useEffect(() => {
@@ -21,7 +21,7 @@ export function ProjectsMotion() {
       stop();
       stop = () => {};
       delete target.dataset.sceneFlow;
-      const mode: 'pinned' | 'flow' = pinned.matches ? 'pinned' : 'flow';
+      const mode: 'deck' | 'slide' = pinned.matches ? 'deck' : 'slide';
       const controller = new AbortController();
       let dispose = () => {};
       let requested = false;

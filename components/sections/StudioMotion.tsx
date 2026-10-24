@@ -30,7 +30,7 @@ export function StudioMotion() {
         observer.disconnect();
         void import('./studio-timeline').then(async ({ mountStudio }) => {
           if (controller.signal.aborted) return;
-          const cleanup = await mountStudio(target, controller.signal);
+          const cleanup = await mountStudio(target, tier >= 2, controller.signal);
           if (controller.signal.aborted) cleanup(); else dispose = cleanup;
         }).catch(() => {
           if (!controller.signal.aborted) target.dataset.sceneFlow = 'true';

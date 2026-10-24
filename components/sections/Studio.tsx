@@ -8,12 +8,9 @@ export function Studio() {
   return <section id="el-estudio" className="es" data-theme="navy-deep" data-nav="dark" data-scene="estudio" aria-labelledby="studio-heading">
     <div className="es-stage">
       <div className="es-atmosphere" aria-hidden="true">
-        <span className="es-glow" />
         <span className="es-vignette" />
         <span className="es-grain" />
       </div>
-
-      <p className="es-eyebrow mono"><span className="es-dot" aria-hidden="true" />{studioCopy.eyebrow}</p>
 
       <h2 id="studio-heading" className="es-headline">
         {HEADLINE.map((line, index) => <span className={`es-line es-line-${index + 1}`} key={line}>

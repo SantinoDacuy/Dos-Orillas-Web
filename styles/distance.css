@@ -3,17 +3,15 @@
 @layer components {
   .distance-scene {
     position:relative; background:#071725; color:#F2EEE6;
-    --d-accent:var(--bridge-on-dark,#7FA6CF); --d-cream:#F2EEE6; --d-line:rgb(242 238 230 / 16%);
+    --d-accent:var(--bridge-on-dark,#68B1FF); --d-cream:#F2EEE6; --d-line:rgb(242 238 230 / 16%);
     --d-gap:112vw; --d-font:min(15vw,27svh);
+    --d-pad:clamp(40px,7vw,120px);
   }
   .distance-stage {
     position:relative; isolation:isolate; overflow:clip; display:grid; align-content:start;
     gap:clamp(48px,9svh,96px); padding:clamp(104px,16svh,160px) var(--gutter) clamp(72px,12svh,128px);
   }
-  .distance-atmosphere { position:absolute; inset:0; z-index:-1; pointer-events:none; }
-  .distance-river,.distance-hud,.distance-bridge-svg,.distance-ruler,.distance-aerial { display:none; }
-  .distance-grain { position:absolute; inset:0; background:url(/textures/grain.svg); opacity:.09; mix-blend-mode:soft-light; }
-  .distance-vignette { position:absolute; inset:0; background:radial-gradient(130% 95% at 50% 50%,transparent 38%,rgb(3 10 18 / 72%) 100%); }
+  .distance-particle,.distance-hud,.bank-edge { display:none; }
 
   .distance-track { position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:start; column-gap:clamp(16px,3vw,48px); row-gap:clamp(32px,6svh,64px); }
   .distance-track::before { content:''; grid-column:2; grid-row:1; align-self:center; width:clamp(28px,6vw,96px); height:1px; background:linear-gradient(90deg,transparent,var(--d-accent) 40%,var(--d-accent) 60%,transparent); }
@@ -21,24 +19,24 @@
   .distance-left { grid-column:1; grid-row:1; }
   .distance-right { grid-column:3; grid-row:1; justify-items:end; text-align:right; }
   .distance-gap { grid-column:1 / -1; grid-row:2; position:relative; display:grid; gap:18px; justify-items:center; text-align:center; }
-  .bank-label,.distance-gap-label { font-size:11px; letter-spacing:.16em; color:var(--d-accent); }
-  .bank-word { margin:0; font-family:var(--font-display),sans-serif; font-weight:650; font-size:clamp(34px,7.4vw,118px); line-height:.9; letter-spacing:-.055em; color:var(--d-cream); text-shadow:0 4px 28px rgb(3 10 18 / 70%); }
+  /* Orillas: lo más pesado y ancho del eje; el puente va en el extremo opuesto (liviano y estrecho). */
+  .bank-word { margin:0; font-family:var(--font-display),sans-serif; font-weight:800; font-stretch:125%; font-size:clamp(26px,4.6vw,88px); line-height:.92; letter-spacing:-.05em; color:var(--d-cream); text-shadow:0 2px 16px rgb(3 10 18 / 55%); }
   .bank-word .line { display:block; overflow:clip; padding:.14em 0 .06em; margin:-.14em 0 -.06em; }
   .line-in { display:block; width:max-content; max-width:100%; }
   .distance-right .line-in { margin-left:auto; }
 
   .distance-description { margin:0; max-width:32ch; }
   .dd-text,.dc-text { font-family:var(--font-display),sans-serif; }
-  .dd-text { font-weight:500; letter-spacing:-.035em; }
-  .dc-text { font-weight:600; letter-spacing:-.05em; }
-  .dd-text { display:block; font-size:clamp(22px,2.8vw,40px); line-height:1.14; color:#DDE6EE; text-wrap:balance; }
+  .dd-text { display:block; font-weight:300; font-stretch:85%; letter-spacing:-.02em; font-size:clamp(24px,3.1vw,44px); line-height:1.14; color:#DDE6EE; text-wrap:balance; }
   .dw { display:inline-block; overflow:clip; vertical-align:top; padding:.12em .03em .18em; margin:-.12em -.03em -.18em; }
   .dw-in { display:inline-block; }
 
-  .distance-outro { position:relative; display:grid; gap:clamp(28px,5svh,48px); }
+  .distance-outro { position:relative; display:grid; gap:clamp(28px,5svh,48px); padding:0 var(--gutter) clamp(72px,12svh,128px); }
   .distance-vline { width:clamp(28px,6vw,72px); height:2px; background:linear-gradient(90deg,transparent,var(--d-accent) 50%,var(--d-accent)); transform-origin:left center; }
   .distance-connection { margin:0; }
-  .dc-text { display:block; font-size:clamp(40px,7.4vw,112px); line-height:1; letter-spacing:-.025em; color:var(--d-cream); text-wrap:balance; }
+  /* Cierre: «Ahí trabajamos» liviano, «nosotros.» en el extremo pesado y ancho (el énfasis es de peso y ancho, no de color). */
+  .dc-text { display:block; font-weight:300; font-stretch:100%; font-size:clamp(40px,7vw,108px); line-height:1; letter-spacing:-.03em; color:var(--d-cream); text-wrap:balance; }
+  .dc-text .dw-strong { font-weight:800; font-stretch:125%; letter-spacing:-.04em; }
 }
 
 @media (max-width:767px) {
@@ -47,39 +45,29 @@
   .distance-track::before { display:none; }
   .distance-left,.distance-right,.distance-gap { grid-column:1; grid-row:auto; }
   .distance-gap { justify-items:start; text-align:left; }
-  .bank-word { font-size:clamp(46px,19vw,96px); }
-  .distance-right .bank-word { font-size:clamp(40px,15.4vw,80px); }
+  .bank-word { font-size:clamp(34px,14vw,86px); }
+  .distance-right .bank-word { font-size:clamp(30px,11.4vw,70px); }
   .distance-vline { width:1px; height:clamp(56px,12svh,112px); background:linear-gradient(180deg,transparent,var(--d-accent)); transform-origin:center top; }
 }
 
 /* Lectura estática: el cambio de tier no debe animar tipografía ni geometría. */
 html[data-motion-tier="0"] .distance-scene,html[data-motion-tier="0"] .distance-scene * { transition-property:none!important; }
 
-/* Móvil con movimiento (lite): la escena sigue en flujo, pero el río y la foto cobran presencia. */
-@media (max-width:767px) {
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-gap {
-    min-height:92svh; align-content:center; justify-items:start; isolation:isolate; margin-inline:calc(var(--gutter) * -1); padding-inline:var(--gutter);
-  }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial {
-    display:block; position:absolute; inset:-8% 0; z-index:-1; pointer-events:none;
-    mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent); -webkit-mask-image:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);
-  }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial img { opacity:.6; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .dd-text { font-size:clamp(26px,8vw,36px); }
-}
-
 /* Recorrido horizontal fijado: desde 768px y con altura suficiente. Reserva la pista completa
    antes de cargar GSAP; el escenario es sticky y GSAP sólo escribe transforms. */
 @media (min-width:768px) and (min-height:681px) {
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) { height:340svh; }
-  html:is([data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) { height:440svh; }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-runway { height:330svh; }
+  html:is([data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-runway { height:360svh; }
 
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-stage {
     position:sticky; top:0; display:block; height:100svh; padding:0;
   }
-  html:is([data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-river { display:block; position:absolute; inset:0; width:100%; height:100%; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) :is(.distance-hud,.distance-bridge-svg,.distance-ruler,.distance-aerial) { display:block; }
+  /* La partícula: un punto de luz crema con un halo corto del acento. Sin estela. */
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-particle {
+    display:block; position:absolute; z-index:2; left:-5px; top:calc(63% - 5px); width:10px; height:10px; border-radius:50%; pointer-events:none;
+    background:#F2EEE6; box-shadow:0 0 12px 3px rgb(104 177 255 / 75%),0 0 44px 10px rgb(104 177 255 / 28%); will-change:transform;
+  }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-hud { display:block; }
 
   /* Pista: banco izquierdo · río · banco derecho. */
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-track {
@@ -87,66 +75,43 @@ html[data-motion-tier="0"] .distance-scene,html[data-motion-tier="0"] .distance-
   }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-track::before { display:none; }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bank {
-    flex:none; grid-column:auto; grid-row:auto; align-content:center; gap:clamp(10px,2svh,22px); padding-inline:clamp(40px,7vw,120px);
+    flex:none; grid-column:auto; grid-row:auto; align-content:center; gap:clamp(10px,2svh,22px); padding-inline:var(--d-pad); z-index:1;
   }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-left { padding-left:var(--gutter); }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right { padding-right:var(--gutter); }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .bank-word { font-size:var(--d-font); line-height:.86; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .bank-label { font-size:12px; }
-  /* La otra orilla todavía no es tangible: aparece fantasma y se solidifica al llegar. */
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right .line-in { color:rgb(242 238 230 / 13%); text-shadow:none; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bank::after {
-    content:''; position:absolute; top:12svh; bottom:12svh; width:1px; background:linear-gradient(180deg,transparent,var(--d-accent) 18%,var(--d-accent) 82%,transparent); opacity:calc(.16 + var(--bank-line,.5) * .6);
+  /* «TECNOLOGÍA» es la palabra más ancha: se achica lo justo para llegar a la otra orilla y verla entera. */
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right .bank-word { font-size:min(10.8vw,24svh); }
+  /* La otra orilla todavía no es tangible: aparece fantasma y se solidifica al llegar (opacidad, no color). */
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right .line-in { opacity:.13; text-shadow:none; }
+  /* Borde de cada orilla: línea real (no pseudo + custom property) para animar sólo opacidad. */
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .bank-edge {
+    display:block; position:absolute; top:12svh; bottom:12svh; width:1px; background:linear-gradient(180deg,transparent,var(--d-accent) 18%,var(--d-accent) 82%,transparent); opacity:.16; pointer-events:none;
   }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-left::after { right:0; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right::after { left:0; }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-left .bank-edge { right:0; }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-right .bank-edge { left:0; }
 
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-gap {
     flex:none; grid-column:auto; grid-row:auto; display:block; width:var(--d-gap); justify-items:normal; text-align:center;
   }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial {
-    position:absolute; top:14%; bottom:14%; left:-40vw; right:-40vw; pointer-events:none;
-    mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 30%,rgb(0 0 0 / 55%) 62%,transparent 100%);
-    -webkit-mask-image:radial-gradient(ellipse closest-side at 50% 50%,#000 30%,rgb(0 0 0 / 55%) 62%,transparent 100%);
-  }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-aerial img { opacity:.38; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-ruler {
-    position:absolute; left:-40vw; right:-40vw; bottom:17svh; height:30px; pointer-events:none;
-    background:
-      repeating-linear-gradient(90deg,rgb(242 238 230 / 30%) 0 1px,transparent 1px 2.8vw) left bottom / 100% 9px no-repeat,
-      repeating-linear-gradient(90deg,rgb(242 238 230 / 62%) 0 1px,transparent 1px 14vw) left bottom / 100% 22px no-repeat;
-    border-bottom:1px solid var(--d-line);
-  }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-gap-label {
-    position:absolute; left:50%; bottom:calc(17svh + 40px); translate:-50% 0; font-size:12px; letter-spacing:.3em; padding-left:.3em;
-  }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-description {
     position:absolute; inset:0; display:grid; place-content:center; max-width:none; padding-bottom:8svh;
   }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .dd-text { max-width:19em; font-size:min(4vw,7.2svh); }
-
-  /* Puente: se dibuja sobre el río y entre las dos orillas. */
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bridge-svg {
-    position:absolute; z-index:2; left:0; top:50%; width:100%; height:calc(var(--d-gap) * .12); translate:0 -78%; overflow:visible; pointer-events:none;
-  }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bridge-svg :is(line,path) { fill:none; stroke:var(--d-cream); stroke-width:2.2px; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bridge-svg .bridge-cable { stroke:var(--d-accent); stroke-width:2px; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-bridge-svg .bridge-hanger { stroke:var(--d-accent); stroke-width:1.1px; opacity:.75; }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .dd-text { max-width:19em; font-size:min(4.4vw,7.9svh); }
 
   /* Brújula superior: la distancia recorrida. */
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-hud {
     position:absolute; z-index:3; top:calc(88px + 8svh); left:var(--gutter); right:var(--gutter); display:flex; align-items:center; gap:18px; pointer-events:none;
   }
-  .hud-label { font-size:11px; letter-spacing:.16em; color:var(--d-accent); white-space:nowrap; }
+  .hud-label { font-size:11px; letter-spacing:.03em; color:var(--d-accent); white-space:nowrap; }
   .hud-rail { position:relative; flex:1; height:1px; background:var(--d-line); }
   .hud-fill { position:absolute; inset:0; background:var(--d-accent); transform-origin:left center; transform:scaleX(0); }
-  .hud-mark { position:absolute; left:-4px; top:-3.5px; width:8px; height:8px; background:var(--d-cream); rotate:45deg; box-shadow:0 0 14px 2px rgb(127 166 207 / 70%); }
+  .hud-mark { position:absolute; left:-4px; top:-3.5px; width:8px; height:8px; background:var(--d-cream); rotate:45deg; box-shadow:0 0 14px 2px rgb(104 177 255 / 70%); }
 
-  /* Cierre sobre la vista general. */
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-outro { position:absolute; inset:0; z-index:3; display:block; pointer-events:none; }
+  /* Cierre: ya no hay vista general. La frase sube por debajo de «LA TECNOLOGÍA» en el último tramo fijado
+     (se monta sobre la mitad vacía del escenario) y después ambas siguen juntas con el scroll. */
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-outro { z-index:2; margin-top:-21svh; padding-block:0 clamp(96px,18svh,180px); }
   html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-vline { display:none; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-connection { position:absolute; left:var(--gutter); right:var(--gutter); top:56svh; text-align:center; }
-  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .dc-text { font-size:min(6.6vw,11.5svh); }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .distance-connection { text-align:center; }
+  html:is([data-motion-tier="1"],[data-motion-tier="2"],[data-motion-tier="3"]) .distance-scene:not([data-scene-flow="true"]) .dc-text { font-size:min(7vw,12svh); }
 }
-

@@ -24,11 +24,12 @@ import '@/styles/contact.css';
 import '@/styles/projects-showcase.css';
 import '@/styles/stack.css';
 import '@/styles/proceso.css';
+import '@/styles/living-bg.css';
 import { buildSiteMetadata } from '@/lib/seo';
 export const metadata: Metadata = buildSiteMetadata();
 export const viewport: Viewport = { themeColor: '#F2EEE6' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  for (const file of ['bricolage', 'geist', 'geist-mono']) {
+  for (const file of ['archivo', 'geist', 'geist-mono']) {
     preload(`/fonts/${file}.woff2`, { as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' });
   }
   return <html lang="es-AR" data-motion-tier="0" data-hero-variant="film" suppressHydrationWarning>

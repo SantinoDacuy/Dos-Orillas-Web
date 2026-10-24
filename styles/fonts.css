@@ -2,19 +2,20 @@
 
 @font-face {
   font-family: "display";
-  src: url("/fonts/bricolage.woff2") format("woff2");
+  src: url("/fonts/archivo.woff2") format("woff2");
   font-display: swap;
-  font-weight: 200 800;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
 }
 
-/* Preserve the metrics emitted by the previous next/font Bricolage face. */
+/* Fallback con métricas cercanas a Archivo para evitar saltos de layout al cargar. */
 @font-face {
   font-family: "display Fallback";
   src: local("Arial");
-  ascent-override: 82.39%;
-  descent-override: 23.92%;
-  line-gap-override: 0.00%;
-  size-adjust: 112.88%;
+  ascent-override: 87.8%;
+  descent-override: 21.4%;
+  line-gap-override: 0%;
+  size-adjust: 100.5%;
 }
 
 :root {

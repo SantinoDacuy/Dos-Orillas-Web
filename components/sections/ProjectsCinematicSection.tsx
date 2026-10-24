@@ -118,7 +118,6 @@ export function ProjectsCinematicSection({ items = SHOWCASE_PROJECTS, className 
       </div>
 
       <header className="pj-head">
-        <p className="pj-eyebrow mono"><span className="pj-dot" aria-hidden="true" />03 // Portafolio Seleccionado</p>
         <div className="pj-title-row">
           <h2 id="projects-title" className="pj-title"><span className="pj-line"><span className="pj-line-in">PROYECTOS.</span></span></h2>
         </div>
@@ -167,7 +166,7 @@ export function ProjectsCinematicSection({ items = SHOWCASE_PROJECTS, className 
         })}
       </div>
 
-      {/* Controles: sólo cobran sentido en el recorrido fijado. */}
+      {/* Controles del carrusel: riel de proyectos y flechas (se muestran con JS). */}
       <div className="pj-controls">
         <div className="pj-rail">
           <span className="pj-rail-fill" aria-hidden="true" />
@@ -177,12 +176,14 @@ export function ProjectsCinematicSection({ items = SHOWCASE_PROJECTS, className 
           </button>)}
         </div>
         <div className="pj-pager mono">
-          <button type="button" className="pj-step" data-step="-1" aria-label="Proyecto anterior" title="Anterior (←)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+          <button type="button" className="pj-step pj-step-prev" data-step="-1" aria-label="Proyecto anterior">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M19 12H5" /><path d="m11 18-6-6 6-6" /></svg>
+            <span className="pj-step-label" aria-hidden="true">Anterior</span>
           </button>
           <span className="pj-counter" aria-hidden="true"><b className="pj-counter-now">01</b><i>/</i><span>{two(count)}</span></span>
-          <button type="button" className="pj-step" data-step="1" aria-label="Siguiente proyecto" title="Siguiente (→)">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+          <button type="button" className="pj-step pj-step-next" data-step="1" aria-label="Siguiente proyecto">
+            <span className="pj-step-label" aria-hidden="true">Siguiente</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
           </button>
         </div>
       </div>

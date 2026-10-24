@@ -76,7 +76,7 @@ export const navigationItems: readonly NavigationItem[] = [
 ];
 
 export const chapters = [
-  { id: "estudio", number: "01", label: "ESTUDIO", sections: ["estudio", "distancia", "manifiesto"] },
+  { id: "estudio", number: "01", label: "ESTUDIO", sections: ["estudio", "distancia"] },
   { id: "soluciones", number: "02", label: "SOLUCIONES", sections: ["soluciones", "proceso"] },
   { id: "proyectos", number: "03", label: "PROYECTOS", sections: ["proyectos", "todos-los-proyectos"] },
   { id: "equipo", number: "04", label: "EQUIPO", sections: ["el-estudio", "equipo", "herramientas"] },
@@ -113,10 +113,8 @@ export const distanceCopy = {
   title: "La distancia entre dos orillas",
   left: { label: "TU NEGOCIO", lines: ["TU", "NEGOCIO"], orilla: "ORILLA 01" },
   right: { label: "LA TECNOLOGÍA", lines: ["LA", "TECNOLOGÍA"], orilla: "ORILLA 02" },
-  measure: "DISTANCIA",
   description: "Entre tener un problema y encontrar la herramienta correcta hay una distancia.",
   connection: "Ahí trabajamos nosotros.",
-  statements: ["Entendemos el problema.", "Pensamos la solución.", "Construimos el puente."],
 } as const;
 
 export const loaderCopy = { orilla: "ORILLA", connected: "DOS ORILLAS" } as const;
@@ -154,14 +152,6 @@ export const footerCopy = {
     { label: "Equipo", href: "#equipo" },
     { label: "Contacto", href: "#contacto" },
   ],
-} as const;
-
-export const manifestoCopy = {
-  title: "Manifiesto",
-  firstLines: ["NO HACEMOS", "TECNOLOGÍA", "PORQUE SÍ."],
-  secondLines: ["LA HACEMOS", "CUANDO PUEDE", "MEJORAR ALGO."],
-  description: "Hacemos que la tecnología se adapte al negocio, no al revés.",
-  media: { src: "/images/river-delta.jpg", width: 1920, height: 1080, alt: "Vista aérea de los brazos del río y humedales de Entre Ríos" } satisfies ContentMedia,
 } as const;
 
 export const studioCopy = {
