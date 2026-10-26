@@ -8,17 +8,29 @@ import { heroFilm } from '@/content/hero-film';
 export function HeroFilmMedia() {
   const { ready, tier } = useMotion();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [playback, setPlayback] = useState<'poster' | 'playing' | 'paused'>('poster');
+  const [playback, setPlayback] = useState<'poster' | 'playing' | 'paused' | 'ended'>('poster');
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !ready) return;
+    // Textos diferidos: aparecen cuando el video termina, o antes si no va a poder verse entero.
+    const hero = video.closest<HTMLElement>('.hero-film');
+    const reveal = () => { if (hero && hero.dataset.intro !== 'done') hero.dataset.intro = 'done'; };
+    if (!heroFilm.textAfterEnd || video.ended) reveal();
     if (tier === 0) {
+      reveal();
       video.pause();
       video.removeAttribute('src');
       video.load();
       return;
     }
+    // Si el usuario baja, navega con el teclado o el video no arranca a tiempo, el texto no espera.
+    const onScroll = () => { if (window.scrollY > 40) reveal(); };
+    const stall = window.setTimeout(() => { if (video.paused || video.readyState < 3) reveal(); }, 4500);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    hero?.addEventListener('focusin', reveal);
+    video.addEventListener('ended', reveal);
+    video.addEventListener('error', reveal);
     let alive = true;
     let visible = false;
     let painted = false;
@@ -30,9 +42,13 @@ export function HeroFilmMedia() {
       idle = 0;
       timer = 0;
       if (!alive || !visible || !painted || document.hidden) return;
-      const source = narrow.matches ? heroFilm.mobileSrc : heroFilm.src;
+      // Un video sin bucle se ve una sola vez: al volver al Hero se queda en su último cuadro.
+      if (!heroFilm.loop && video.ended) return;
+      // AV1 pesa menos con la misma calidad; donde no se decodifica, H.264.
+      const av1 = video.canPlayType('video/mp4; codecs="av01.0.08M.08"') === 'probably';
+      const source = narrow.matches ? (av1 && heroFilm.mobileSrcAv1) || heroFilm.mobileSrc : (av1 && heroFilm.srcAv1) || heroFilm.src;
       if (video.getAttribute('src') !== source) video.src = source;
-      void video.play().catch(() => { /* The native poster stays usable if autoplay is unavailable. */ });
+      void video.play().catch(() => { reveal(); /* The native poster stays usable if autoplay is unavailable. */ });
     };
     const schedule = () => {
       if (!alive || !painted || !visible || idle || timer) return;
@@ -72,6 +88,11 @@ export function HeroFilmMedia() {
       observer.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
       narrow.removeEventListener('change', schedule);
+      window.clearTimeout(stall);
+      window.removeEventListener('scroll', onScroll);
+      hero?.removeEventListener('focusin', reveal);
+      video.removeEventListener('ended', reveal);
+      video.removeEventListener('error', reveal);
       video.pause();
     };
   }, [ready, tier]);
@@ -80,11 +101,16 @@ export function HeroFilmMedia() {
     {/* Present the small, preloaded poster atomically with the first content
         frame; the movie becomes visible only after a decoded moving frame. */}
     <picture>
+      {/* Con movimiento reducido no hay video: se muestra directamente su último cuadro. */}
+      {heroFilm.endPosterDesktop && <source media="(prefers-reduced-motion: reduce) and (min-width:1024px)" srcSet={heroFilm.endPosterDesktop} />}
+      {heroFilm.endPoster && <source media="(prefers-reduced-motion: reduce)" srcSet={heroFilm.endPoster} />}
       <source media="(min-width:1024px)" srcSet={heroFilm.desktopPoster} />
-      <img className="hero-film-poster" src={heroFilm.poster} alt="" aria-hidden="true" width={1280} height={716} fetchPriority="high" decoding="sync" />
+      <source media="(max-width:767px)" srcSet={heroFilm.mobilePoster} />
+      <img className="hero-film-poster" src={heroFilm.poster} alt="" aria-hidden="true" width={heroFilm.posterWidth} height={heroFilm.posterHeight} fetchPriority="high" decoding="sync" />
     </picture>
     <video ref={videoRef} data-hero-video data-has-frame={tier > 0 && playback !== 'poster'}
-      onPlaying={() => setPlayback('playing')} onPause={() => setPlayback(previous => previous === 'poster' ? 'poster' : 'paused')}
-      onEmptied={() => setPlayback('poster')} className="hero-film-video" width={1924} height={1076} poster={heroFilm.poster} muted loop playsInline preload="none" aria-hidden="true" tabIndex={-1} />
+      onPlaying={() => setPlayback('playing')} onPause={() => setPlayback(previous => previous === 'poster' || previous === 'ended' ? previous : 'paused')}
+      onEnded={() => setPlayback('ended')} data-playback={playback}
+      onEmptied={() => setPlayback('poster')} className="hero-film-video" width={heroFilm.width} height={heroFilm.height} poster={heroFilm.poster} muted loop={heroFilm.loop} playsInline preload="none" aria-hidden="true" tabIndex={-1} />
   </>;
 }

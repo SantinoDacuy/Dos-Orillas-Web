@@ -1,14 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { usePathname } from "next/navigation";
 import { FooterWordmark } from "@/components/layout/FooterWordmark";
 import { useMotion } from "@/components/motion/MotionProvider";
-import { accessibilityCopy, brandCopy, footerCopy, motionCopy, siteConfig } from "@/content/site";
-
-const subscribeHydration = () => () => {};
-const clientHydration = () => true;
-const serverHydration = () => false;
+import { accessibilityCopy, footerCopy, siteConfig } from "@/content/site";
 
 function LocalClock() {
   const [date, setDate] = useState<Date | null>(null);
@@ -45,11 +41,8 @@ function Year() {
 }
 
 export function Footer({ home }: { home: boolean }) {
-  const { tier, reduced, toggleMotion, lenisRef, ready } = useMotion();
-  // This Suspense boundary may hydrate after the provider has classified motion.
-  // Preserve its server label during hydration, then expose the current setting.
-  const hydrated = useSyncExternalStore(subscribeHydration, clientHydration, serverHydration);
-  const buttonReduced = !hydrated || reduced;
+  const { tier, reduced, lenisRef, ready } = useMotion();
+  const statement = footerCopy.philosophy.split(/(?<=\.)\s+/);
   const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -130,15 +123,6 @@ export function Footer({ home }: { home: boolean }) {
     };
   }, [tier, reduced, pathname, ready]);
 
-  const backToTop = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    event.preventDefault();
-    if (lenisRef.current) lenisRef.current.scrollTo(0, { duration: reduced ? 0 : 2, immediate: reduced });
-    else window.scrollTo({ top: 0, behavior: reduced ? "instant" : "smooth" });
-    document.getElementById("main-content")?.focus({ preventScroll: true });
-    history.replaceState(null, "", pathname);
-  };
-
   const followAnchor = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
     if (!home || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const target = document.querySelector<HTMLElement>(href);
@@ -154,19 +138,25 @@ export function Footer({ home }: { home: boolean }) {
       <div ref={sentinelRef} className="footer-sentinel" aria-hidden="true" data-footer-sentinel />
       <footer ref={footerRef} id="footer" className="site-footer" data-theme="ink" data-visible="true">
         <div className="footer-hairline" aria-hidden="true" />
-        <div className="footer-marquee" aria-hidden="true"><span>{brandCopy.marquee} {brandCopy.marquee}</span></div>
-        <div className="footer-wordmark-mask"><FooterWordmark /></div>
-        <div className="footer-details">
-          <div className="footer-philosophy"><p>{footerCopy.philosophy}</p><p className="mono">{siteConfig.location.label}</p></div>
-          <nav className="footer-nav" aria-label={accessibilityCopy.footerNavigation}>
+        <div className="footer-top">
+          <p className="footer-statement"><span>{statement[0]}</span> <span className="footer-statement-soft">{statement[1]}</span></p>
+          <nav className="footer-col footer-nav" aria-label={accessibilityCopy.footerNavigation}>
+            <p className="footer-label mono">{footerCopy.labels.sections}</p>
             {footerCopy.links.map((link) => <a key={link.href} href={home ? link.href : `/${link.href}`} onClick={(event) => followAnchor(event, link.href)}>{link.label}</a>)}
           </nav>
-          <div className="footer-social"><a href={siteConfig.emailHref}>{footerCopy.emailLabel} ↗</a><a href={siteConfig.instagram.url} target="_blank" rel="noopener noreferrer">{footerCopy.instagramLabel} ↗</a>{siteConfig.availability && <span className="mono">{siteConfig.availability}</span>}</div>
+          <div className="footer-col footer-contact">
+            <p className="footer-label mono">{footerCopy.labels.contact}</p>
+            <a href={siteConfig.emailHref}>{siteConfig.email}<span className="footer-arrow" aria-hidden="true">↗</span></a>
+            <a href={siteConfig.instagram.url} target="_blank" rel="noopener noreferrer">{siteConfig.instagram.handle}<span className="footer-arrow" aria-hidden="true">↗</span></a>
+            <p className="footer-label mono footer-label-base">{footerCopy.labels.base}</p>
+            <p className="footer-place">{siteConfig.location.city}<br />{siteConfig.location.region} · {siteConfig.location.country}</p>
+          </div>
         </div>
+        {/* La marca grande cierra el footer: la luz dentro del logo sigue al puntero por todo el pie. */}
+        <div className="footer-wordmark-mask"><FooterWordmark /></div>
         <div className="footer-bottom">
           <span className="mono">{footerCopy.copyright} <Year /> {siteConfig.name}</span>
           <LocalClock />
-          <div className="footer-controls"><button className="motion-toggle mono" type="button" suppressHydrationWarning aria-pressed={buttonReduced} onClick={toggleMotion}>{buttonReduced ? motionCopy.full : motionCopy.reduce}<span className="motion-toggle-dot" aria-hidden="true" /></button><a className="back-to-top" href="#main-content" aria-label={accessibilityCopy.backToTop} onClick={backToTop}><span aria-hidden="true">↑</span></a></div>
         </div>
       </footer>
     </>

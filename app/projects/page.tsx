@@ -35,6 +35,6 @@ export default function ProjectsIndex() {
       })}
     </ul>
     <Link className="projects-index-contact" href="/#contacto" prefetch={false}>{projectsCopy.invitation}</Link>
-    <Suspense fallback={null}><DeferredProjectsMotion featured={false} gridRootId="projects-index" /></Suspense>
+    <Suspense fallback={null}><DeferredProjectsMotion gridRootId="projects-index" /></Suspense>
   </section>;
 }

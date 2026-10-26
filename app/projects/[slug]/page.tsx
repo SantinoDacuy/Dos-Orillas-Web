@@ -40,6 +40,6 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <ProjectChapters project={project} />
     {next && next.slug !== project.slug && <NextProject project={next} />}
     <Suspense fallback={null}><ProjectMotion slug={project.slug} /></Suspense>
-    <Suspense fallback={null}><DeferredProjectsMotion featured={false} grid={false} /></Suspense>
+    <Suspense fallback={null}><DeferredProjectsMotion grid={false} /></Suspense>
   </article>;
 }

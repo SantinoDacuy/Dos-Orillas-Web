@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
 import { ChevronDown, Send, ShieldCheck } from 'lucide-react';
 import { contactCopy, siteConfig } from '@/content/site';
-import { contactFeedback, privacyDocumentCopy } from '@/content/contact-feedback';
+import { contactFeedback } from '@/content/contact-feedback';
 import { contactLimits } from '@/lib/contact/limits';
 import type { ContactErrors, ContactField } from '@/lib/contact/types';
 import type { ContactClientSession } from '@/lib/contact/client-submit';

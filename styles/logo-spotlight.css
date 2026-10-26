@@ -1,0 +1,58 @@
+/* Luz interactiva dentro del logo del footer (referencia: pie de optium.com.ar).
+   El logo oficial es una máscara: el degradado sólo se ve en sus partes opacas, con huecos y proporciones intactos.
+   Parámetros de la referencia: elipse 38% × 140%; paradas 0.95 / 0.45 (acento) y 0.13 / 0.06 (blanco); halo 46px a 0.18. */
+.logo-spotlight {
+  --spot-x: 50%;
+  --spot-y: 60%;
+  --spot-rgb: 104, 177, 255;
+  position: relative;
+  width: 100%;
+  aspect-ratio: var(--logo-ratio, 1.768);
+  isolation: isolate;
+  user-select: none;
+}
+
+.logo-spotlight__art,
+.logo-spotlight__paint,
+.logo-spotlight__fallback {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.logo-spotlight__art {
+  display: none;
+  /* El halo vive en el wrapper, fuera de la capa enmascarada, para que no se recorte. */
+  filter: drop-shadow(0 0 46px rgba(var(--spot-rgb), 0.18));
+}
+
+.logo-spotlight__paint {
+  background: radial-gradient(
+    38% 140% at var(--spot-x) var(--spot-y),
+    rgba(var(--spot-rgb), 0.95) 0%,
+    rgba(var(--spot-rgb), 0.45) 22%,
+    rgba(255, 255, 255, 0.13) 46%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  -webkit-mask-image: var(--logo-mask);
+  mask-image: var(--logo-mask);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  mask-mode: alpha;
+}
+
+.logo-spotlight__fallback {
+  object-fit: contain;
+  opacity: 0.6;
+}
+
+@supports ((mask-image: linear-gradient(black, black)) or (-webkit-mask-image: linear-gradient(black, black))) {
+  .logo-spotlight__art { display: block; }
+  .logo-spotlight__fallback { display: none; }
+}

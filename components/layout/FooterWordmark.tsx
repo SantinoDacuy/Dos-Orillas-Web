@@ -1,7 +1,11 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { Logo } from './Logo';
+import { LogoSpotlight } from './LogoSpotlight';
 import { siteConfig } from '@/content/site';
+
+/** Logo oficial (870 × 492), usado como máscara de la luz que sigue al puntero por todo el footer. */
+const LOGO = { src: '/brand/logo.svg', ratio: 870 / 492 };
 
 /** Reserve the exact logo box; fetch the official SVG as the footer approaches. */
 export function FooterWordmark() {
@@ -22,7 +26,7 @@ export function FooterWordmark() {
     return () => observer.disconnect();
   }, []);
   return <div ref={ref} className="footer-wordmark-frame" role="img" aria-label={siteConfig.name}>
-    {visible && <Logo light eager className="footer-wordmark" />}
+    {visible && <LogoSpotlight src={LOGO.src} aspectRatio={LOGO.ratio} className="footer-wordmark" />}
     <noscript><Logo light eager className="footer-wordmark" /></noscript>
   </div>;
 }

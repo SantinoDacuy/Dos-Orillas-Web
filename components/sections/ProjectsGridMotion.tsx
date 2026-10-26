@@ -5,8 +5,8 @@ import { useMotion } from '@/components/motion/MotionProvider';
 import { getMountedSceneRoot } from '@/lib/get-visible-root';
 import type { ProjectGridAnimator } from './projects-grid-motion';
 
-function DeferredProjectMotion({ sectionId, kind }: { sectionId: string; kind: 'grid' | 'separator' }) {
-  const { tier, ready, lenisRef } = useMotion();
+function DeferredProjectMotion({ sectionId, kind }: { sectionId: string; kind: 'grid' }) {
+  const { tier, ready } = useMotion();
   useEffect(() => {
     if (!ready || tier === 0 || !('IntersectionObserver' in window)) return;
     const root = getMountedSceneRoot(`#${CSS.escape(sectionId)}`);
@@ -34,14 +34,12 @@ function DeferredProjectMotion({ sectionId, kind }: { sectionId: string; kind: '
         ? import('./projects-grid-lite').then(runtime => runtime.mountProjectGridLite(root, controller.signal))
         : import('./projects-grid-motion').then(async runtime => {
           if (disposed || controller.signal.aborted) return { dispose: () => {} };
-          return kind === 'grid'
-            ? runtime.mountProjectGrid(root, tier, controller.signal)
-            : runtime.mountBrandSeparator(root, tier, controller.signal, () => lenisRef.current?.velocity ?? null);
+          return runtime.mountProjectGrid(root, tier, controller.signal);
         });
       void loading.then(mounted => {
         if (disposed || controller.signal.aborted) mounted.dispose();
         else animator = mounted;
-      }).catch(() => { /* Complete SSR cards/band remain visible after an import failure. */ });
+      }).catch(() => { /* Complete SSR cards remain visible after an import failure. */ });
     };
     const firstScroll = () => {
       if (disposed || started) return;
@@ -86,13 +84,10 @@ function DeferredProjectMotion({ sectionId, kind }: { sectionId: string; kind: '
         else root.setAttribute('data-narrative-layout-ready', previousReady);
       }
     };
-  }, [sectionId, kind, tier, ready, lenisRef]);
+  }, [sectionId, kind, tier, ready]);
   return null;
 }
 
 export function ProjectsGridMotion({ rootId = 'todos-los-proyectos' }: { rootId?: string } = {}) {
   return <DeferredProjectMotion sectionId={rootId} kind="grid" />;
-}
-export function BrandSeparatorMotion({ sectionId }: { sectionId: string }) {
-  return <DeferredProjectMotion sectionId={sectionId} kind="separator" />;
 }

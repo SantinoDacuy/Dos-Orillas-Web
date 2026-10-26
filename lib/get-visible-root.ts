@@ -4,16 +4,6 @@ export function getVisibleRoot(selector: string): HTMLElement | undefined {
     .find(element => element.getClientRects().length > 0);
 }
 
-/** Filter diagram descendants by their scene owner without forcing skipped CV content. */
-export function getVisibleSceneElements(selector: string): HTMLElement[] {
-  const owners = new Map<HTMLElement, boolean>();
-  return Array.from(document.querySelectorAll<HTMLElement>(selector)).filter(element => {
-    const owner = element.closest<HTMLElement>('[data-page-pathname],[data-scene]') ?? element;
-    if (!owners.has(owner)) owners.set(owner, owner.getClientRects().length > 0);
-    return owners.get(owner);
-  });
-}
-
 /** Owner selection during hydration must not force a layout. Activity hides its
  * retained subtree inline; ordinary scene geometry is left to deferred IO. */
 function hasMountedOwner(element: HTMLElement): boolean {

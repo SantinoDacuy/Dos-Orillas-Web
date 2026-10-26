@@ -85,28 +85,15 @@ export const chapters = [
 
 export const brandCopy = {
   wordmark: "DOS ORILLAS",
-  wordmarkParts: ["DOS", "ORILLAS"],
-  studio: "ESTUDIO",
   accessibleName: "Dos Orillas Estudio",
-  philosophy: "Primero entendemos. Después hacemos.",
-  marquee: "DOS ORILLAS — DOS ORILLAS —",
 } as const;
 
 export const heroCopy = {
   title: "Dos Orillas Estudio",
-  titleParts: ["DOS", "ORILLAS"],
-  studio: "ESTUDIO",
-  philosophy: "Primero entendemos. Después hacemos.",
   philosophyLines: ["Primero entendemos.", "Después hacemos."],
   description: "Soluciones digitales pensadas desde el problema, no desde la herramienta.",
-  primaryCta: { label: "CONTANOS QUÉ QUERÉS RESOLVER →", href: "#contacto" },
-  secondaryCta: { label: "VER PROYECTOS ↓", href: "#proyectos" },
-  scrollHint: "DESLIZÁ PARA CRUZAR",
-  orillaLabels: ["ORILLA 01", "ORILLA 02"],
-  media: [
-    { src: "/projects/_hero/orilla-1.webp", width: 2400, height: 3000, alt: "" },
-    { src: "/projects/_hero/orilla-2.webp", width: 2400, height: 3000, alt: "" },
-  ] satisfies ContentMedia[],
+  primaryCta: { label: "Contanos qué querés resolver", href: "#contacto" },
+  secondaryCta: { label: "Ver proyectos", href: "#proyectos" },
 } as const;
 
 export const distanceCopy = {
@@ -117,8 +104,6 @@ export const distanceCopy = {
   connection: "Ahí trabajamos nosotros.",
 } as const;
 
-export const loaderCopy = { orilla: "ORILLA", connected: "DOS ORILLAS" } as const;
-
 export const accessibilityCopy = {
   skipLink: "Saltar al contenido",
   mainNavigation: "Principal",
@@ -126,7 +111,6 @@ export const accessibilityCopy = {
   mobileMenu: "Menú principal",
   openMenu: "Abrir menú",
   closeMenu: "Cerrar menú",
-  backToTop: "Volver arriba",
   projectLink: (title: string): string => `Ir al proyecto ${title}`,
 } as const;
 
@@ -137,14 +121,11 @@ export const motionCopy = {
 } as const;
 
 export const footerCopy = {
-  wordmark: ["DOS ORILLAS", "ESTUDIO"],
   philosophy: "Primero entendemos. Después hacemos.",
-  location: "Concepción del Uruguay · Entre Ríos · Argentina",
   clockCity: "CONCEPCIÓN DEL URUGUAY",
   clockZone: "ART",
-  emailLabel: "Email",
-  instagramLabel: "Instagram",
   copyright: "©",
+  labels: { sections: "Secciones", contact: "Contacto", base: "Base" },
   links: [
     { label: "Estudio", href: "#estudio" },
     { label: "Soluciones", href: "#soluciones" },
@@ -212,12 +193,4 @@ export const contactCopy = {
 export const notFoundCopy = {
   title: "Este puente no llega a ningún lado.",
   cta: { label: "VOLVER AL INICIO →", href: "/" },
-} as const;
-
-export const keyVisualCopy = {
-  "commerce-flow": { nodes: ["CATÁLOGO", "CARRITO", "PAGO", "ENVÍO"], branches: ["GOOGLE LOGIN", "MERCADO PAGO", "PANEL ADMIN"] },
-  "event-flow": { nodes: ["API (Next.js)", "comandos", "Procesador", "eventos", "SSE", "Timeline"], branch: "DLQ" },
-  geo: { nearby: "Búsqueda geográfica", ranking: "Ranking de popularidad", clustering: "Clustering" },
-  clusters: { algorithm: "ART1 (Carpenter-Grossberg)", stages: ["Variedad", "Calidad"] },
-  "dw-structure": { fact: "HECHOS", dimension: "DIMENSIÓN", stages: ["ETL", "modelo", "dashboards"], empty: "a completar" },
 } as const;

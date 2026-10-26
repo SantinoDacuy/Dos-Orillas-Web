@@ -83,7 +83,7 @@ async function measure(mode, lighthouse, chromeLauncher, desktopConfig) {
         const urlStr = resource.url.startsWith('data:') ? '' : resource.url;
         const decoded = urlStr ? decodeURIComponent(urlStr) : '';
         const pathname = new URL(decoded || resource.url, 'http://localhost').pathname;
-        return pathname.includes('/_hero/') || /^\/visuals\/hero-film-poster(?:-desktop)?\.webp$/.test(pathname);
+        return pathname.includes('/_hero/') || /^\/visuals\/hero-(?:film|city|river)-poster(?:-desktop|-mobile)?\.webp$/.test(pathname);
       } catch {
         return false;
       }

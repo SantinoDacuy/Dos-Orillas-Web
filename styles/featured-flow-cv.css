@@ -1,9 +1,0 @@
-/* Optional untouched server flow. The loader latches real geometry before arc.
-   The native carousel never has a scroll pin and never remains under CV. */
-@media (max-width:1023px) and (min-height:701px) {
-  html.js-motion[data-motion-tier="1"]:not(:has(:target))
-  [data-scene="featured"][data-featured-mode="flow"][data-featured-cv-policy="flow-tier1"][data-featured-intrinsic="true"]:not([data-featured-ready="true"]):not([data-narrative-layout-ready="true"]):not(:focus-within) {
-    content-visibility:auto;
-    contain-intrinsic-block-size:auto var(--featured-flow-intrinsic-height);
-  }
-}
