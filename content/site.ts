@@ -80,7 +80,7 @@ export const chapters = [
   { id: "soluciones", number: "02", label: "SOLUCIONES", sections: ["soluciones", "proceso"] },
   { id: "proyectos", number: "03", label: "PROYECTOS", sections: ["proyectos", "todos-los-proyectos"] },
   { id: "equipo", number: "04", label: "EQUIPO", sections: ["el-estudio", "equipo", "herramientas"] },
-  { id: "contacto", number: "05", label: "CONTACTO", sections: ["hablemos", "contacto", "footer"] },
+  { id: "contacto", number: "05", label: "CONTACTO", sections: ["contacto", "footer"] },
 ] as const;
 
 export const brandCopy = {
@@ -90,8 +90,8 @@ export const brandCopy = {
 
 export const heroCopy = {
   title: "Dos Orillas Estudio",
-  philosophyLines: ["Primero entendemos.", "Después hacemos."],
-  description: "Soluciones digitales pensadas desde el problema, no desde la herramienta.",
+  philosophyLines: ["Primero entendemos", "Después hacemos"],
+  description: "Soluciones digitales pensadas desde el problema, no desde la herramienta",
   primaryCta: { label: "Contanos qué querés resolver", href: "#contacto" },
   secondaryCta: { label: "Ver proyectos", href: "#proyectos" },
 } as const;
@@ -100,8 +100,8 @@ export const distanceCopy = {
   title: "La distancia entre dos orillas",
   left: { label: "TU NEGOCIO", lines: ["TU", "NEGOCIO"], orilla: "ORILLA 01" },
   right: { label: "LA TECNOLOGÍA", lines: ["LA", "TECNOLOGÍA"], orilla: "ORILLA 02" },
-  description: "Entre tener un problema y encontrar la herramienta correcta hay una distancia.",
-  connection: "Ahí trabajamos nosotros.",
+  description: "Entre tener un problema y encontrar la herramienta correcta hay una distancia",
+  connection: "Ahí trabajamos nosotros",
 } as const;
 
 export const accessibilityCopy = {
@@ -121,7 +121,7 @@ export const motionCopy = {
 } as const;
 
 export const footerCopy = {
-  philosophy: "Primero entendemos. Después hacemos.",
+  philosophy: ["Primero entendemos", "Después hacemos"],
   clockCity: "CONCEPCIÓN DEL URUGUAY",
   clockZone: "ART",
   copyright: "©",
@@ -138,10 +138,10 @@ export const footerCopy = {
 export const studioCopy = {
   title: "EL ESTUDIO",
   eyebrow: "04 · EL ESTUDIO",
-  headline: ["DOS PERSONAS.", "DOS ORILLAS.", "UNA MISMA FORMA DE TRABAJAR."],
+  headline: ["DOS PERSONAS", "DOS ORILLAS", "UNA MISMA FORMA DE TRABAJAR"],
   coordinates: "32°29′S 58°14′W · CONCEPCIÓN DEL URUGUAY",
-  lead: "Dos Orillas nace de una idea simple: antes de construir una solución, hay que entender realmente el problema.",
-  paragraph: "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos. Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología.",
+  lead: "Dos Orillas nace de una idea simple: antes de construir una solución, hay que entender realmente el problema",
+  paragraph: "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos. Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología",
   paragraphs: [
     "Somos un estudio de soluciones digitales de Concepción del Uruguay, Entre Ríos. Trabajamos con negocios, comercios, emprendimientos y organizaciones que necesitan ordenar, mejorar o transformar alguna parte de su trabajo mediante tecnología.",
   ],
@@ -163,17 +163,10 @@ export const projectsCopy = {
   counter: (index: number, total: number): string => `${String(index).padStart(2, "0")} / ${String(total).padStart(2, "0")}`,
 } as const;
 
-export const finalCtaCopy = {
-  lines: ["TENÉS UNA IDEA.", "UN PROBLEMA.", "O ALGO QUE PODRÍA", "FUNCIONAR MEJOR."],
-  title: "HABLEMOS.",
-  cta: { label: "CONTANOS QUÉ QUERÉS RESOLVER →", href: "#contacto" },
-  location: "Dos Orillas Estudio · Concepción del Uruguay · Entre Ríos · Argentina",
-} as const;
-
 export const contactCopy = {
   title: "Conversemos",
   fields: { name: "Nombre", email: "Email", organization: "Negocio / empresa", message: "¿Qué querés resolver?" },
-  helper: "No hace falta que tengas la solución. Contanos qué está pasando.",
+  helper: "No hace falta que tengas la solución. Contanos qué está pasando",
   submit: "ENVIAR MENSAJE →",
   loading: "ENVIANDO…",
   errors: {
@@ -191,6 +184,6 @@ export const contactCopy = {
 } as const;
 
 export const notFoundCopy = {
-  title: "Este puente no llega a ningún lado.",
+  title: "Este puente no llega a ningún lado",
   cta: { label: "VOLVER AL INICIO →", href: "/" },
 } as const;

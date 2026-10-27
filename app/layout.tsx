@@ -21,6 +21,7 @@ import '@/styles/editorial.css';
 import '@/styles/contact.css';
 import '@/styles/projects-showcase.css';
 import '@/styles/stack.css';
+import '@/styles/team.css';
 import '@/styles/proceso.css';
 import '@/styles/living-bg.css';
 import { buildSiteMetadata } from '@/lib/seo';

@@ -35,7 +35,7 @@ export function Contact() {
             </div>
             <h3 className="contact-visual-title-light">
               Cada gran producto <br />
-              <span className="contact-accent-text-light">empieza con una charla.</span>
+              <span className="contact-accent-text-light">empieza con una charla</span>
             </h3>
           </div>
 
@@ -64,7 +64,7 @@ export function Contact() {
               Conversemos
             </h2>
             <p className="contact-main-desc">
-              Completá el formulario para contarnos sobre tu proyecto. Respondemos dentro de las 24 horas hábiles.
+              Completá el formulario para contarnos sobre tu proyecto. Respondemos dentro de las 24 horas hábiles
             </p>
           </div>
           <ContactForm />

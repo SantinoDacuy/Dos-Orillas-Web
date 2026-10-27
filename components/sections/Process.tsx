@@ -4,7 +4,7 @@ import { SectionReveal } from './SectionReveal';
 
 /** Cómo trabajamos: lectura plana. Cuatro pasos sobre una sola línea (el puente) y nada fijado. */
 export function Process() {
-  const [first, second] = processCopy.subtitle.split(/(?<=\.)\s+/);
+  const [first, second] = processCopy.subtitle;
   return <section id="proceso" className="pr" data-theme="navy" data-nav="dark" data-scene="proceso" aria-labelledby="process-title">
     <div className="pr-wrap">
       <header className="pr-head" data-reveal>

@@ -5,14 +5,41 @@
     position:relative; background:#071725; color:#F2EEE6;
     --e-accent:var(--bridge-on-dark,#68B1FF); --e-cream:#F2EEE6; --e-line:rgb(242 238 230 / 16%);
   }
+  .es { overflow:clip; isolation:isolate; }
   .es-stage {
-    position:relative; isolation:isolate; overflow:clip; display:grid; gap:clamp(40px,7svh,80px);
+    position:relative; z-index:1; display:grid; gap:clamp(40px,7svh,80px);
     padding:clamp(88px,11svh,120px) var(--gutter) clamp(64px,9svh,96px);
   }
-  .es-atmosphere { position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-  .es-vignette { position:absolute; inset:0; background:radial-gradient(130% 90% at 50% 50%,transparent 40%,rgb(3 10 18 / 65%) 100%); }
-  .es-grain { position:absolute; inset:0; background:url(/textures/grain.svg); opacity:.09; mix-blend-mode:soft-light; }
 
+  /* Mosaico 3D de proyectos (fondo de la sección). Un plano de 1720px inclinado como el «3D Marquee»: rotateX 55°,
+     rotateZ −45°; cuatro columnas que derivan ±100px en sentidos opuestos (10 s y 15 s). La máscara lo apaga hacia la
+     izquierda y arriba, donde va el texto; un velo azul lo integra al fondo. */
+  .es-marquee {
+    position:absolute; inset:0; z-index:0; display:flex; align-items:center; justify-content:center; overflow:hidden; pointer-events:none;
+    --mq-scale:.5;
+    -webkit-mask-image:linear-gradient(90deg,transparent 4%,rgb(0 0 0 / 55%) 38%,#000 62%),linear-gradient(180deg,transparent 0%,#000 34%,#000 84%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(90deg,transparent 4%,rgb(0 0 0 / 55%) 38%,#000 62%),linear-gradient(180deg,transparent 0%,#000 34%,#000 84%,transparent 100%);
+    mask-composite:intersect;
+  }
+  .es-marquee::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgb(7 23 37 / 55%),rgb(7 23 37 / 18%) 60%,rgb(7 23 37 / 30%)); }
+  /* El plano se corre hacia abajo a la derecha (en px del plano, escalados) para que la franja inclinada cubra la sección. */
+  .es-mq-plane { flex:none; width:1720px; height:1720px; --mq-x:900px; --mq-y:500px; transform:translate(calc(var(--mq-x) * var(--mq-scale)),calc(var(--mq-y) * var(--mq-scale))) scale(var(--mq-scale)); }
+  .es-mq-grid {
+    position:relative; top:384px; right:50%; width:100%; height:100%; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:32px;
+    transform-origin:0 0; transform:rotateX(55deg) rotateY(0deg) rotateZ(-45deg); transform-style:preserve-3d;
+  }
+  .es-mq-col { position:relative; display:flex; flex-direction:column; gap:32px; }
+  /* Guías finas punteadas entre columnas y entre portadas, como en la referencia. */
+  .es-mq-col::before { content:''; position:absolute; left:-16px; top:-40px; bottom:-40px; width:1px; background:repeating-linear-gradient(180deg,rgb(242 238 230 / 18%) 0 3px,transparent 3px 8px); }
+  .es-mq-item { position:relative; pointer-events:auto; }
+  .es-mq-item::before { content:''; position:absolute; left:-10px; right:-10px; top:-16px; height:1px; background:repeating-linear-gradient(90deg,rgb(242 238 230 / 18%) 0 3px,transparent 3px 8px); }
+  .es-mq-item img { display:block; width:100%; height:auto; aspect-ratio:970 / 700; object-fit:cover; border-radius:8px; box-shadow:0 0 0 1px rgb(242 238 230 / 8%); transition:translate .3s cubic-bezier(.22,1,.36,1),box-shadow .3s cubic-bezier(.22,1,.36,1); }
+  @media (hover:hover) and (pointer:fine) {
+    .es-mq-item:hover img { translate:0 -10px; box-shadow:0 0 0 1px rgb(104 177 255 / 40%),0 18px 40px -16px rgb(2 8 15 / 80%); }
+  }
+
+  .es-read { max-width:min(100%,560px); }
   .es-headline { margin:0; display:grid; grid-template-columns:minmax(0,1fr); font-family:var(--font-display),sans-serif; font-weight:700; font-stretch:118%; font-size:clamp(36px,7.2vw,124px); line-height:.92; letter-spacing:-.045em; color:var(--e-cream); text-shadow:0 4px 44px rgb(3 10 18 / 55%); }
   .es-line { display:block; overflow:clip; padding:.14em .1em .08em 0; margin:-.14em 0 -.08em; }
   .es-line-in { display:block; width:max-content; max-width:100%; }
@@ -20,14 +47,6 @@
   .es-line-2 .es-line-in { margin-left:auto; }
   .es-line-3 { margin-top:.5em; font-size:clamp(22px,3.6vw,58px); line-height:1.05; letter-spacing:-.035em; color:var(--e-cream); opacity:.72; font-weight:400; font-stretch:100%; }
   .es-line-3 .es-line-in { width:auto; }
-
-  .es-photo { margin:0; justify-self:center; width:min(100%,460px); }
-  .es-photo-frame { position:relative; aspect-ratio:3 / 4; overflow:clip; border-radius:2px; box-shadow:0 36px 90px rgb(2 8 15 / 60%),0 0 0 1px rgb(242 238 230 / 10%); }
-  .es-photo-frame .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
-  .es-photo-frame img { object-fit:cover; }
-  .es-photo-frame { --feather:0; }
-  .es-photo-frame::after { content:''; position:absolute; inset:-1px; pointer-events:none; opacity:var(--feather); background:radial-gradient(closest-side,transparent 22%,#071725 100%); }
-  .es-photo-veil { position:absolute; inset:0; background:linear-gradient(180deg,rgb(7 23 37 / 15%),rgb(7 23 37 / 45%)); }
 
   .es-lead { margin:0 0 clamp(20px,3svh,32px); font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(24px,3vw,46px); line-height:1.1; letter-spacing:-.04em; color:var(--e-cream); text-wrap:balance; }
   .es-paragraph { margin:0; max-width:52ch; font-size:clamp(16px,1.3vw,19px); line-height:1.6; color:#C9D4DE; }
@@ -39,12 +58,17 @@
   .es-coords { grid-column:1 / -1; justify-self:center; margin-top:16px; font-size:11px; letter-spacing:.03em; color:#DDE6EE; text-align:center; }
 }
 
+@media (min-width:640px) { .es-marquee { --mq-scale:.75; } }
+@media (min-width:1280px) { .es-marquee { --mq-scale:1; } }
 @media (min-width:768px) {
-  .es-stage { grid-template-columns:minmax(0,.85fr) minmax(0,1fr); grid-template-areas:"headline headline" "photo read" "bridge bridge"; column-gap:clamp(32px,5vw,96px); align-items:center; }
-  .es-headline { grid-area:headline; }
-  .es-photo { grid-area:photo; justify-self:start; }
-  .es-read { grid-area:read; }
-  .es-bridge { grid-area:bridge; }
+  .es-stage { min-height:min(100svh,980px); align-content:space-between; }
+}
+/* Celular: el mosaico queda de fondo en toda la sección, más apagado, y el texto encima. */
+@media (max-width:767px) {
+  .es-marquee {
+    -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 75%,transparent 100%); mask-image:linear-gradient(180deg,transparent 0%,#000 30%,#000 75%,transparent 100%);
+  }
+  .es-marquee::after { background:rgb(7 23 37 / 62%); }
 }
 @media (max-width:767px) {
   .es-headline { font-size:clamp(30px,9vw,80px); }
@@ -52,3 +76,13 @@
 }
 
 html[data-motion-tier="0"] .es,html[data-motion-tier="0"] .es * { transition-property:none!important; }
+
+/* Deriva de las columnas: sólo con el script de la escena (data-live mientras está en pantalla) y sin movimiento
+   reducido; sin eso el mosaico queda quieto. */
+@keyframes es-drift-down { from { transform:translateY(0); } to { transform:translateY(100px); } }
+@keyframes es-drift-up { from { transform:translateY(0); } to { transform:translateY(-100px); } }
+@media (prefers-reduced-motion:no-preference) {
+  .es[data-mq="ready"] .es-mq-col { animation:es-drift-down 10s ease-in-out infinite alternate; animation-play-state:paused; will-change:transform; }
+  .es[data-mq="ready"] .es-mq-col:nth-child(even) { animation-name:es-drift-up; animation-duration:15s; }
+  .es[data-mq="ready"][data-live] .es-mq-col { animation-play-state:running; }
+}

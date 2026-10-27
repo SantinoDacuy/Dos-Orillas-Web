@@ -5,61 +5,73 @@
     --a-accent:var(--bridge-on-dark,#68B1FF); --a-cream:#F2EEE6; --a-line:rgb(242 238 230 / 16%);
   }
   .ap-stage { position:relative; isolation:isolate; overflow:clip; }
-  .ap-grain { position:absolute; inset:0; z-index:5; pointer-events:none; background:url(/textures/grain.svg); opacity:.08; mix-blend-mode:soft-light; }
   .ap-line { display:block; overflow:clip; padding:.14em .1em .08em 0; margin:-.14em 0 -.08em; }
   .ap-line-in { display:block; width:max-content; max-width:100%; }
 
-  /* ── Soluciones: plana, sin recorrido fijado. Cuatro tarjetas y la línea de IA. ── */
-  .ap-solutions .ap-stage { display:grid; gap:clamp(40px,7svh,72px); padding:clamp(88px,12svh,128px) var(--gutter) clamp(64px,10svh,112px); }
-  .ap-sol-head { display:grid; gap:14px; }
-  .ap-sol-title { margin:0; font-family:var(--font-display),sans-serif; font-weight:700; font-stretch:122%; font-size:clamp(38px,6.6vw,108px); line-height:.92; letter-spacing:-.045em; color:var(--a-cream); }
-  .ap-sol-sub { margin:0; max-width:34ch; font-size:clamp(16px,1.35vw,20px); line-height:1.5; color:var(--a-soft,#C9D4DE); }
-  .ap-services { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(36px,6svh,56px) clamp(20px,2.4vw,40px); }
-  .ap-service { display:grid; grid-template-areas:"media" "name" "detail"; align-content:start; row-gap:16px; min-width:0; }
-  .ap-service-media { grid-area:media; margin:0; }
-  .ap-service-name { grid-area:name; position:relative; display:flex; align-items:baseline; gap:clamp(10px,1.2vw,16px); min-width:0; padding-top:16px; border-top:1px solid var(--a-line); }
-  .ap-service-name::before { content:''; position:absolute; left:0; right:0; top:-1px; height:1px; background:var(--a-accent); transform:scaleX(0); transform-origin:left center; transition:transform .8s var(--ease-out-expo); }
-  .ap-service:hover .ap-service-name::before,.ap-service:focus-within .ap-service-name::before { transform:scaleX(1); }
-  .ap-service-detail { grid-area:detail; }
-  .ap-num,.ap-full,.ap-ai-label { font-size:11px; letter-spacing:.03em; color:var(--a-accent); }
-  .ap-name { margin:0; font-family:var(--font-display),sans-serif; font-weight:650; font-size:min(clamp(30px,3.2vw,46px),calc((100vw - 2 * var(--gutter) - 56px) / (var(--chars,8) * .66))); line-height:.95; letter-spacing:-.05em; color:var(--a-cream); min-width:0; }
-  .ap-name-rule { display:none; }
-  .ap-full { margin:0 0 10px; }
-  .ap-desc { margin:0; max-width:34ch; font-size:clamp(15px,1.15vw,18px); line-height:1.5; color:#C9D4DE; }
-  .ap-slide { position:relative; aspect-ratio:16 / 11; overflow:clip; border-radius:2px; }
-  .ap-slide .media { position:absolute; inset:0; height:100%; aspect-ratio:auto!important; background:none; }
-  .ap-slide img { object-fit:cover; filter:grayscale(1) contrast(1.06) brightness(.92); transition:transform 1.2s var(--ease-out-expo),filter .9s var(--ease-out-quint); }
-  /* Las cuatro fotos comparten un virado azul: se leen como un mismo sistema y recuperan su color al acercarse. */
-  .ap-slide::after { content:''; position:absolute; inset:0; pointer-events:none; background:linear-gradient(160deg,rgb(20 70 130 / 72%),rgb(7 23 37 / 45%)); mix-blend-mode:color; transition:opacity .9s var(--ease-out-quint); }
-  .ap-slide::before { content:''; position:absolute; inset:0; z-index:1; pointer-events:none; opacity:0; background:radial-gradient(circle at var(--gx,50%) var(--gy,30%),rgb(255 255 255 / 26%),transparent 55%); transition:opacity .5s; }
-  .ap-service:is(:hover,:focus-within) .ap-slide img { filter:none; transform:scale(1.05); }
-  .ap-service:is(:hover,:focus-within) .ap-slide::after { opacity:0; }
-  .ap-service:hover .ap-slide::before { opacity:1; }
-  .ap-service-media { transform-style:preserve-3d; will-change:transform; }
-  .ap-ai { display:grid; gap:14px; padding-top:clamp(28px,4.5svh,48px); border-top:1px solid var(--a-line); }
-  .ap-ai-label { margin:0; }
-  .ap-ai-copy { margin:0; max-width:26ch; font-family:var(--font-display),sans-serif; font-weight:600; font-size:clamp(24px,3vw,46px); line-height:1.08; letter-spacing:-.04em; color:var(--a-cream); }
-  .ap-ai-copy .ap-line-in { width:auto; }
+  /* ── Soluciones: encabezado y cuatro tarjetas. ── */
+  .ap-solutions .ap-stage { display:grid; gap:clamp(36px,4.5vw,56px); padding:clamp(88px,12svh,128px) var(--gutter) clamp(64px,10svh,112px); }
+  .ap-sol-head { display:grid; gap:18px; }
+  .ap-sol-kicker { margin:0; font-size:11px; letter-spacing:.03em; color:var(--a-accent); }
+  /* Encabezado sobre las tarjetas (referencia: Enjambre): Inter 500, interlineado 1.02 y tracking −.05em. */
+  .ap-sol-title { margin:0; max-width:16ch; font-family:var(--font-inter),sans-serif; font-weight:500; font-size:clamp(36px,6vw,80px); line-height:1.02; letter-spacing:-.05em; color:var(--a-cream); text-wrap:balance; }
+  .ap-sol-title .ap-line { padding-bottom:.12em; margin-bottom:-.12em; }
+  .ap-sol-title .ap-line-in { width:auto; }
+
+  /* Tarjetas (referencia: el trío de Enjambre, con la luz en el azul de Dos Orillas). El <li> revela; la tarjeta flota. */
+  .ap-services { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:minmax(0,1fr); gap:16px; }
+  .ap-service { display:grid; min-width:0; }
+  .trio-card {
+    position:relative; overflow:hidden; isolation:isolate; height:100%; padding:26px; text-align:left;
+    border:1px solid rgb(255 255 255 / 7%); border-radius:22px;
+    background:linear-gradient(180deg,rgb(16 34 54 / 78%),rgb(6 15 26 / 82%));
+    box-shadow:inset 0 1px 0 rgb(255 255 255 / 4%);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  }
+  /* Tramo de luz que recorre el contorno: degradado cónico recortado a 1 px con máscaras. */
+  .trio-card::before {
+    content:''; position:absolute; inset:0; border-radius:inherit; padding:1px; pointer-events:none;
+    background:conic-gradient(from var(--trio-a),transparent 0 70%,rgb(104 177 255 / 90%) 85%,transparent 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor;
+    mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  }
+  /* Reflejo diagonal que cruza la superficie, recortado por las esquinas (overflow hidden) y detrás del texto. */
+  .trio-card::after {
+    content:''; position:absolute; inset:-40% auto -40% -60%; z-index:-1; width:45%; pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgb(190 220 255 / 9%),transparent); transform:skewX(-18deg);
+  }
+  .trio-n {
+    display:inline-block; padding:3px 9px; border-radius:999px; font-family:var(--font-jb),monospace; font-size:11px; line-height:1.5;
+    color:#DCEBFF; border:1px solid rgb(104 177 255 / 25%); background:rgb(104 177 255 / 10%); font-variant-numeric:tabular-nums;
+  }
+  .trio-title { margin:16px 0 6px; font-family:var(--font-inter),sans-serif; font-size:20px; font-weight:500; line-height:1.2; letter-spacing:-.025em; color:#F2EEE6; text-wrap:balance; }
+  .trio-desc { margin:0; font-family:var(--font-inter),sans-serif; font-size:15px; font-weight:400; line-height:1.6; color:#A3B1BF; text-wrap:pretty; }
+
 }
 
-@media (max-width:767px) {
-  .ap-name { font-size:min(9.4vw,calc((100vw - 2 * var(--gutter) - 56px) / (var(--chars,8) * .66))); }
+@property --trio-a { syntax:"<angle>"; inherits:false; initial-value:0deg; }
+@keyframes trioBorder { to { --trio-a:360deg; } }
+@keyframes trioShine { 0%,55% { left:-60%; } 100% { left:130%; } }
+@keyframes trioFloat { 0%,100% { translate:0 0; } 50% { translate:0 -8px; } }
+@keyframes trioPulse { 0%,100% { box-shadow:0 0 0 0 rgb(104 177 255 / 0%); } 50% { box-shadow:0 0 16px 2px rgb(104 177 255 / 35%); } }
+
+/* Movimiento (sólo con el script de la escena: tier ≥1 y sin movimiento reducido). data-trio lo marca al montar;
+   data-live, mientras la lista está en pantalla (fuera de ella las animaciones continuas se pausan). Sin script,
+   tier 0 o movimiento reducido, las tarjetas quedan quietas y visibles. */
+@media (prefers-reduced-motion:no-preference) {
+  .ap-services[data-trio="ready"] .ap-service { opacity:0; transform:translateY(32px); transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1.1s cubic-bezier(.16,1,.3,1); transition-delay:calc(var(--d,0) * 110ms); }
+  .ap-services[data-trio="ready"] .ap-service.in { opacity:1; transform:none; }
+  .ap-services[data-trio="ready"] .trio-card::before { animation:trioBorder 6s linear infinite; animation-delay:calc(var(--d,0) * -1.5s); }
+  .ap-services[data-trio="ready"] .trio-card::after { animation:trioShine 7s cubic-bezier(.16,1,.3,1) infinite; animation-delay:calc(var(--d,0) * 1.2s + 1s); }
+  .ap-services[data-trio="ready"] .ap-service.in .trio-card { animation:trioFloat 6s ease-in-out infinite; animation-delay:calc(var(--d,0) * -1.5s); }
+  .ap-services[data-trio="ready"] .trio-n { animation:trioPulse 3s ease-in-out infinite; animation-delay:calc(var(--d,0) * .5s); }
+  .ap-services[data-trio="ready"]:not([data-live]) :is(.trio-card,.trio-card::before,.trio-card::after,.trio-n) { animation-play-state:paused; }
 }
 
-@media (min-width:768px) {
+@media (min-width:761px) {
   .ap-services { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .ap-slide { aspect-ratio:4 / 3; }
-  .ap-name { font-size:min(clamp(30px,3.6vw,46px),calc((50vw - var(--gutter) - 76px) / (var(--chars,8) * .66))); }
-}
-@media (min-width:768px) and (min-height:681px) {
-  .ap-sol-head { grid-template-columns:minmax(0,1fr) auto; align-items:end; column-gap:32px; }
 }
 @media (min-width:1100px) {
   .ap-services { grid-template-columns:repeat(4,minmax(0,1fr)); }
-  .ap-slide { aspect-ratio:5 / 6; }
-  .ap-name { font-size:min(clamp(26px,2.5vw,40px),calc(((100vw - 2 * var(--gutter)) / 4 - 48px) / (14 * .66))); }
-  .ap-ai { grid-template-columns:minmax(0,.34fr) minmax(0,1fr); column-gap:clamp(24px,4vw,64px); align-items:start; }
-  .ap-ai-label { padding-top:1.1em; }
 }
 
 /* Lectura estática: el cambio de tier no debe animar tipografía ni geometría. */

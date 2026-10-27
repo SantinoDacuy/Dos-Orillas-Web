@@ -1,4 +1,4 @@
-"""Regenerate the three local WOFF2 files without changing their type design.
+"""Regenerate the local WOFF2 files without changing their type design.
 
 Optional asset maintenance tool: python -m pip install "fonttools[woff]==4.66.1"
 then python scripts/subset-fonts.py. Normal pnpm builds do not need Python.
@@ -15,6 +15,7 @@ SOURCES = {
     "archivo.woff2": "@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2",
     "geist.woff2": "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
     "geist-mono.woff2": "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2",
+    "jetbrains-mono.woff2": "@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2",
 }
 
 # Keep all ASCII, every Spanish accented letter, and every character in the

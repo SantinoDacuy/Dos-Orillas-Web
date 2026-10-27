@@ -14,8 +14,12 @@ import { organizationJSONLD } from '@/lib/structured-data';
 export default function Home() {
   return <>
     <StructuredData data={organizationJSONLD()} />
-    <Hero />
-    <Distance />
+    {/* Telón: el Hero queda fijo y la Distancia sube por encima (styles/distance.css, «Telón»). */}
+    <div className="hero-cover">
+      <Hero />
+      <div className="cover-edge" aria-hidden="true" />
+      <Distance />
+    </div>
     <Solutions />
     <Process />
     <ProjectsCinematicSection />

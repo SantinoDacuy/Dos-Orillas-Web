@@ -9,7 +9,7 @@ interface Params {
   full: boolean;
 }
 
-/** Soluciones: reveals por columna e inclinación de las fotos hacia el cursor. */
+/** Soluciones: reveal del encabezado; las tarjetas se revelan por clase (ver styles/approach.css). */
 export async function mountApproach(root: HTMLElement, tier: MotionTier, signal: AbortSignal) {
   const runtime = await loadGSAP();
   if (signal.aborted || !root.isConnected) return () => {};
@@ -37,7 +37,7 @@ export async function mountApproach(root: HTMLElement, tier: MotionTier, signal:
 
 /* ───────────────────────── Soluciones · plana ───────────────────────── */
 
-function flowSolutions({ runtime: { gsap }, root, full }: Params): () => void {
+function flowSolutions({ runtime: { gsap }, root }: Params): () => void {
   const rise = (targets: Element | Element[] | NodeListOf<Element>, trigger: Element, start = 'top 85%', stagger = .08) => {
     gsap.fromTo(targets, { yPercent: 118 }, {
       yPercent: 0, stagger, duration: 1, ease: 'power4.out',
@@ -47,63 +47,30 @@ function flowSolutions({ runtime: { gsap }, root, full }: Params): () => void {
   const head = root.querySelector('.ap-sol-head');
   if (head) rise(head.querySelectorAll('.ap-line-in'), head, 'top 88%', .12);
 
-  // Las tarjetas comparten fila en pantallas anchas: el retraso escalona sólo dentro de la fila.
-  const columns = innerWidth >= 1100 ? 4 : innerWidth >= 768 ? 2 : 1;
-  root.querySelectorAll<HTMLElement>('.ap-service').forEach((service, index) => {
-    const delay = (index % columns) * .12;
-    const slide = service.querySelector<HTMLElement>('.ap-slide');
-    const image = service.querySelector<HTMLElement>('.ap-slide img');
-    const name = service.querySelector('.ap-name .ap-line-in');
-    if (slide) {
-      gsap.fromTo(slide, { clipPath: 'inset(100% 0% 0% 0%)' }, {
-        clipPath: 'inset(0% 0% 0% 0%)', duration: 1.1, delay, ease: 'power3.inOut',
-        scrollTrigger: { trigger: service, start: 'top 85%', toggleActions: 'play none none reverse' },
-      });
-    }
-    if (slide && image) {
-      gsap.fromTo(image, { yPercent: -5, scale: 1.16 }, {
-        yPercent: 5, scale: 1.16, ease: 'none',
-        scrollTrigger: { trigger: slide, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
-    }
-    if (name) {
-      gsap.fromTo(name, { yPercent: 118 }, {
-        yPercent: 0, duration: 1, delay: delay + .25, ease: 'power4.out',
-        scrollTrigger: { trigger: service, start: 'top 80%', toggleActions: 'play none none reverse' },
-      });
-    }
-    gsap.fromTo(service.querySelectorAll('.ap-full, .ap-desc'), { autoAlpha: 0, y: 16 }, {
-      autoAlpha: 1, y: 0, stagger: .1, duration: .8, delay: delay + .35, ease: 'power3.out',
-      scrollTrigger: { trigger: service, start: 'top 78%', toggleActions: 'play none none reverse' },
+  // Tarjetas: revelado por clase (CSS) con IntersectionObserver, como la referencia (umbral .14, margen −40 px).
+  // La lista marca data-live mientras está en pantalla: fuera de ella, las animaciones continuas se pausan.
+  const list = root.querySelector<HTMLElement>('.ap-services');
+  const cards = Array.from(root.querySelectorAll<HTMLElement>('.ap-service'));
+  let reveal: IntersectionObserver | undefined;
+  let live: IntersectionObserver | undefined;
+  if (list && cards.length) {
+    list.dataset.trio = 'ready';
+    reveal = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('in');
+      reveal?.unobserve(entry.target);
+    }), { threshold: .14, rootMargin: '0px 0px -40px 0px' });
+    cards.forEach(card => reveal?.observe(card));
+    live = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) list.dataset.live = 'true'; else delete list.dataset.live;
     });
-  });
-  const ai = root.querySelector('.ap-ai');
-  if (ai) rise(ai.querySelectorAll('.ap-line-in'), ai, 'top 80%', .14);
-
-  // Perspectiva: cada foto se inclina hacia el cursor y el brillo la sigue (sólo puntero fino y tier completo).
-  const listeners: Array<() => void> = [];
-  if (full && matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    root.querySelectorAll<HTMLElement>('.ap-service').forEach(service => {
-      const media = service.querySelector<HTMLElement>('.ap-service-media');
-      const slide = service.querySelector<HTMLElement>('.ap-slide');
-      if (!media || !slide) return;
-      gsap.set(media, { transformPerspective: 900 });
-      const rotY = gsap.quickTo(media, 'rotationY', { duration: .6, ease: 'power3.out' });
-      const rotX = gsap.quickTo(media, 'rotationX', { duration: .6, ease: 'power3.out' });
-      const move = (event: PointerEvent) => {
-        const box = media.getBoundingClientRect();
-        const px = Math.min(1, Math.max(0, (event.clientX - box.left) / box.width));
-        const py = Math.min(1, Math.max(0, (event.clientY - box.top) / box.height));
-        rotY((px - .5) * 14);
-        rotX(-(py - .5) * 11);
-        slide.style.setProperty('--gx', `${(px * 100).toFixed(1)}%`);
-        slide.style.setProperty('--gy', `${(py * 100).toFixed(1)}%`);
-      };
-      const leave = () => { rotY(0); rotX(0); };
-      service.addEventListener('pointermove', move, { passive: true });
-      service.addEventListener('pointerleave', leave);
-      listeners.push(() => { service.removeEventListener('pointermove', move); service.removeEventListener('pointerleave', leave); });
-    });
+    live.observe(list);
   }
-  return () => listeners.forEach(off => off());
+
+  return () => {
+    reveal?.disconnect();
+    live?.disconnect();
+    if (list) { delete list.dataset.trio; delete list.dataset.live; }
+    cards.forEach(card => card.classList.remove('in'));
+  };
 }

@@ -42,7 +42,7 @@ function Year() {
 
 export function Footer({ home }: { home: boolean }) {
   const { tier, reduced, lenisRef, ready } = useMotion();
-  const statement = footerCopy.philosophy.split(/(?<=\.)\s+/);
+  const statement = footerCopy.philosophy;
   const pathname = usePathname();
   const footerRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);

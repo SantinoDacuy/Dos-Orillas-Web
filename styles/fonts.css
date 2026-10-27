@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap');
+/* Inter (titulares del Hero, Soluciones, Stack, Equipo y tarjetas). */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 @font-face {
   font-family: "display";
@@ -19,6 +20,9 @@
 }
 
 :root {
+  /* Inter (ya cargada arriba para Equipo) y JetBrains Mono: titulares del Hero/Soluciones y tarjetas de servicios. */
+  --font-inter: "Inter", "body Fallback";
+  --font-jb: "jetbrains", "mono Fallback";
   --font-display: "display", "display Fallback";
   --font-body: "body", "body Fallback";
   --font-mono: "mono", "mono Fallback";
@@ -51,4 +55,10 @@
   descent-override:22.43%;
   line-gap-override:0%;
   size-adjust:131.49%;
+}
+@font-face {
+  font-family:"jetbrains";
+  src:url("/fonts/jetbrains-mono.woff2") format("woff2");
+  font-display:swap;
+  font-weight:100 800;
 }

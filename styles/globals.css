@@ -60,3 +60,20 @@
 }
 @media (max-width:767px) { .foundation-pair { gap:5%; } .foundation-pair .media { width:47.5%; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } }
+
+/* Fragmentos destacados de titulares: el color vive dentro de las letras (blanco que se tiñe del azul del sitio hacia
+   abajo). Las paradas finales pasan del 100% para que el azul quede suave y mezclado con blanco. box-decoration-break:clone
+   repite el degradado en cada línea cuando el fragmento se parte. Sin soporte de background-clip: text, un celeste claro
+   legible. Variante --hero con la mezcla del titular principal. */
+.text-glow {
+  --glow-from:#FFFFFF; --glow-to:#68B1FF; --glow-start:0%; --glow-end:120%; --glow-fallback:#BFDFFF;
+  color:var(--glow-fallback);
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+}
+.text-glow--hero { --glow-start:10%; --glow-end:130%; }
+@supports ((background-clip:text) or (-webkit-background-clip:text)) {
+  .text-glow {
+    background-image:linear-gradient(180deg,var(--glow-from) var(--glow-start),var(--glow-to) var(--glow-end));
+    -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+  }
+}

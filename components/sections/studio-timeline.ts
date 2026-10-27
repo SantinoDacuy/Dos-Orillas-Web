@@ -39,20 +39,6 @@ function flowStudio({ gsap }: Runtime, root: HTMLElement, full: boolean): () => 
       scrollTrigger: { trigger: line, start: 'top 88%', toggleActions: 'play none none reverse' },
     });
   });
-  const frame = root.querySelector<HTMLElement>('.es-photo-frame');
-  const image = root.querySelector<HTMLElement>('.es-photo-frame img');
-  if (frame) {
-    gsap.fromTo(frame, { clipPath: 'inset(100% 0% 0% 0%)' }, {
-      clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'power3.inOut',
-      scrollTrigger: { trigger: frame, start: 'top 88%', toggleActions: 'play none none reverse' },
-    });
-  }
-  if (frame && image) {
-    gsap.fromTo(image, { yPercent: -6, scale: 1.16 }, {
-      yPercent: 6, scale: 1.16, ease: 'none',
-      scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-  }
   // La frase central se enciende palabra por palabra con el scroll.
   const lead = root.querySelector('.es-lead');
   if (lead) {
@@ -81,26 +67,24 @@ function flowStudio({ gsap }: Runtime, root: HTMLElement, full: boolean): () => 
     });
   }
 
-  // Capas con el cursor: cada frase se desplaza hacia su orilla, la foto se inclina y avanza en sentido contrario.
-  const listeners: Array<() => void> = [];
+  // Mosaico de proyectos: deriva sólo mientras la sección está en pantalla.
+  root.dataset.mq = 'ready';
+  const live = new IntersectionObserver(([entry]) => {
+    if (entry?.isIntersecting) root.dataset.live = 'true'; else delete root.dataset.live;
+  });
+  live.observe(root);
+
+  // Capas con el cursor: cada frase se desplaza hacia su orilla.
+  const listeners: Array<() => void> = [() => { live.disconnect(); delete root.dataset.mq; delete root.dataset.live; }];
   if (full && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const lines = q('.es-line');
-    const photo = root.querySelector<HTMLElement>('.es-photo');
-    if (photo && frame) gsap.set(frame, { transformPerspective: 1000 });
     const shift = lines.map(line => gsap.quickTo(line, 'x', { duration: .9, ease: 'power3.out' }));
-    const photoX = photo ? gsap.quickTo(photo, 'x', { duration: .9, ease: 'power3.out' }) : null;
-    const rotY = frame ? gsap.quickTo(frame, 'rotationY', { duration: .9, ease: 'power3.out' }) : null;
-    const rotX = frame ? gsap.quickTo(frame, 'rotationX', { duration: .9, ease: 'power3.out' }) : null;
     const move = (event: PointerEvent) => {
       const box = root.getBoundingClientRect();
       const px = (event.clientX - box.left) / box.width - .5;
-      const py = (event.clientY - box.top) / box.height - .5;
       shift.forEach((to, index) => to((index === 1 ? 1 : index === 0 ? -1 : .4) * px * 38));
-      photoX?.(-px * 26);
-      rotY?.(px * 12);
-      rotX?.(-py * 9);
     };
-    const leave = () => { shift.forEach(to => to(0)); photoX?.(0); rotY?.(0); rotX?.(0); };
+    const leave = () => { shift.forEach(to => to(0)); };
     root.addEventListener('pointermove', move, { passive: true });
     root.addEventListener('pointerleave', leave);
     listeners.push(() => { root.removeEventListener('pointermove', move); root.removeEventListener('pointerleave', leave); });

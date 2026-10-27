@@ -40,7 +40,7 @@ export function Hero() {
             {/* La frase de la marca es el titular visual; el logo firma arriba (el h1 lo nombra). */}
             <p className="hero-statement">
               <span className="hero-first">{heroCopy.philosophyLines[0]}</span>{' '}
-              <span className="hero-second">{heroCopy.philosophyLines[1]}</span>
+              <span className="hero-second"><span className="text-glow text-glow--hero">{heroCopy.philosophyLines[1]}</span></span>
             </p>
             <p className="hero-description">{heroCopy.description}</p>
 

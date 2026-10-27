@@ -88,7 +88,9 @@ export function buildDistance({ gsap, ScrollTrigger }: Runtime, options: Distanc
   if (!runway || !stage || !track || !gap) return () => {};
 
   const full = tier >= 2;
-  const crossing = particle ? createCrossing(gsap, { stage, track, gap, particle }) : undefined;
+  const crossing = particle ? createCrossing(gsap, {
+    stage, track, gap, particle, thread: one<HTMLElement>('.distance-thread'), anchor: one<HTMLElement>('.distance-anchor'),
+  }) : undefined;
   const travel = createTravel();
 
   let pan = 0;
@@ -161,9 +163,40 @@ export function buildDistance({ gsap, ScrollTrigger }: Runtime, options: Distanc
   });
   const refresh = () => crossing?.remeasure();
   ScrollTrigger.addEventListener('refresh', refresh);
+  const uncover = coverHero({ ScrollTrigger }, runway);
   return () => {
     ScrollTrigger.removeEventListener('refresh', refresh);
     crossing?.dispose();
+    uncover();
+  };
+}
+
+/** Telón: el Hero queda fijo (CSS, desde el primer pintado) y la Distancia sube por encima hasta taparlo; recién ahí
+ * empieza el viaje horizontal (el pin arranca con la pista en 'top top'). El movimiento y el oscurecido son del
+ * navegador (sticky + animación ligada al scroll), sin trabajo por cuadro. Este script sólo comprueba que el Hero
+ * entre en la pantalla y, mientras está tapado, lo oculta y pausa su video. */
+function coverHero({ ScrollTrigger }: Pick<Runtime, 'ScrollTrigger'>, runway: HTMLElement): () => void {
+  const wrapper = runway.closest<HTMLElement>('.hero-cover');
+  const hero = wrapper?.querySelector<HTMLElement>('.hero-scene');
+  if (!wrapper || !hero) return () => {};
+  if (hero.offsetHeight > window.innerHeight + 2) {
+    // No entra en la pantalla: el telón dejaría contenido del Hero sin ver; vuelve al flujo normal.
+    wrapper.dataset.cover = 'off';
+    return () => { delete wrapper.dataset.cover; };
+  }
+  const video = hero.querySelector<HTMLVideoElement>('[data-hero-video]');
+  const hide = (hidden: boolean) => {
+    hero.style.visibility = hidden ? 'hidden' : '';
+    if (hidden) video?.pause();
+    else if (video && !video.ended && video.currentTime > 0) void video.play().catch(() => {});
+  };
+  const trigger = ScrollTrigger.create({
+    trigger: runway, start: 'top top', end: 'bottom top',
+    onEnter: () => hide(true), onLeaveBack: () => hide(false),
+  });
+  return () => {
+    trigger.kill();
+    hide(false);
   };
 }
 

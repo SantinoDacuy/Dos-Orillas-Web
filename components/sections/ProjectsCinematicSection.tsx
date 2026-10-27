@@ -29,7 +29,7 @@ export const SHOWCASE_PROJECTS: readonly ShowcaseProject[] = [
     categoria: 'E-COMMERCE / SISTEMAS',
     titulo: 'Mate Único',
     // TODO: reemplazar por problema/solución final cuando el cliente los provea
-    descripcion: 'Tienda digital especializada con checkout integrado, catálogo dinámico y panel de administración en tiempo real.',
+    descripcion: 'Tienda digital especializada con checkout integrado, catálogo dinámico y panel de administración en tiempo real',
     stack: ['React', 'Node.js', 'PostgreSQL', 'Mercado Pago', 'Tailwind'],
     stackCompleto: ['React (Router)', 'Node.js/Express', 'PostgreSQL', 'Strapi', 'API de Mercado Pago', 'Google OAuth'],
     imagen: '/projects/mate-unico/cover.webp',
@@ -43,7 +43,7 @@ export const SHOWCASE_PROJECTS: readonly ShowcaseProject[] = [
     categoria: 'BACKEND / DATOS / GEOLOCALIZACIÓN',
     titulo: 'Gestión Aeroportuaria',
     // TODO: reemplazar por problema/solución final cuando el cliente los provea
-    descripcion: 'Plataforma geoespacial para monitoreo de tráfico aéreo e infraestructura con visualización interactiva y APIs.',
+    descripcion: 'Plataforma geoespacial para monitoreo de tráfico aéreo e infraestructura con visualización interactiva y APIs',
     stack: ['API REST', 'MongoDB', 'Redis', 'Leaflet', 'Docker'],
     stackCompleto: ['API REST', 'MongoDB', 'Redis', 'Leaflet', 'Docker', 'Docker Compose'],
     imagen: '/projects/gestion-aeroportuaria/cover.webp',
@@ -57,7 +57,7 @@ export const SHOWCASE_PROJECTS: readonly ShowcaseProject[] = [
     categoria: 'INTELIGENCIA ARTIFICIAL',
     titulo: 'Clasificador de Frutas',
     // TODO: reemplazar por problema/solución final cuando el cliente los provea
-    descripcion: 'Red neuronal ART1 aplicada a la clasificación automática y control de calidad visual en procesos industriales.',
+    descripcion: 'Red neuronal ART1 aplicada a la clasificación automática y control de calidad visual en procesos industriales',
     stack: ['Python', 'Redes Neuronales', 'ART1', 'Computer Vision'],
     stackCompleto: ['Python', 'ART1 (Carpenter-Grossberg)', 'Redes Neuronales', 'Computer Vision'],
     imagen: '/projects/clasificador-de-frutas/cover.webp',
@@ -71,7 +71,7 @@ export const SHOWCASE_PROJECTS: readonly ShowcaseProject[] = [
     categoria: 'DATOS / BUSINESS INTELLIGENCE',
     titulo: 'Retail Vision',
     // TODO: reemplazar por problema/solución final cuando el cliente los provea
-    descripcion: 'Arquitectura de Data Warehouse y dashboards analíticos para la toma de decisiones comerciales estratégicas.',
+    descripcion: 'Arquitectura de Data Warehouse y dashboards analíticos para la toma de decisiones comerciales estratégicas',
     stack: ['PostgreSQL', 'Tableau', 'Data Warehouse', 'ETL Pipeline', 'SQL'],
     stackCompleto: ['PostgreSQL', 'Tableau', 'Data Warehouse', 'ETL Pipeline', 'SQL'],
     imagen: '/projects/retail-vision/cover.webp',
@@ -85,7 +85,7 @@ export const SHOWCASE_PROJECTS: readonly ShowcaseProject[] = [
     categoria: 'ARQUITECTURA / SISTEMAS DISTRIBUIDOS',
     titulo: 'Transacciones en Tiempo Real',
     // TODO: reemplazar por problema/solución final cuando el cliente los provea
-    descripcion: 'Arquitectura orientada a eventos con Kafka y SSE para procesamiento transaccional resiliente y timeline en vivo.',
+    descripcion: 'Arquitectura orientada a eventos con Kafka y SSE para procesamiento transaccional resiliente y timeline en vivo',
     stack: ['Next.js', 'Apache Kafka', 'Event-Driven', 'SSE', 'Node.js'],
     stackCompleto: ['Next.js', 'KafkaJS', 'Apache Kafka', 'Server-Sent Events', 'Event-Driven Architecture'],
     imagen: '/projects/transacciones-en-tiempo-real/cover.webp',
@@ -119,7 +119,7 @@ export function ProjectsCinematicSection({ items = SHOWCASE_PROJECTS, className 
 
       <header className="pj-head">
         <div className="pj-title-row">
-          <h2 id="projects-title" className="pj-title"><span className="pj-line"><span className="pj-line-in">PROYECTOS.</span></span></h2>
+          <h2 id="projects-title" className="pj-title"><span className="pj-line"><span className="pj-line-in">PROYECTOS</span></span></h2>
         </div>
         <Link href="/projects" className="btn btn-ghost btn-sm pj-all" title="Ver el catálogo completo de proyectos">
           <span>Ver todos los proyectos ({two(count)})</span><span className="btn-icon" aria-hidden="true">↗</span>
